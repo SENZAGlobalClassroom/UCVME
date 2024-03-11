@@ -16,9 +16,10 @@
 
     <div class="center">
         <FloatLabel>
-            <InputText id="phone" v-model="value" class="InputText" />
+            <InputMask id="phone" v-model="value2" mask="+999 999 9999" placeholder="(999) 999-9999" />
             <label for="phone">Phone Number</label>
         </FloatLabel>
+
     </div>
 
     <div class="center">

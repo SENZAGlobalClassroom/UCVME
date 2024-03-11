@@ -5,9 +5,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config';
+import 'primevue/resources/themes/aura-light-purple/theme.css'
 
 import Button from "primevue/button"
-import 'primevue/resources/themes/aura-light-purple/theme.css'
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import FloatLabel from 'primevue/floatlabel';
@@ -15,9 +15,11 @@ import Card from 'primevue/card';
 import Footer from './components/Footer.vue';
 import TopBarFT from './components/topBarFirstTime.vue';
 import Steps from 'primevue/steps';
-
+import InputMask from 'primevue/inputmask';
 import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
+import Chips from 'primevue/chips';
+import Calendar from 'primevue/calendar';
 
 const app = createApp(App)
 
@@ -31,6 +33,9 @@ app.component('TopBarFT', TopBarFT);
 app.component('Steps', Steps);
 app.component('Stepper', Stepper);
 app.component('StepperPanel', StepperPanel);
+app.component('InputMask', InputMask);
+app.component('Chips', Chips);
+app.component('Calendar', Calendar);
 
 app.use(router)
 app.use(PrimeVue);
