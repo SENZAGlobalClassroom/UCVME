@@ -1,7 +1,7 @@
 <template>
 
   <head>
-    <title>Make your CV</title>
+    <title >Make your CV</title>
   </head>
   <div class="gray-background">
     <TopBarFT></TopBarFT>
@@ -115,6 +115,7 @@ const handleContinueClicked = (data) => {
 
 
 :deep .p-stepper .p-stepper-panels {
+  width: 100dvh;
   margin-top: 1rem;
   background-color: rgba(255, 255, 255, 0.703);
   border-radius: 30px;
@@ -138,7 +139,7 @@ const handleContinueClicked = (data) => {
 }
 
 @media only screen and (max-width: 768px) {
-  .p-stepper .p-stepper-panels {
+  :deep .p-stepper .p-stepper-panels {
     width: 100%;
     padding: 1rem;
   }

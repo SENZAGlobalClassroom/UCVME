@@ -1,97 +1,126 @@
 <template>
-    <h1 class="title"> Basic Information</h1>
-    <FloatLabel size="large">
-        <InputText id="firstname" v-model="value" class="InputText" />
-        <label for="firstname">First Name</label>
-    </FloatLabel>
 
-    <FloatLabel>
-        <InputText id="lastname" v-model="value" class="InputText" />
-        <label for="lastname">Last Name</label>
-    </FloatLabel>
-
-    <FloatLabel>
-        <InputText id="phone" v-model="value" class="InputText" />
-        <label for="phone">Phone Number</label>
-    </FloatLabel>
-
-    <FloatLabel>
-        <InputText id="email" v-model="value" class="InputText" />
-        <label for="email">Email</label>
-    </FloatLabel>
-
-    <Dropdown v-model="selectedCountry" :options="countries" filter optionLabel="name" placeholder="Select a Country"
-        class="w-full md:w-14rem">
-        <template #value="slotProps">
-            <div v-if="slotProps.value" class="flex align-items-center">
-                <img :alt="slotProps.value.label"
-                    src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                    :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`" style="width: 18px" />
-                <div>{{ slotProps.value.name }}</div>
+    <h1 class="title">Pick a Colour Scheme</h1>
+    <div class="center">
+        <div class="cube-grid">
+            <!-- Cube 1 -->
+            <div class="cube">
+                <div class="face front" style="background: #6580E1;"></div>
+                <div class="face top" style="background: #93AAFC;"></div>
+                <div class="face left" style="background: #BDCBFD;"></div>
             </div>
-            <span v-else>
-                {{ slotProps.placeholder }}
-            </span>
-        </template>
-        <template #option="slotProps">
-            <div class="flex align-items-center">
-                <img :alt="slotProps.option.label"
-                    src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                    :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`" style="width: 18px" />
-                <div>{{ slotProps.option.name }}</div>
+            <!-- Cube 2 -->
+            <div class="cube">
+                <div class="face front" style="background: #8865E1;"></div>
+                <div class="face top" style="background: #B193FC;"></div>
+                <div class="face left" style="background: #CFBDFD;"></div>
             </div>
-        </template>
-    </Dropdown>
-
+            <!-- Cube 3 -->
+            <div class="cube">
+                <div class="face front" style="background: #80E165;"></div>
+                <div class="face top" style="background: #AAFC93;"></div>
+                <div class="face left" style="background: #CBFDBD;"></div>
+            </div>
+            <!-- Cube 4 -->
+            <div class="cube">
+                <div class="face front" style="background: #E165BE;"></div>
+                <div class="face top" style="background: #FC93DE;"></div>
+                <div class="face left" style="background: #FDBDEB;"></div>
+            </div>
+            <!-- Cube 5 -->
+            <div class="cube">
+                <div class="face front" style="background: #B3B3B3;"></div>
+                <div class="face top" style="background: #D9D9D9;"></div>
+                <div class="face left" style="background: #FFFFFF;"></div>
+            </div>
+            <!-- Cube 6 -->
+            <div class="cube">
+                <div class="face front" style="background: #E1C665;"></div>
+                <div class="face top" style="background: #FCE593;"></div>
+                <div class="face left" style="background: #FDEFBD;"></div>
+            </div>
+            <!-- Cube 7 -->
+            <div class="cube">
+                <div class="face front" style="background: #E18865;"></div>
+                <div class="face top" style="background: #FCB193;"></div>
+                <div class="face left" style="background: #FDCFBD;"></div>
+            </div>
+            <!-- Cube 8 -->
+            <div class="cube">
+                <div class="face front" style="background: #E16580;"></div>
+                <div class="face top" style="background: #FC93AA;"></div>
+                <div class="face left" style="background: #FDBDCB;"></div>
+            </div>
+            <!-- Cube 9 -->
+            <div class="cube">
+                <div class="face front" style="background: #65BEE1;"></div>
+                <div class="face top" style="background: #93DEFC;"></div>
+                <div class="face left" style="background: #BDEBFD;"></div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-const value = ref();
-const selectedCountry = ref();
-const countries = ref([
-    { name: 'Australia', code: 'AU' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'China', code: 'CN' },
-    { name: 'Egypt', code: 'EG' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'India', code: 'IN' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'United States', code: 'US' }
-]);
 
 </script>
 
 <style scoped>
-.p-float-label input,
-.p-dropdown {
-    padding: 0.7rem;
-    width: 50dvh;
+.center {
+    margin-left: 12%;
 }
-
-.p-float-label,
-.p-dropdown {
-    margin: 2rem;
-}
-
 
 .title {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.p-button {
     padding: 1rem;
 }
 
-:deep .p-steps .p-steps-item .p-menuitem-link {
-    background-color: transparent !important;
+
+.cube-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem;
+    margin: 4rem;
 }
 
+.cube {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    transform-style: preserve-3d;
+    transform: rotateX(-45deg) rotateY(45deg);
+    transition: transform 0.5s ease-in-out;
+}
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.front {
+    transform: translateZ(50px);
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(50px);
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(50px);
+}
+
+.cube:hover {
+    transform: rotateX(0deg) rotateY(0deg);
+}
 
 @media only screen and (max-width: 768px) {
 
@@ -106,5 +135,32 @@ const countries = ref([
         margin-left: 10%;
         padding: 0.4rem;
     }
+
+    .cube-grid {
+        gap: 3.5rem;
+        margin: 2.5rem;
+    }
+
+    .cube {
+        width: 80px;
+        height: 80px;
+    }
+
+    .front {
+        transform: translateZ(40px);
+    }
+
+    .top {
+        transform: rotateX(90deg) translateZ(40px);
+    }
+
+    .left {
+        transform: rotateY(-90deg) translateZ(40px);
+    }
+
+    .center {
+        margin-left: 0%;
+    }
+
 }
 </style>
