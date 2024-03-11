@@ -1,3 +1,0 @@
-# UCVME
-
-jiawvetwvtewvw
