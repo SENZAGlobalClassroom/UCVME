@@ -9,6 +9,8 @@ import HomeView from './views/HomeView.vue';
 
 </template>
 
-<style scoped>
-
+<style>
+* {
+    margin: 0%;
+};
 </style>
