@@ -1,13 +1,12 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import CVProcess from '@/components/CVProcess.vue';
 </script>
 
 <template>
   <head>
-    <title>Make your CV</title>
+    <title>UCVME SignUp</title>
   </head>
-  <CVProcess />
+
 </template>
 
 <style scoped>

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CVProcessView from '../views/CVProcessView.vue'
+import LoginView from '../views/LoginView.vue'
+import SignUpView from '../views/SignUpView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,7 +12,17 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
-      path: '/cv',
+      path: '/login',
+      name: 'Login',
+      component: LoginView
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: SignUpView
+    },
+    {
+      path: '/cvProcess',
       name: 'CVProcess',
       component: CVProcessView
     },
