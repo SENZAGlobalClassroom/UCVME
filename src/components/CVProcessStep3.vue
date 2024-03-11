@@ -16,24 +16,39 @@
 
     <!-- Work Experience Form -->
     <div v-for="(experience, index) in workExperiences" :key="index" class="experience-container flex justify-center">
-        <h2 style="padding-bottom: 3%;">Work Experience {{ index + 1 }}</h2>
+        <div class="experience-header">
+            <h2 style="padding-bottom: 3%;">Work Experience {{ index + 1 }}</h2>
+            <button @click="removeExperience(index)" class="remove-button"><i class="pi pi-times"
+                    style="font-size: 1.5rem"></i>
+            </button>
+        </div>
         <div class="">
             <InputText v-model="experience.jobTitle" placeholder="Job Title" class="input-field" />
+            <div class="center">
+                <Dropdown v-model="experience.selectedCategory" :options="jobCategories" filter optionLabel="label"
+                    placeholder="Select a Job Category" class="w-full md:w-14rem">
+                    <template #value="slotProps">
+                        <div v-if="slotProps.value" class="flex align-items-center">
+                            <div>{{ slotProps.value.label }}</div>
+                        </div>
+                    </template>
+                </Dropdown>
+            </div>
             <div class="date-fields">
-                <Calendar v-model="experience.startDate" placeholder="Start Date" class="input-field" style="margin-right: 1rem;" />
+                <Calendar v-model="experience.startDate" placeholder="Start Date" class="input-field"
+                    style="margin-right: 1rem;" />
                 <Calendar v-model="experience.endDate" placeholder="End Date" class="input-field" />
             </div>
-            <textarea v-model="experience.jobDescription" rows="3" placeholder="What you did in the job"
+            <textarea v-model="experience.jobDescription" rows="3" placeholder="Describe your work"
                 class="input-field"></textarea>
-            <textarea v-model="experience.favoriteMemory" rows="3" placeholder="Favorite Memory"
+            <textarea v-model="experience.favoriteMemory" rows="3" placeholder="Write about your favorite memory"
                 class="input-field"></textarea>
             <InputMask v-model="experience.referencePhoneNumber" mask="+999 999 9999"
                 placeholder="Reference Phone Number" class="input-field" />
-            <button @click="removeExperience(index)" class="remove-button">Remove</button>
         </div>
     </div>
     <div class="center">
-    <Button @click="addExperience">Add More Job Experience</Button>
+        <Button @click="addExperience" class="underline-text">Click to add more work experiences</Button>
     </div>
 
 
@@ -82,8 +97,32 @@ const groupedPersonalities = ref([
     }
 ]);
 
+const jobCategories = ref([
+    { label: 'Technology', value: 'technology' },
+    { label: 'Finance', value: 'finance' },
+    { label: 'Healthcare', value: 'healthcare' },
+    { label: 'Marketing', value: 'marketing' },
+    { label: 'Sales', value: 'sales' },
+    { label: 'Education', value: 'education' },
+    { label: 'Human Resources', value: 'hr' },
+    { label: 'Manufacturing', value: 'manufacturing' },
+    { label: 'Customer Service', value: 'customer-service' },
+    { label: 'Research', value: 'research' },
+    { label: 'Legal', value: 'legal' },
+    { label: 'Real Estate', value: 'real-estate' },
+    { label: 'Design', value: 'design' },
+    { label: 'Hospitality', value: 'hospitality' },
+    { label: 'Transportation', value: 'transportation' },
+    { label: 'Non-profit', value: 'non-profit' },
+    { label: 'Telecommunications', value: 'telecom' },
+    { label: 'Agriculture', value: 'agriculture' },
+    { label: 'Environment', value: 'environment' },
+    { label: 'Other', value: 'other' },
+]);
+
 const workExperiences = ref([
     {
+        selectedCategory: null,
         jobTitle: "",
         startDate: null,
         endDate: null,
@@ -95,6 +134,7 @@ const workExperiences = ref([
 
 const addExperience = () => {
     workExperiences.value.push({
+        selectedCategory: null,
         jobTitle: "",
         startDate: null,
         endDate: null,
@@ -112,13 +152,12 @@ const removeExperience = (index) => {
 
 <style scoped>
 .center {
-    margin-left: 5%;
+    margin-left: 1%;
 }
 
 .p-float-label input,
 .p-dropdown {
-    padding: 0.7rem;
-    width: 60dvh;
+    width: 58dvh;
 }
 
 .p-float-label,
@@ -148,7 +187,7 @@ const removeExperience = (index) => {
 }
 
 .input-field {
-    padding: 0.8rem;
+    padding: 0.5rem;
     width: 100%;
     margin-bottom: 20px;
 
@@ -159,22 +198,29 @@ const removeExperience = (index) => {
     justify-content: space-between;
 }
 
-.remove-button {
-    background-color: #ff4d4f;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
-.add-button {
-    background-color: #4caf50;
-    color: #fff;
+.remove-button {
+    background-color: #ff4d5000;
+    color: #1f1f1f;
     border: none;
-    padding: 8px 16px;
+    padding: 8px;
     cursor: pointer;
-    margin-top: 20px;
+    font-size: 1.5rem;
+    margin-left: 10px;
 }
+
+.underline-text {
+    text-decoration: underline;
+    background-color: transparent;
+    color: #000;
+    border: none;
+}
+
 
 @media only screen and (max-width: 768px) {
 
@@ -184,14 +230,17 @@ const removeExperience = (index) => {
         padding: 0.8rem;
     }
 
-    .p-dropdown {
-        width: 80%;
-        margin-left: 10%;
-        padding: 0.4rem;
-    }
-
     .center {
         margin-left: 0%;
+    }
+
+    .experience-container {
+        margin: 0rem;
+    }
+
+    .p-float-label input,
+    .p-dropdown {
+        width: 46dvh;
     }
 }
 </style>

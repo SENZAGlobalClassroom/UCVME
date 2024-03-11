@@ -78,22 +78,10 @@
 
 
 <script setup>
-import { ref } from "vue";
 import CVProcessStep1 from '@/components/CVProcessStep1.vue';
 import CVProcessStep2 from '@/components/CVProcessStep2.vue';
 import CVProcessStep3 from '@/components/CVProcessStep3.vue';
 import CVProcessStep4 from '@/components/CVProcessStep4.vue';
-
-const enteredData = ref({});
-const activeStep = ref(0);
-
-const handleContinueClicked = (data) => {
-  console.log("Data received in CVProcessView:", data);
-
-  enteredData.value = data;
-
-};
-
 
 </script>
 

@@ -1,122 +1,131 @@
 <template>
-    <h1 class="title"> Basic Information</h1>
-    <div class="center">
-        <FloatLabel size="large">
-            <InputText id="firstname" v-model="value" class="InputText" />
-            <label for="firstname">First Name</label>
-        </FloatLabel>
-    </div>
+    <h1 class="title"> Add Your Video</h1>
 
-    <div class="center">
-        <FloatLabel>
-            <InputText id="lastname" v-model="value" class="InputText" />
-            <label for="lastname">Last Name</label>
-        </FloatLabel>
-    </div>
-
-    <div class="center">
-        <FloatLabel>
-            <InputText id="phone" v-model="value" class="InputText" />
-            <label for="phone">Phone Number</label>
-        </FloatLabel>
-    </div>
-
-    <div class="center">
-        <FloatLabel>
-            <InputText id="email" v-model="value" class="InputText" />
-            <label for="email">Email</label>
-        </FloatLabel>
-    </div>
-
-    <div class="center">
-        <Dropdown v-model="selectedCountry" :options="countries" filter optionLabel="name"
-            placeholder="Select a Country" class="w-full md:w-14rem">
-            <template #value="slotProps">
-                <div v-if="slotProps.value" class="flex align-items-center">
-                    <img :alt="slotProps.value.label"
-                        src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                        :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`" style="width: 18px" />
-                    <div>{{ slotProps.value.name }}</div>
+    <div style="padding: 2rem;">
+        <div class="center">
+            <div class="image-preview-container">
+                <div class="image-preview" v-if="previewImage">
+                    <img :src="previewImage" alt="Video preview" class="rounded-preview">
                 </div>
-                <span v-else>
-                    {{ slotProps.placeholder }}
-                </span>
-            </template>
-            <template #option="slotProps">
-                <div class="flex align-items-center">
-                    <img :alt="slotProps.option.label"
-                        src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                        :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`" style="width: 18px" />
-                    <div>{{ slotProps.option.name }}</div>
+                <div class="default-image" v-else>
+                    <img src="\src\assets\videoUpload.png" alt="Default Image" class="rounded-preview">
                 </div>
-            </template>
-        </Dropdown>
-    </div>
+            </div>
 
+            <div class="file-input-container">
+                <label for="fileInput" class="file-label">Choose File</label>
+                <input id="fileInput" type="file" @change="handleFileInputChange" accept="video/*"
+                    style="display: none">
+            </div>
+        </div>
+    </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script>
+export default {
+    data() {
+        return {
+            previewImage: null
+        };
+    },
+    methods: {
+        handleFileInputChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.generatePreviewImage(file);
+            }
+        },
+        generatePreviewImage(videoFile) {
+            const video = document.createElement('video');
+            video.setAttribute('crossorigin', 'anonymous');
+            video.setAttribute('controls', 'true');
 
-const value = ref();
-const selectedCountry = ref();
-const countries = ref([
-    { name: 'Australia', code: 'AU' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'China', code: 'CN' },
-    { name: 'Egypt', code: 'EG' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'India', code: 'IN' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'United States', code: 'US' }
-]);
+            const blobUrl = URL.createObjectURL(videoFile);
+            video.src = blobUrl;
 
+            video.addEventListener('seeked', async () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                this.previewImage = canvas.toDataURL('image/png');
+                URL.revokeObjectURL(blobUrl);
+            });
+
+            video.addEventListener('error', () => {
+                console.error('Error loading the video.');
+            });
+
+            video.load();
+            video.currentTime = 1; // Seek to a specific time to trigger 'seeked' event
+        }
+    }
+};
 </script>
+
 
 <style scoped>
 .center {
-    margin-left: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.p-float-label input,
-.p-dropdown {
-
-    padding: 0.7rem;
-    width: 60dvh;
+.image-preview-container {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
 
-.p-float-label,
-.p-dropdown {
-    margin: 2rem;
+.image-preview {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
+.default-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rounded-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.file-input-container {
+    text-align: center;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.file-label:hover {
+    background-color: #45a049;
+}
+
+#fileInput {
+    display: none;
+}
 
 .title {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-}
-
-
-@media only screen and (max-width: 768px) {
-
-    .p-float-label input {
-        width: 100%;
-        margin: 0;
-        padding: 0.8rem;
-    }
-
-    .p-dropdown {
-        width: 80%;
-        margin-left: 10%;
-        padding: 0.4rem;
-    }
-
-    .center {
-        margin-left: 0%;
-    }
 }
 </style>
