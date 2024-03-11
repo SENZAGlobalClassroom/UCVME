@@ -129,6 +129,7 @@ const handleContinueClicked = (data) => {
   border-radius: 50px;
 }
 
+
 @media only screen and (max-width: 1200px) {
   .p-stepper .p-stepper-panels {
     width: 75%;
@@ -142,9 +143,14 @@ const handleContinueClicked = (data) => {
     padding: 1rem;
   }
 
+
   .p-button {
     margin: 5px;
-    padding: 10px 10px;
+    padding: 15px 15px;
   }
+
+  .centered {
+  align-items: normal;
+}
 }
 </style>
