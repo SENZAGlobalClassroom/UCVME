@@ -15,13 +15,8 @@
           </template>
           <template #content="{ nextCallback }">
             <div class="flex flex-column h-12rem ">
-              <CVProcessStep1 
-              @firstName="logFirstName" 
-              @lastName="logLastName"
-              @phone="logPhone"
-              @email="logEmail"
-              @country="logCountry"
-              ></CVProcessStep1>
+              <CVProcessStep1 @firstName="logFirstName" @lastName="logLastName" @phone="logPhone" @email="logEmail"
+                @country="logCountry"></CVProcessStep1>
             </div>
             <div class="flex pt-4 justify-content-end">
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
@@ -36,7 +31,7 @@
           </template>
           <template #content="{ prevCallback, nextCallback }">
             <div class="flex flex-column h-12rem">
-              <CVProcessStep2></CVProcessStep2>
+              <CVProcessStep2 @cubeColor="logCubeColor"></CVProcessStep2>
             </div>
             <div class="flex pt-4 justify-content-between">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
@@ -91,7 +86,10 @@ import CVProcessStep4 from '@/components/CVProcessStep4.vue';
 
 export default {
   components: {
-    CVProcessStep1
+    CVProcessStep1,
+    CVProcessStep2,
+    CVProcessStep3,
+    CVProcessStep4,
   },
   methods: {
     logFirstName(event) {
@@ -107,6 +105,9 @@ export default {
       console.log(event)
     },
     logCountry(event) {
+      console.log(event)
+    },
+    logCubeColor(event) {
       console.log(event)
     }
   }
