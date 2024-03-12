@@ -6,7 +6,7 @@
 
 
 ## Project Setup
-cd .\UCVME\
+cd .\UCVME\app\view
 npm install
 
 
