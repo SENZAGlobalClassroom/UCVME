@@ -2,21 +2,24 @@
     <h1 class="title"> Basic Information</h1>
     <div class="center">
         <FloatLabel size="large">
-            <InputText id="firstname" v-model="value" class="InputText" />
+            <InputText id="firstname" v-model="firstname" class="InputText"
+                @change="$emit('firstName', $event.target.value)" />
             <label for="firstname">First Name</label>
         </FloatLabel>
     </div>
 
     <div class="center">
         <FloatLabel>
-            <InputText id="lastname" v-model="value" class="InputText" />
+            <InputText id="lastname" v-model="lastname" class="InputText"
+                @change="$emit('lastName', $event.target.value)" />
             <label for="lastname">Last Name</label>
         </FloatLabel>
     </div>
 
     <div class="center">
         <FloatLabel>
-            <InputMask id="phone" v-model="value2" mask="+999 999 9999" placeholder="(999) 999-9999" />
+            <InputMask id="phone" v-model="phone" mask="+999 999 9999" placeholder="(999) 999-9999"
+                @change="$emit('phone', $event.target.value)" />
             <label for="phone">Phone Number</label>
         </FloatLabel>
 
@@ -24,14 +27,16 @@
 
     <div class="center">
         <FloatLabel>
-            <InputText id="email" v-model="value" class="InputText" />
+            <InputText id="email" v-model="email" class="InputText" 
+                @change="$emit('email', $event.target.value)" />
             <label for="email">Email</label>
         </FloatLabel>
     </div>
 
     <div class="center">
         <Dropdown v-model="selectedCountry" :options="countries" filter optionLabel="name"
-            placeholder="Select a Country" class="w-full md:w-14rem">
+            placeholder="Select a Country" class="w-full md:w-14rem"
+            @change="$emit('country', $event.value)" >
             <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex align-items-center">
                     <img :alt="slotProps.value.label"
@@ -59,7 +64,10 @@
 <script setup>
 import { ref } from "vue";
 
-const value = ref();
+const firstname = ref("");
+const lastname = ref("");
+const phone = ref("");
+const email = ref("");
 const selectedCountry = ref();
 const countries = ref([
     { name: 'Australia', code: 'AU' },

@@ -1,7 +1,7 @@
 <template>
 
   <head>
-    <title >Make your CV</title>
+    <title>Make your CV</title>
   </head>
   <div class="gray-background">
     <TopBarFT></TopBarFT>
@@ -15,7 +15,13 @@
           </template>
           <template #content="{ nextCallback }">
             <div class="flex flex-column h-12rem ">
-              <CVProcessStep1></CVProcessStep1>
+              <CVProcessStep1 
+              @firstName="logFirstName" 
+              @lastName="logLastName"
+              @phone="logPhone"
+              @email="logEmail"
+              @country="logCountry"
+              ></CVProcessStep1>
             </div>
             <div class="flex pt-4 justify-content-end">
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
@@ -77,12 +83,34 @@
 </template>
 
 
-<script setup>
+<script>
 import CVProcessStep1 from '@/components/CVProcessStep1.vue';
 import CVProcessStep2 from '@/components/CVProcessStep2.vue';
 import CVProcessStep3 from '@/components/CVProcessStep3.vue';
 import CVProcessStep4 from '@/components/CVProcessStep4.vue';
 
+export default {
+  components: {
+    CVProcessStep1
+  },
+  methods: {
+    logFirstName(event) {
+      console.log(event)
+    },
+    logLastName(event) {
+      console.log(event)
+    },
+    logPhone(event) {
+      console.log(event)
+    },
+    logEmail(event) {
+      console.log(event)
+    },
+    logCountry(event) {
+      console.log(event)
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -139,7 +167,7 @@ import CVProcessStep4 from '@/components/CVProcessStep4.vue';
   }
 
   .centered {
-  align-items: normal;
-}
+    align-items: normal;
+  }
 }
 </style>
