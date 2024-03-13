@@ -4,6 +4,12 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
     <header>
+         <!-- Search Bar -->
+        <div class="search-container">
+            <i class="fa fa-search search-icon"></i>
+            <input type="text" placeholder="Search for users or jobs...">
+        </div>
+
         <img alt="UCVME logo" class="logo" src="@/assets/UCVME_logo-removebg-preview.png" width="300" height="125" />
 
         <div class="wrapper">
@@ -29,5 +35,40 @@ import { RouterLink, RouterView } from 'vue-router'
             </nav>
         </div>
     </header>
-
 </template>
+
+<style scoped>
+.search-bar-container {
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px; 
+}
+
+.search-container {
+  position: relative;
+  width: 35%; 
+  margin-bottom: 5px; 
+  padding-top: 1%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 7px 15px 7px 40px;
+  font-size: 0.750rem; 
+  border: 2px solid #ccc; 
+  border-radius: 25px; 
+  outline: none; 
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;   
+  top: 50%;
+  transform: translateY(-50%);
+  color: #495057;
+  z-index: 10;
+  margin-top: 1%;
+}
+</style>

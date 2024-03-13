@@ -8,7 +8,7 @@
         <a href="#">Contact</a>
       </div>
       <div class="copyright">
-        <p>Copyright &copy; 2024 Produced by Senza Ltd</p>
+        <p>Copyright &copy; 2024 Produced by SenzaashdgjGDAgyd Ltd</p>
       </div>
     </footer>
   </template>
