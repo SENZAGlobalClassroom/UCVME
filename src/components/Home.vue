@@ -49,7 +49,7 @@ import { RouterLink, RouterView } from 'vue-router'
           <!-- Swipe for pictures if necessary -->
         </div>
         <div class="post-actions">
-          <button class="save-post">Save Post</button>
+          <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
           <button class="apply-post">Apply</button>
         </div>
       </div>
