@@ -36,27 +36,57 @@ import { RouterLink, RouterView } from 'vue-router'
         </div>
       </header>
     </div>
-    <div class="post-upload-container">
-      <div class="post-upload-card">
-        <div class="user-info">
-          <img class="user-avatar" src="@/assets/Pastel_1.png" alt="User Avatar" />
-          <h3 class="user-name">Jane Kim</h3>
+    <body>
+      <div class="post-upload-container">
+        <div class="post-upload-card">
+          <div class="user-info">
+            <img class="user-avatar" src="@/assets/Pastel_1.png" alt="User Avatar" />
+            <h3 class="user-name">Jane Kim</h3>
+          </div>
+          <div class="post-content">
+            <h2>Looking for a gardener</h2>
+            <p>Needed for 22/04/2024, 16:00</p>
+            <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.</p>
+            <!-- Swipe for pictures if necessary -->
+          </div>
+          <div class="post-actions">
+            <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
+            <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
+          </div>
         </div>
-        <div class="post-content">
-          <h2>Looking for a gardener</h2>
-          <p>Needed for 22/04/2024, 16:00</p>
-          <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.</p>
-          <!-- Swipe for pictures if necessary -->
-        </div>
-        <div class="post-actions">
-          <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
-          <button class="apply-post">Apply</button>
-        </div>
+        <!-- Second post -->
+        <div class="post-upload-card">
+            <div class="user-info">
+              <img class="user-avatar" src="@/assets/Pastel_2.png" alt="User Avatar" />
+              <h3 class="user-name">John Doe</h3>
+            </div>
+            <div class="post-content">
+              <h2>Need a Math Tutor</h2>
+              <p>Urgent requirement for my son's exam preparation</p>
+              <p>Looking for an experienced math tutor for my son who is preparing for his final exams. He needs help in calculus and algebra. Sessions needed for the upcoming three weekends.</p>
+            </div>
+            <div class="post-actions">
+              <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
+              <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
+            </div>
+          </div>
       </div>
-    </div>
-  </template>
+    </body>
+</template>
   
 <style scoped>
+
+header {
+  /* Your header styles */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000; /* Ensure header is above other content */
+}
+
+main {
+  padding-top: 70px; /* Adjust this value so that the main content starts below the header */
+}
 .search-bar-container {
   display: flex;
   justify-content: center; 
@@ -81,6 +111,15 @@ import { RouterLink, RouterView } from 'vue-router'
   outline: none; 
 }
 
+.apply-post {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .apply-post i {
+    margin-right: 5px;
+  }
+
 .search-icon {
   position: absolute;
   left: 16px;   
@@ -93,9 +132,9 @@ import { RouterLink, RouterView } from 'vue-router'
 
 .post-upload-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: calc(100vh - 250px); /* Adjust the height as needed */
+  margin-top: 50px; /* Space from the header */
 }
 
 .post-upload-card {
@@ -106,6 +145,7 @@ import { RouterLink, RouterView } from 'vue-router'
   max-width: 600px; /* Set a max-width for the card */
   margin: 20px;
   width: 100%;
+  margin-top: 20px;
 }
 
 .user-info {
@@ -150,4 +190,28 @@ import { RouterLink, RouterView } from 'vue-router'
   background-color: #4CAF50;
   color: white;
 }
+
+.posts-background {
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    padding: 20px;
+  }
+
+  .post-upload-container + .post-upload-container {
+    margin-top: 30px; /* Space between posts */
+  }
+
+  .post-upload-container {
+    display: flex;
+    flex-direction: column; /* This will stack the cards vertically */
+    align-items: center; /* Center the cards horizontally */
+    padding-bottom: 20px; /* Add space at the bottom of the container */
+  }
+
+  .post-upload-card {
+    background-color: white;
+    /* ... other styles ... */
+    margin-top: 20px; /* Adds space between cards */
+    width: 90%; /* Adjust the width as desired */
+    max-width: 600px; /* Keeps the card width from getting too large */
+  }
 </style>
