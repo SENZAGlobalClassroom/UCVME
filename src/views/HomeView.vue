@@ -8,5 +8,4 @@ import Footer from '@/components/Footer.vue';
     <title>UCVME Home</title>
   </head>
     <Home />
-    <Footer/>
 </template>

@@ -20,6 +20,8 @@ import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
 import Chips from 'primevue/chips';
 import Calendar from 'primevue/calendar';
+import ScrollPanel from 'primevue/scrollpanel';
+
 
 const app = createApp(App)
 
@@ -36,6 +38,8 @@ app.component('StepperPanel', StepperPanel);
 app.component('InputMask', InputMask);
 app.component('Chips', Chips);
 app.component('Calendar', Calendar);
+app.component('ScrollPanel', ScrollPanel);
+
 
 app.use(router)
 app.use(PrimeVue);
