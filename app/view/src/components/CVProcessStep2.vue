@@ -4,56 +4,56 @@
     <div class="center">
         <div class="cube-grid">
             <!-- Cube 1 -->
-            <div class="cube" @click="selectCube('blue'), $emit('cubeColor', 'blue')" :class="{ 'selected': selectedColor === 'blue' }">
+            <div class="cube" @click="selectCube('blue')" :class="{ 'selected': selectedColor === 'blue' }">
                 <div class="face front" style="background: #6580E1;"></div>
                 <div class="face top" style="background: #93AAFC;"></div>
                 <div class="face left" style="background: #BDCBFD;"></div>
             </div>
             <!-- Cube 2 -->
-            <div class="cube"  @click="selectCube('purple'), $emit('cubeColor', 'purple')" :class="{ 'selected': selectedColor === 'purple' }">
+            <div class="cube"  @click="selectCube('purple')" :class="{ 'selected': selectedColor === 'purple' }">
                 <div class="face front" style="background: #8865E1;"></div>
                 <div class="face top" style="background: #B193FC;"></div>
                 <div class="face left" style="background: #CFBDFD;"></div>
             </div>
             <!-- Cube 3 -->
-            <div class="cube"  @click="selectCube('green'), $emit('cubeColor', 'green')" :class="{ 'selected': selectedColor === 'green' }">
+            <div class="cube"  @click="selectCube('green')" :class="{ 'selected': selectedColor === 'green' }">
                 <div class="face front" style="background: #80E165;"></div>
                 <div class="face top" style="background: #AAFC93;"></div>
                 <div class="face left" style="background: #CBFDBD;"></div>
             </div>
             <!-- Cube 4 -->
             
-            <div class="cube" @click="selectCube('pink'), $emit('cubeColor', 'pink')" :class="{ 'selected': selectedColor === 'pink' }">
+            <div class="cube" @click="selectCube('pink')" :class="{ 'selected': selectedColor === 'pink' }">
                 <div class="face front" style="background: #E165BE;"></div>
                 <div class="face top" style="background: #FC93DE;"></div>
                 <div class="face left" style="background: #FDBDEB;"></div>
             </div>
             <!-- Cube 5 -->
-            <div class="cube" @click="selectCube('white'), $emit('cubeColor', 'white')" :class="{ 'selected': selectedColor === 'white' }">
+            <div class="cube" @click="selectCube('white')" :class="{ 'selected': selectedColor === 'white' }">
                 <div class="face front" style="background: #B3B3B3;"></div>
                 <div class="face top" style="background: #D9D9D9;"></div>
                 <div class="face left" style="background: #FFFFFF;"></div>
             </div>
             <!-- Cube 6 -->
-            <div class="cube" @click="selectCube('yellow'), $emit('cubeColor', 'yellow')" :class="{ 'selected': selectedColor === 'yellow' }">
+            <div class="cube" @click="selectCube('yellow')" :class="{ 'selected': selectedColor === 'yellow' }">
                 <div class="face front" style="background: #E1C665;"></div>
                 <div class="face top" style="background: #FCE593;"></div>
                 <div class="face left" style="background: #FDEFBD;"></div>
             </div>
             <!-- Cube 7 -->
-            <div class="cube"  @click="selectCube('orange'),$emit('cubeColor', 'orange')" :class="{ 'selected': selectedColor === 'orange' }">
+            <div class="cube"  @click="selectCube('orange')" :class="{ 'selected': selectedColor === 'orange' }">
                 <div class="face front" style="background: #E18865;"></div>
                 <div class="face top" style="background: #FCB193;"></div>
                 <div class="face left" style="background: #FDCFBD;"></div>
             </div>
             <!-- Cube 8 -->
-            <div class="cube"  @click="selectCube('red'), $emit('cubeColor', 'red')" :class="{ 'selected': selectedColor === 'red' }">
+            <div class="cube"  @click="selectCube('red')" :class="{ 'selected': selectedColor === 'red' }">
                 <div class="face front" style="background: #E16580;"></div>
                 <div class="face top" style="background: #FC93AA;"></div>
                 <div class="face left" style="background: #FDBDCB;"></div>
             </div>
             <!-- Cube 9 -->
-            <div class="cube"  @click="selectCube('cyan'), $emit('cubeColor', 'cyan')" :class="{ 'selected': selectedColor === 'cyan' }">
+            <div class="cube"  @click="selectCube('cyan')" :class="{ 'selected': selectedColor === 'cyan' }">
                 <div class="face front" style="background: #65BEE1;"></div>
                 <div class="face top" style="background: #93DEFC;"></div>
                 <div class="face left" style="background: #BDEBFD;"></div>
@@ -63,15 +63,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 
 const selectedColor = ref(null);
+
+const emit = defineEmits(['update:selectedColor']);
 
 const selectCube = (color) => {
   if (selectedColor.value === color) {
     selectedColor.value = null;
   } else {
     selectedColor.value = color;
+    emit('update:selectedColor', selectedColor.value);
   }
 };
 </script>

@@ -15,8 +15,13 @@
           </template>
           <template #content="{ nextCallback }">
             <div class="flex flex-column h-12rem ">
-              <CVProcessStep1 @firstName="logFirstName" @lastName="logLastName" @phone="logPhone" @email="logEmail"
-                @country="logCountry"></CVProcessStep1>
+              <CVProcessStep1 
+                @update:firstName="updateFirstName"
+                @update:lastName="updateLastName"
+                @update:phone="updatePhone"
+                @update:email="updateEmail"
+                @update:country="updateCountry" :selectedCountry="selectedCountry"
+              ></CVProcessStep1>
             </div>
             <div class="flex pt-4 justify-content-end">
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
@@ -31,7 +36,7 @@
           </template>
           <template #content="{ prevCallback, nextCallback }">
             <div class="flex flex-column h-12rem">
-              <CVProcessStep2 @cubeColor="logCubeColor"></CVProcessStep2>
+              <CVProcessStep2 @update:selectedColor="logCubeColor"></CVProcessStep2>
             </div>
             <div class="flex pt-4 justify-content-between">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
@@ -63,7 +68,7 @@
           </template>
           <template #content="{ prevCallback }">
             <div class="flex flex-column h-12rem">
-              <CVProcessStep4></CVProcessStep4>
+              <CVProcessStep4 @videoUploaded="handleVideoData"></CVProcessStep4>
             </div>
             <div class="flex pt-4 justify-content-between">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
@@ -84,6 +89,8 @@ import CVProcessStep2 from '@/components/CVProcessStep2.vue';
 import CVProcessStep3 from '@/components/CVProcessStep3.vue';
 import CVProcessStep4 from '@/components/CVProcessStep4.vue';
 
+import { ref } from 'vue';
+
 export default {
   components: {
     CVProcessStep1,
@@ -91,26 +98,62 @@ export default {
     CVProcessStep3,
     CVProcessStep4,
   },
-  methods: {
-    logFirstName(event) {
-      console.log(event)
-    },
-    logLastName(event) {
-      console.log(event)
-    },
-    logPhone(event) {
-      console.log(event)
-    },
-    logEmail(event) {
-      console.log(event)
-    },
-    logCountry(event) {
-      console.log(event)
-    },
-    logCubeColor(event) {
-      console.log(event)
+  setup() {
+    const firstName = ref("");
+    const updateFirstName = (value) => {
+      firstName.value = value;
+      console.log(firstName.value);
+    };
+    const lastName = ref("");
+    const updateLastName = (value) => {
+      lastName.value = value;
+      console.log(lastName.value);
+    };
+    const phone = ref("");
+    const updatePhone = (value) => {
+      phone.value = value;
+      console.log(phone.value);
+    };
+    const email = ref("");
+    const updateEmail = (value) => {
+      email.value = value;
+      console.log(email.value);
+    };
+    const selectedCountry = ref("");
+    const updateCountry = (value) => {
+      selectedCountry.value = value;
+      console.log(selectedCountry.value);
+    };
+
+    const selectedColor = ref("");
+    const logCubeColor = (color) => {
+      selectedColor.value = color;
+      console.log(selectedColor.value);
+    };
+
+    const videoData = ref(null);
+    const handleVideoData = (data) => {
+      videoData.value = data;
+      console.log('Received video data:', videoData.value);
+    };
+
+    return {
+      firstName,
+      lastName,
+      phone,
+      email,
+      selectedCountry,
+      updateFirstName,
+      updateLastName,
+      updatePhone,
+      updateEmail,
+      updateCountry,
+      selectedColor,
+      logCubeColor,
+      videoData,
+      handleVideoData
     }
-  }
+  },
 }
 </script>
 

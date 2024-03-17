@@ -22,20 +22,20 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
-    data() {
-        return {
-            previewImage: null
-        };
-    },
-    methods: {
-        handleFileInputChange(event) {
+    setup(_, { emit }) {
+        const previewImage = ref(null);
+
+        const handleFileInputChange = (event) => {
             const file = event.target.files[0];
             if (file) {
-                this.generatePreviewImage(file);
+                generatePreviewImage(file);
             }
-        },
-        generatePreviewImage(videoFile) {
+        };
+
+        const generatePreviewImage = (videoFile) => {
             const video = document.createElement('video');
             video.setAttribute('crossorigin', 'anonymous');
             video.setAttribute('controls', 'true');
@@ -50,7 +50,7 @@ export default {
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                this.previewImage = canvas.toDataURL('image/png');
+                previewImage.value = canvas.toDataURL('image/png');
                 URL.revokeObjectURL(blobUrl);
             });
 
@@ -60,7 +60,21 @@ export default {
 
             video.load();
             video.currentTime = 1; // Seek to a specific time to trigger 'seeked' event
-        }
+                
+            // Emit the video data when the video is successfully uploaded
+            video.addEventListener('loadedmetadata', () => {
+                const videoData = {
+                    file: videoFile,
+                    preview: previewImage.value
+                };
+                emit('videoUploaded', videoData);
+            });
+        };
+
+        return {
+            previewImage,
+            handleFileInputChange
+        };
     }
 };
 </script>
