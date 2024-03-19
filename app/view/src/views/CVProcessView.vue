@@ -15,13 +15,9 @@
           </template>
           <template #content="{ nextCallback }">
             <div class="flex flex-column h-12rem ">
-              <CVProcessStep1 
-                @update:firstName="updateFirstName"
-                @update:lastName="updateLastName"
-                @update:phone="updatePhone"
-                @update:email="updateEmail"
-                @update:country="updateCountry" :selectedCountry="selectedCountry"
-              ></CVProcessStep1>
+              <CVProcessStep1 @update:firstName="updateFirstName" @update:lastName="updateLastName"
+                @update:phone="updatePhone" @update:email="updateEmail" @update:country="updateCountry"
+                :selectedCountry="selectedCountry"></CVProcessStep1>
             </div>
             <div class="flex pt-4 justify-content-end">
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
@@ -72,7 +68,8 @@
             </div>
             <div class="flex pt-4 justify-content-between">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
-              <Button label="Complete" @click="" />
+              <Button label="Complete" @click="completeCV"></Button>
+
             </div>
           </template>
         </StepperPanel>
@@ -90,6 +87,7 @@ import CVProcessStep3 from '@/components/CVProcessStep3.vue';
 import CVProcessStep4 from '@/components/CVProcessStep4.vue';
 
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   components: {
@@ -99,6 +97,23 @@ export default {
     CVProcessStep4,
   },
   setup() {
+    const router = useRouter(); 
+
+    const sendDataToDatabase = () => {
+    // this is called when the complete button is pressed
+    // you can send the data to the db here @jia
+    };
+
+    const completeCV = async () => {
+      try {
+        await sendDataToDatabase();
+        // Redirect to the CVProcessCompleteView.vue page after data is sent
+        router.push({ name: 'CVComplete' });
+      } catch (error) {
+        console.error('Error while completing CV:', error);
+      }
+    };
+
     const firstName = ref("");
     const updateFirstName = (value) => {
       firstName.value = value;
@@ -151,7 +166,8 @@ export default {
       selectedColor,
       logCubeColor,
       videoData,
-      handleVideoData
+      handleVideoData,
+      completeCV
     }
   },
 }
