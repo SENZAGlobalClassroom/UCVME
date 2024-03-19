@@ -46,10 +46,12 @@
             <InputMask v-model="experience.referencePhoneNumber" mask="+999 999 9999"
                 placeholder="Reference Phone Number" class="input-field" />
         </div>
+        <Divider></Divider>
     </div>
     <div class="center">
         <Button @click="addExperience" class="underline-text">Click to add more work experiences</Button>
     </div>
+
 
 
 </template>
@@ -225,7 +227,7 @@ const removeExperience = (index) => {
 @media only screen and (max-width: 768px) {
 
     .p-float-label input {
-        width: 100%;
+        width: 90%;
         margin: 0;
         padding: 0.8rem;
     }
@@ -240,7 +242,7 @@ const removeExperience = (index) => {
 
     .p-float-label input,
     .p-dropdown {
-        width: 46dvh;
+        width: 39dvh;
     }
 }
 </style>

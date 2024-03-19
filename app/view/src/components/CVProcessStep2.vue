@@ -155,24 +155,24 @@ const selectCube = (color) => {
 
     .cube-grid {
         gap: 3.5rem;
-        margin: 2.5rem;
+        margin: 2rem;
     }
 
     .cube {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
     }
 
     .front {
-        transform: translateZ(40px);
+        transform: translateZ(30px);
     }
 
     .top {
-        transform: rotateX(90deg) translateZ(40px);
+        transform: rotateX(90deg) translateZ(30px);
     }
 
     .left {
-        transform: rotateY(-90deg) translateZ(40px);
+        transform: rotateY(-90deg) translateZ(30px);
     }
 
     .center {
