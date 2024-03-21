@@ -154,7 +154,7 @@ const removeExperience = (index) => {
 
 <style scoped>
 .center {
-    margin-left: 1%;
+    margin-left: 0%;
 }
 
 .p-float-label input,

@@ -3,6 +3,7 @@ import CVProcessView from '../views/CVProcessView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import CVProcessCompleteView from '../views/CVProcessCompleteView.vue'
+import CV from '../views/CVView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,11 @@ const router = createRouter({
       path: '/CVComplete',
       name: 'CVComplete',
       component: CVProcessCompleteView
+    },
+    {
+      path: '/CVUsername',
+      name: 'CVUsername',
+      component: CV
     },
     // {
     //   path: '/about',

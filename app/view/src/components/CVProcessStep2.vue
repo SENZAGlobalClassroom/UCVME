@@ -159,20 +159,20 @@ const selectCube = (color) => {
     }
 
     .cube {
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
     }
 
     .front {
-        transform: translateZ(30px);
+        transform: translateZ(20px);
     }
 
     .top {
-        transform: rotateX(90deg) translateZ(30px);
+        transform: rotateX(90deg) translateZ(20px);
     }
 
     .left {
-        transform: rotateY(-90deg) translateZ(30px);
+        transform: rotateY(-90deg) translateZ(20px);
     }
 
     .center {
