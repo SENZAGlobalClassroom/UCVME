@@ -14,12 +14,12 @@
             </Button>
           </template>
           <template #content="{ nextCallback }">
-            <div class="flex flex-column h-12rem ">
+            <div class="space">
               <CVProcessStep1 @update:firstName="updateFirstName" @update:lastName="updateLastName"
                 @update:phone="updatePhone" @update:email="updateEmail" @update:country="updateCountry"
                 :selectedCountry="selectedCountry"></CVProcessStep1>
             </div>
-            <div class="flex pt-4 justify-content-end">
+            <div class="buttons">
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
             </div>
           </template>
@@ -31,10 +31,10 @@
             </Button>
           </template>
           <template #content="{ prevCallback, nextCallback }">
-            <div class="flex flex-column h-12rem">
+            <div class="space">
               <CVProcessStep2 @update:selectedColor="logCubeColor"></CVProcessStep2>
             </div>
-            <div class="flex pt-4 justify-content-between">
+            <div class="buttons">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
             </div>
@@ -47,10 +47,10 @@
             </Button>
           </template>
           <template #content="{ prevCallback, nextCallback }">
-            <div class="flex flex-column h-12rem">
+            <div class="space">
               <CVProcessStep3></CVProcessStep3>
             </div>
-            <div class="flex pt-4 justify-content-between">
+            <div class="buttons">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
             </div>
@@ -63,10 +63,10 @@
             </Button>
           </template>
           <template #content="{ prevCallback }">
-            <div class="flex flex-column h-12rem">
+            <div class="space">
               <CVProcessStep4 @videoUploaded="handleVideoData"></CVProcessStep4>
             </div>
-            <div class="flex pt-4 justify-content-between">
+            <div class="buttons">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
               <Button label="Complete" @click="completeCV"></Button>
 
@@ -97,11 +97,11 @@ export default {
     CVProcessStep4,
   },
   setup() {
-    const router = useRouter(); 
+    const router = useRouter();
 
     const sendDataToDatabase = () => {
-    // this is called when the complete button is pressed
-    // you can send the data to the db here @jia
+      // this is called when the complete button is pressed
+      // you can send the data to the db here @jia
     };
 
     const completeCV = async () => {
@@ -189,6 +189,14 @@ export default {
   align-items: center;
 }
 
+.space {
+  padding: 1rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
 
 :deep .p-stepper .p-stepper-panels {
   width: 100dvh;

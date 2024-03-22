@@ -10,19 +10,19 @@
                 <div class="face left" style="background: #BDCBFD;"></div>
             </div>
             <!-- Cube 2 -->
-            <div class="cube"  @click="selectCube('purple')" :class="{ 'selected': selectedColor === 'purple' }">
+            <div class="cube" @click="selectCube('purple')" :class="{ 'selected': selectedColor === 'purple' }">
                 <div class="face front" style="background: #8865E1;"></div>
                 <div class="face top" style="background: #B193FC;"></div>
                 <div class="face left" style="background: #CFBDFD;"></div>
             </div>
             <!-- Cube 3 -->
-            <div class="cube"  @click="selectCube('green')" :class="{ 'selected': selectedColor === 'green' }">
+            <div class="cube" @click="selectCube('green')" :class="{ 'selected': selectedColor === 'green' }">
                 <div class="face front" style="background: #80E165;"></div>
                 <div class="face top" style="background: #AAFC93;"></div>
                 <div class="face left" style="background: #CBFDBD;"></div>
             </div>
             <!-- Cube 4 -->
-            
+
             <div class="cube" @click="selectCube('pink')" :class="{ 'selected': selectedColor === 'pink' }">
                 <div class="face front" style="background: #E165BE;"></div>
                 <div class="face top" style="background: #FC93DE;"></div>
@@ -41,19 +41,19 @@
                 <div class="face left" style="background: #FDEFBD;"></div>
             </div>
             <!-- Cube 7 -->
-            <div class="cube"  @click="selectCube('orange')" :class="{ 'selected': selectedColor === 'orange' }">
+            <div class="cube" @click="selectCube('orange')" :class="{ 'selected': selectedColor === 'orange' }">
                 <div class="face front" style="background: #E18865;"></div>
                 <div class="face top" style="background: #FCB193;"></div>
                 <div class="face left" style="background: #FDCFBD;"></div>
             </div>
             <!-- Cube 8 -->
-            <div class="cube"  @click="selectCube('red')" :class="{ 'selected': selectedColor === 'red' }">
+            <div class="cube" @click="selectCube('red')" :class="{ 'selected': selectedColor === 'red' }">
                 <div class="face front" style="background: #E16580;"></div>
                 <div class="face top" style="background: #FC93AA;"></div>
                 <div class="face left" style="background: #FDBDCB;"></div>
             </div>
             <!-- Cube 9 -->
-            <div class="cube"  @click="selectCube('cyan')" :class="{ 'selected': selectedColor === 'cyan' }">
+            <div class="cube" @click="selectCube('cyan')" :class="{ 'selected': selectedColor === 'cyan' }">
                 <div class="face front" style="background: #65BEE1;"></div>
                 <div class="face top" style="background: #93DEFC;"></div>
                 <div class="face left" style="background: #BDEBFD;"></div>
@@ -70,21 +70,24 @@ const selectedColor = ref(null);
 const emit = defineEmits(['update:selectedColor']);
 
 const selectCube = (color) => {
-  if (selectedColor.value === color) {
-    selectedColor.value = null;
-  } else {
-    selectedColor.value = color;
-    emit('update:selectedColor', selectedColor.value);
-  }
+    if (selectedColor.value === color) {
+        selectedColor.value = null;
+    } else {
+        selectedColor.value = color;
+        emit('update:selectedColor', selectedColor.value);
+    }
 };
 </script>
 
 <style scoped>
 .cube.selected {
-  border: 7px solid #ffffff; 
+    border: 7px solid #ffffff;
 }
+
 .center {
-    margin-left: 12%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title {
@@ -93,7 +96,6 @@ const selectCube = (color) => {
     align-items: center;
     padding: 1rem;
 }
-
 
 .cube-grid {
     display: grid;
@@ -140,19 +142,6 @@ const selectCube = (color) => {
 }
 
 @media only screen and (max-width: 768px) {
-
-    .p-float-label input {
-        width: 100%;
-        margin: 0;
-        padding: 0.8rem;
-    }
-
-    .p-dropdown {
-        width: 80%;
-        margin-left: 10%;
-        padding: 0.4rem;
-    }
-
     .cube-grid {
         gap: 3.5rem;
         margin: 2rem;

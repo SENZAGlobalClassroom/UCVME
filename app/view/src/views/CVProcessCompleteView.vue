@@ -36,7 +36,7 @@ const goToHomePage= () => {
 }
 
 .p-button {
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 25px;
 }
 
@@ -53,57 +53,14 @@ const goToHomePage= () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 80vh;
 }
 
-.congratulations-image {
-    max-width: 40%;
-    margin-top: 2rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
-
+.congratulations-image{
+    max-width: 60dvw;
 }
 
-@media only screen and (max-width: 1200px) {
-    .p-button {
-        padding: 1rem;
-        border-radius: 25px;
-    }
 
 
-    .congratulations-image {
-        max-width: 70%;
-        margin-top: 5rem;
-        margin-left: 0rem;
-        margin-right: 0rem;
-
-    }
-
-    .complete-container {
-        height: 77vh;
-    }
-}
-
-@media only screen and (max-width: 800px) {
-    .p-button {
-        padding: 1rem;
-        border-radius: 25px;
-    }
-
-
-    .congratulations-image {
-        max-width: 100%;
-        margin-top: 10rem;
-        margin-left: 0rem;
-        margin-right: 0rem;
-
-    }
-
-    .complete-container {
-        height: 75vh;
-    }
-}
 
 // Credits to Heather Allem ( Wilcox ) https://codepen.io/hmaw/pen/qBEMLxV for the firework animation
 $particles: 50;

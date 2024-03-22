@@ -1,42 +1,33 @@
 <template>
     <h1 class="title"> Basic Information</h1>
     <div class="center">
-        <FloatLabel size="large">
-            <InputText id="firstname" v-model="firstname" class="InputText"
-                @input="$emit('update:firstName', $event.target.value)" />
-            <label for="firstname">First Name</label>
-        </FloatLabel>
-    </div>
+      
+            <FloatLabel>
+                <InputText id="firstname" v-model="firstname" class="InputText"
+                    @input="$emit('update:firstName', $event.target.value)" />
+                <label for="firstname">First Name</label>
+            </FloatLabel>
 
-    <div class="center">
-        <FloatLabel>
-            <InputText id="lastname" v-model="lastname" class="InputText"
-                @input="$emit('update:lastName', $event.target.value)" />
-            <label for="lastname">Last Name</label>
-        </FloatLabel>
-    </div>
+            <FloatLabel>
+                <InputText id="lastname" v-model="lastname" class="InputText"
+                    @input="$emit('update:lastName', $event.target.value)" />
+                <label for="lastname">Last Name</label>
+            </FloatLabel>
 
-    <div class="center">
-        <FloatLabel>
-            <InputMask id="phone" v-model="phone" mask="+999 999 9999" placeholder="(999) 999-9999"
-                @input="$emit('update:phone', $event.target.value)" />
-            <label for="phone">Phone Number</label>
-        </FloatLabel>
+            <FloatLabel>
+                <InputMask id="phone" v-model="phone" mask="+999 999 9999" placeholder="(999) 999-9999"
+                    @input="$emit('update:phone', $event.target.value)" />
+                <label for="phone">Phone Number</label>
+            </FloatLabel>
 
-    </div>
-
-    <div class="center">
-        <FloatLabel>
-            <InputText id="email" v-model="email" class="InputText" 
-            @input="$emit('update:email', $event.target.value)" />
-            <label for="email">Email</label>
-        </FloatLabel>
-    </div>
-
-    <div class="center">
+            <FloatLabel>
+                <InputText id="email" v-model="email" class="InputText"
+                    @input="$emit('update:email', $event.target.value)" />
+                <label for="email">Email</label>
+            </FloatLabel>
+    
         <Dropdown v-model="selectedCountry" :options="countries" filter optionLabel="name"
-            placeholder="Select a Country" class="w-full md:w-14rem" 
-            @change="$emit('update:country', $event.value)" >
+            placeholder="Select a Country" class="w-full md:w-14rem" @change="$emit('update:country', $event.value)">
             <template #value="slotProps">
                 <div v-if="slotProps.value" class="flex align-items-center">
                     <div>{{ slotProps.value.name }}</div>
@@ -81,47 +72,37 @@ const countries = ref([
 </script>
 
 <style scoped>
-.center {
-    margin-left: 15%;
-}
 
-.p-float-label input,
-.p-dropdown {
-
+.p-float-label input {
+    margin: 1rem 0;
     padding: 0.7rem;
-    width: 60dvh;
+    width: 40dvw;
 }
 
-.p-float-label,
 .p-dropdown {
-    margin: 2rem;
+    padding: 0.3rem;
+    width: 40dvw;
 }
-
 
 .title {
+    padding: 1rem;
+    text-align: center;
+}
+
+.center {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
 }
 
-
-@media only screen and (max-width: 768px) {
-
+@media only screen and (max-width: 600px) {
     .p-float-label input {
-        width: 100%;
-        margin: 0;
-        padding: 0.8rem;
-    }
+    width: 65dvw;
+}
 
-    .p-dropdown {
-        width: 80%;
-        margin-left: 10%;
-        padding: 0.4rem;
-    }
-
-    .center {
-        margin-left: 0%;
-    }
+.p-dropdown {
+    padding: 0.3rem;
+    width: 65dvw;
+}
 }
 </style>

@@ -12,28 +12,28 @@
                 </div>
             </template>
         </Dropdown>
-    </div>
 
-    <!-- Work Experience Form -->
-    <div v-for="(experience, index) in workExperiences" :key="index" class="experience-container flex justify-center">
-        <div class="experience-header">
-            <h2 style="padding-bottom: 3%;">Work Experience {{ index + 1 }}</h2>
-            <button @click="removeExperience(index)" class="remove-button"><i class="pi pi-times"
-                    style="font-size: 1.5rem"></i>
-            </button>
-        </div>
-        <div class="">
-            <InputText v-model="experience.jobTitle" placeholder="Job Title" class="input-field" />
-            <div class="center">
-                <Dropdown v-model="experience.selectedCategory" :options="jobCategories" filter optionLabel="label"
-                    placeholder="Select a Job Category" class="w-full md:w-14rem">
-                    <template #value="slotProps">
-                        <div v-if="slotProps.value" class="flex align-items-center">
-                            <div>{{ slotProps.value.label }}</div>
-                        </div>
-                    </template>
-                </Dropdown>
+        <!-- Work Experience Form -->
+        <div v-for="(experience, index) in workExperiences" :key="index"
+            class="experience-container flex justify-center">
+            <div class="experience-header">
+                <h2 style="padding-bottom: 3%;">Work Experience {{ index + 1 }}</h2>
+                <button @click="removeExperience(index)" class="remove-button"><i class="pi pi-times"
+                        style="font-size: 1.5rem"></i>
+                </button>
             </div>
+
+            <InputText v-model="experience.jobTitle" placeholder="Job Title" class="input-field" />
+
+            <Dropdown v-model="experience.selectedCategory" :options="jobCategories" filter optionLabel="label"
+                placeholder="Select a Job Category" class="w-full md:w-14rem">
+                <template #value="slotProps">
+                    <div v-if="slotProps.value" class="flex align-items-center">
+                        <div>{{ slotProps.value.label }}</div>
+                    </div>
+                </template>
+            </Dropdown>
+
             <div class="date-fields">
                 <Calendar v-model="experience.startDate" placeholder="Start Date" class="input-field"
                     style="margin-right: 1rem;" />
@@ -154,7 +154,9 @@ const removeExperience = (index) => {
 
 <style scoped>
 .center {
-    margin-left: 0%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .p-float-label input,
@@ -164,9 +166,10 @@ const removeExperience = (index) => {
 
 .p-float-label,
 .p-dropdown {
-    margin: 2rem;
-}
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 
+}
 
 .title {
     display: flex;
@@ -175,17 +178,10 @@ const removeExperience = (index) => {
     padding: 0.5rem;
 }
 
-
 .experience-container {
     margin: 11rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
-}
-
-.center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .input-field {
@@ -225,24 +221,10 @@ const removeExperience = (index) => {
 
 
 @media only screen and (max-width: 768px) {
-
-    .p-float-label input {
-        width: 90%;
-        margin: 0;
-        padding: 0.8rem;
-    }
-
-    .center {
-        margin-left: 0%;
-    }
-
-    .experience-container {
-        margin: 0rem;
-    }
-
     .p-float-label input,
-    .p-dropdown {
-        width: 39dvh;
-    }
+.p-dropdown {
+    width: 80dvw;
+}
+
 }
 </style>
