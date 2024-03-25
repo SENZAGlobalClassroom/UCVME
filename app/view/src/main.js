@@ -7,6 +7,8 @@ import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/aura-light-purple/theme.css'
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
 
 import Button from "primevue/button"
 import InputText from 'primevue/inputtext';
@@ -25,6 +27,10 @@ import Divider from 'primevue/divider';
 import ScrollPanel from 'primevue/scrollpanel';
 import Navbar from './components/Navbar.vue';
 import SpeedDial from 'primevue/speeddial';
+import Dialog from 'primevue/dialog';
+import ToggleButton from 'primevue/togglebutton';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 
 const app = createApp(App)
 
@@ -45,8 +51,14 @@ app.component('Divider', Divider);
 app.component('ScrollPanel', ScrollPanel);
 app.component('Navbar', Navbar);
 app.component('SpeedDial', SpeedDial);
+app.component('Dialog', Dialog);
+app.component('ToggleButton', ToggleButton);
+app.component('ConfirmDialog', ConfirmDialog);
+app.component('Toast', Toast);
 
 app.use(router)
 app.use(PrimeVue);
+app.use(ConfirmationService);
+app.use(ToastService);
 
 app.mount('#app')
