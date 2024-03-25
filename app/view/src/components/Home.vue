@@ -15,13 +15,13 @@ const toggleMenu = () => {
     <div class="navbar">
       <!-- Search Bar -->
       <div class="search-container">
-        <i class="fa fa-search search-icon"></i>
+        <i class="pi pi-search search-icon" style="color: black; font-size: 1rem"></i>
         <input type="text" placeholder="Search for users or jobs...">
       </div>
 
       <!-- Hamburger Menu Icon -->
       <div class="hamburger-menu" @click="toggleMenu">
-        <i class="fas fa-bars"></i>
+        <i class="pi pi-bars" style="color: black; font-size: 1.5rem"></i>
       </div>
 
       <!-- Dropdown Menu -->
@@ -36,7 +36,6 @@ const toggleMenu = () => {
     </div>
 
     <ScrollPanel style="width: 100%; height: 80dvh" class="posts-background">
-
       <div class="post-upload-container">
         <div class="post-upload-card">
           <div class="user-info">
@@ -87,7 +86,6 @@ const toggleMenu = () => {
   cursor: pointer;
   padding: 10px;
   order: 1;
-  /* Positions the menu icon first within the header */
   font-size: 30px;
 }
 
@@ -95,16 +93,13 @@ const toggleMenu = () => {
   position: relative;
   width: 35%;
   order: 2;
-  /* Adjusts the search container position */
 }
 
 
 .menu-content {
   display: none;
-  /* Hide by default */
   position: absolute;
   top: 100%;
-  /* Position it below the header */
   left: 0;
   background-color: white;
   width: 100%;
@@ -116,26 +111,16 @@ const toggleMenu = () => {
   display: block;
 }
 
-.menu-icon {
-  font-size: 24px;
-  /* Adjust icon size as needed */
-  cursor: pointer;
-  /* Add other styling as needed, such as padding, margins, etc. */
-}
-
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  /* Adjust as necessary to fit under your header */
   left: 0;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 200px;
-  /* Adjust as necessary */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1001;
-  /* Should be above other content */
 }
 
 .dropdown-menu ul {
@@ -233,7 +218,6 @@ const toggleMenu = () => {
   border-radius: 10px;
   padding: 20px;
   max-width: 600px;
-  /* Set a max-width for the card */
   margin: 20px;
   width: 100%;
   margin-top: 20px;
@@ -247,7 +231,6 @@ const toggleMenu = () => {
 
 .user-avatar {
   width: 50px;
-  /* Set the size of the avatar */
   height: 50px;
   border-radius: 50%;
 }
@@ -286,33 +269,24 @@ const toggleMenu = () => {
 
 .posts-background {
   background-color: rgba(255, 255, 255, 0.9);
-  /* Semi-transparent white */
   padding: 20px;
 }
 
 .post-upload-container+.post-upload-container {
   margin-top: 30px;
-  /* Space between posts */
 }
 
 .post-upload-container {
   display: flex;
   flex-direction: column;
-  /* This will stack the cards vertically */
   align-items: center;
-  /* Center the cards horizontally */
   padding-bottom: 20px;
-  /* Add space at the bottom of the container */
 }
 
 .post-upload-card {
   background-color: white;
-  /* ... other styles ... */
   margin-top: 20px;
-  /* Adds space between cards */
   width: 90%;
-  /* Adjust the width as desired */
   max-width: 600px;
-  /* Keeps the card width from getting too large */
 }
 </style>
