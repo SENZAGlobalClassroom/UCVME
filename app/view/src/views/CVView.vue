@@ -23,6 +23,7 @@
       </template>
     </Card>
   </div>
+  <Navbar></Navbar>
 </template>
 
 <script setup>
@@ -63,10 +64,6 @@ const workExperiences = ref([
 const videoUrl = video
 
 const router = useRouter();
-
-const goToHomePage = () => {
-  router.push({ name: 'Home' });
-};
 
 </script>
 

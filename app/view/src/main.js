@@ -23,6 +23,7 @@ import Chips from 'primevue/chips';
 import Calendar from 'primevue/calendar';
 import Divider from 'primevue/divider';
 import ScrollPanel from 'primevue/scrollpanel';
+import Navbar from './components/Navbar.vue';
 
 const app = createApp(App)
 
@@ -41,6 +42,7 @@ app.component('Chips', Chips);
 app.component('Calendar', Calendar);
 app.component('Divider', Divider);
 app.component('ScrollPanel', ScrollPanel);
+app.component('Navbar', Navbar);
 
 app.use(router)
 app.use(PrimeVue);

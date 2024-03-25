@@ -1,6 +1,6 @@
 <script setup>
 import Home from '@/components/Home.vue';
-import Footer from '@/components/Footer.vue';
+
 </script>
 
 <template scoped>
@@ -8,4 +8,5 @@ import Footer from '@/components/Footer.vue';
     <title>UCVME Home</title>
   </head>
     <Home />
+    <Navbar></Navbar>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="d-flex">
-      <RouterLink to="/" class="nav-item nav-link active">
+      <RouterLink to="/">
         <i class="pi pi-home"  style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
       <RouterLink to="/about">
@@ -10,10 +10,10 @@
       <RouterLink to="/add-post">
         <i class="pi pi-plus" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
-      <RouterLink to="/likes" class="nav-item nav-link">
+      <RouterLink to="/likes">
         <i class="pi pi-heart" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
-      <RouterLink to="/profile" class="nav-item nav-link">
+      <RouterLink to="/profile">
         <i class="pi pi-user" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
     </div>
