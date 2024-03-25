@@ -24,6 +24,7 @@ import Calendar from 'primevue/calendar';
 import Divider from 'primevue/divider';
 import ScrollPanel from 'primevue/scrollpanel';
 import Navbar from './components/Navbar.vue';
+import SpeedDial from 'primevue/speeddial';
 
 const app = createApp(App)
 
@@ -43,6 +44,7 @@ app.component('Calendar', Calendar);
 app.component('Divider', Divider);
 app.component('ScrollPanel', ScrollPanel);
 app.component('Navbar', Navbar);
+app.component('SpeedDial', SpeedDial);
 
 app.use(router)
 app.use(PrimeVue);

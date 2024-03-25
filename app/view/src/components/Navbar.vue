@@ -13,7 +13,7 @@
       <RouterLink to="/likes">
         <i class="pi pi-heart" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
-      <RouterLink to="/profile">
+      <RouterLink to="/CVUsername">
         <i class="pi pi-user" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
     </div>
