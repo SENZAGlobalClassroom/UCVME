@@ -9,6 +9,7 @@ import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/aura-light-purple/theme.css'
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
+import VueTypes from 'vue-types';
 
 import Button from "primevue/button"
 import InputText from 'primevue/inputtext';

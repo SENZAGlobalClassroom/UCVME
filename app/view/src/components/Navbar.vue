@@ -4,7 +4,7 @@
       <RouterLink to="/">
         <i class="pi pi-home"  style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
-      <RouterLink to="/about">
+      <RouterLink to="/wallet">
         <i class="pi pi-wallet" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
       <RouterLink to="/add-post">
