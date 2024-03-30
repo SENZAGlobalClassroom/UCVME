@@ -31,7 +31,7 @@
     height: 100vh;
     padding-top: 0;
 
-    background-image: url('@/assets/Pastel_11.png'), url('@/assets/Pastel_12.png');
+    background-image: url('@/assets/Pastel_12.png');
     background-position: left center, right center;
     background-repeat: no-repeat, no-repeat;
     background-size: cover;
