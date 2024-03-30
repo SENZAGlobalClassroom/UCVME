@@ -80,6 +80,7 @@ const toggleMenu = () => {
 .navbar {
   display: flex;
   justify-content: space-between;
+  position: relative; /* added this to fix the hamburger menu*/
 }
 
 .hamburger-menu {
