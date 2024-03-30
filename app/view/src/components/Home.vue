@@ -156,9 +156,9 @@ const toggleMenu = () => {
 }
 
 .posts-background {
-  background-color: rgba(250, 250, 250, 0.578);
+  background-color: rgba(255, 255, 255, 0.9); 
   width: 100%;
-  padding: 3rem;
+  padding: 20px;
   border-radius: 25px;
 }
 
@@ -199,7 +199,7 @@ const toggleMenu = () => {
   position: absolute;
   left: 16px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-75%);
   color: #495057;
   z-index: 10;
   margin-top: 1%;
@@ -268,10 +268,6 @@ const toggleMenu = () => {
   color: white;
 }
 
-.posts-background {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 20px;
-}
 
 .post-upload-container+.post-upload-container {
   margin-top: 30px;
