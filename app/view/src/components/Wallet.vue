@@ -114,14 +114,14 @@ const saveChanges = () => {
     const newName = editCollectionName.value.trim();
     if (newName) {
         emit('update-collection', { id: editingCollectionId.value, name: newName });
-        toast.add({ severity: 'success', summary: 'Success', detail: 'Collection updated' });
+        toast.add({ severity: 'success', summary: 'Success', detail: 'Collection updated',life: 3000 });
     }
     showEditDialog.value = false;
 };
 
 const deleteCollection = () => {
     emit('delete-collection', editingCollectionId.value);
-    toast.add({ severity: 'success', summary: 'Success', detail: 'Collection deleted' });
+    toast.add({ severity: 'success', summary: 'Success', detail: 'Collection deleted',life: 3000 });
     showEditDialog.value = false;
 };
 
@@ -153,7 +153,7 @@ const deleteCollection = () => {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    min-width: 15dvw;
+    min-width: 18dvw;
 }
 
 .collection:hover {
@@ -171,7 +171,7 @@ const deleteCollection = () => {
 
 .primary {
     flex: 1;
-    height: 15rem;
+    height: 10rem;
 }
 
 .side-images {
@@ -244,28 +244,39 @@ const deleteCollection = () => {
     }
 
     .collection {
-        min-width: 20dvw;
+        min-width: 24dvw;
     }
 
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .collections-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
     .collection {
-        min-width: 30dvw;
+        min-width: 38dvw;
+    }
+
+}
+
+@media (max-width: 700px) {
+    .collections-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .collection {
+        min-width: 45dvw;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 468px) {
     .collections-grid {
         grid-template-columns: repeat(1, 1fr);
     }
 
     .collection {
-        min-width: 50dvw;
+        min-width: 90dvw;
     }
 }
 </style>
