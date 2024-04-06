@@ -5,7 +5,6 @@ import SignUpView from '../views/SignUpView.vue'
 import CVProcessCompleteView from '../views/CVProcessCompleteView.vue'
 import CV from '../views/CVView.vue'
 import WalletView from '../views/WalletView.vue'
-import HelpView from '@/views/HelpView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,11 +43,6 @@ const router = createRouter({
       path: '/wallet',
       name: 'WalletView',
       component: WalletView
-    },
-    {
-      path: '/help',
-      name: 'HelpView',
-      component: HelpView
     },
     // {
     //   path: '/about',

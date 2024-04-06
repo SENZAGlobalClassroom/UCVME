@@ -177,7 +177,7 @@ export default {
 .gray-background {
   padding: 1rem;
   background-color: #ededed98;
-  background-image: url('@/assets/Pastel_11.png');
+  background-image: url('@/assets/Pastel_9.png');
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;

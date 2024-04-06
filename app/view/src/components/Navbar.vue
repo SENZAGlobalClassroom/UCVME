@@ -7,7 +7,7 @@
       <RouterLink to="/wallet">
         <i class="pi pi-wallet" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
-      <RouterLink to="/add-post">
+      <RouterLink to="/addpost">
         <i class="pi pi-plus" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
       <RouterLink to="/likes">

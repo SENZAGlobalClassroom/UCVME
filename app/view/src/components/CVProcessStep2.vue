@@ -106,11 +106,11 @@ const selectCube = (color) => {
 
 .cube {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     transform-style: preserve-3d;
     transform: rotateX(-30deg) rotateY(45deg);
-    transition: transform 2s ease-in-out;
+    transition: transform 1.5s ease-in-out;
 }
 
 .face {
@@ -126,15 +126,15 @@ const selectCube = (color) => {
 }
 
 .front {
-    transform: translateZ(50px);
+    transform: translateZ(40px);
 }
 
 .top {
-    transform: rotateX(90deg) translateZ(50px);
+    transform: rotateX(90deg) translateZ(40px);
 }
 
 .left {
-    transform: rotateY(-90deg) translateZ(50px);
+    transform: rotateY(-90deg) translateZ(40px);
 }
 
 .cube:hover {
