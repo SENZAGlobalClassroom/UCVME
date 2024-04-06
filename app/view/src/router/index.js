@@ -5,7 +5,8 @@ import SignUpView from '../views/SignUpView.vue'
 import CVProcessCompleteView from '../views/CVProcessCompleteView.vue'
 import CV from '../views/CVView.vue'
 import WalletView from '../views/WalletView.vue'
-import HelpView from '@/views/HelpView.vue'
+import HelpView from '../views/HelpView.vue'
+import SettingView from '../views/SettingView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +51,11 @@ const router = createRouter({
       name: 'HelpView',
       component: HelpView
     },
+    {
+      path: '/settings',
+      name: 'SettingView',
+      component: SettingView
+    }
     // {
     //   path: '/about',
     //   name: 'about',
