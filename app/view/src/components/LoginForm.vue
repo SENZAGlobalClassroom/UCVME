@@ -7,9 +7,10 @@
       </div>
       <div class="form-group">
         <input type="password" id="password" v-model="password" placeholder="Password" required>
+        <br>
         <div class="actions">
           <label class="checkbox-container">
-            Remember me
+            <p>Remember me</p>
             <input type="checkbox" v-model="rememberMe">
             <span class="checkmark"></span>
           </label>
@@ -35,7 +36,11 @@
     },
     methods: {
       onSubmit() {
-        console.log('Form submitted:', this.username, this.password, this.rememberMe);
+        this.$emit('submit-form', {
+          username: this.username,
+          password: this.password,
+          rememberMe: this.rememberMe
+        });
       }
     }
   };
@@ -62,12 +67,14 @@
   }
 
   .form-group input {
-    width: calc(100% - 20px);
+    width: calc(100% - 60px); 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 10px;
-  }
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    }
 
   .actions {
     display: flex;
@@ -131,31 +138,28 @@
     transform: rotate(45deg);
   }
 
-  .login-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
+  .login-form button {
+    width: calc(100% - 60px);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     padding: 10px 20px;
-    border-radius: 4px;
-    width: 100%;
-  }
-
-  .login-button:hover {
-    background-color: #2980b9;
-  }
-
-  .google-sign-in {
-    background-color: #db4437;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    width: 100%;
+    border-radius: 5px;
     margin-top: 10px;
   }
 
+  .login-form button:hover {
+    background: #e5e5e5;
+  }
+
+  .google-sign-in {
+    background: #435efa;
+    border-color: #435efa;
+    color: #fff;
+  }
+
   .google-sign-in:hover {
-    background-color: #c1351d;
+    background: #3b4d91 !important;
   }
 
   .signup-link, .separator {
@@ -164,7 +168,9 @@
   }
 
   .forgot-password {
+    font-size: 12px;
     color: #3498db;
+    padding-bottom: 10px;
     text-decoration: none;
   }
 

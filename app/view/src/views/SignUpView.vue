@@ -3,7 +3,7 @@
     <TopBarFirstTime />
 
     <div class="form-container">
-      <SignUpForm @submit="handleSignUp" />
+      <SignUpForm @submit-form="handleSignUp" />
     </div>
     <Footer />
 
@@ -17,6 +17,9 @@ import Footer from '@/components/Footer.vue';
 
 const handleSignUp = (credentials) => {
   console.log('Sign-up credentials:', credentials);
+
+  // Here you can send the credentials to the server
+  // For now, we will just log them
 };
 </script>
 
@@ -46,8 +49,10 @@ const handleSignUp = (credentials) => {
   align-items: center;
 }
 
-
 .top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,6 +66,11 @@ const handleSignUp = (credentials) => {
 
 .globe-icon {
   font-size: 2rem; 
+}
+
+footer {
+  position: fixed;
+  bottom: 2rem;
 }
 
 @media (max-width: 600px) {

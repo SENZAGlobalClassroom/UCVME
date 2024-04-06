@@ -3,7 +3,7 @@
     <TopBarFirstTime />
 
     <div class="form-container">
-      <LoginForm @submit="handleLogin" />
+      <LoginForm @submit-form="handleLogin" />
     </div>
     
     <Footer />
@@ -18,6 +18,9 @@
 
   const handleLogin = (credentials) => {
     console.log('Login credentials:', credentials);
+
+    // Send the credentials to the server
+    // For now, just log the credentials to the console
   };
 </script>
 
@@ -50,11 +53,14 @@
   }
 
   .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
   }
 
   .logo {
@@ -63,6 +69,11 @@
 
   .globe-icon {
     font-size: 2rem; 
+  }
+
+  footer {
+    position: fixed;
+    bottom: 2rem;
   }
 
   @media (max-width: 600px) {
