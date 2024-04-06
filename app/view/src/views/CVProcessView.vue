@@ -8,7 +8,7 @@
     <div class="centered">
       <Stepper linear>
         <StepperPanel>
-          <template #header=>
+          <template #header=> 
             <Button>
               <i class="pi pi-user" />
             </Button>
