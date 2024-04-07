@@ -7,6 +7,7 @@ import CV from '../views/CVView.vue'
 import WalletView from '../views/WalletView.vue'
 import HelpView from '../views/HelpView.vue'
 import SettingView from '../views/SettingView.vue'
+import LikesView from '../views/LikesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,6 +56,11 @@ const router = createRouter({
       path: '/settings',
       name: 'SettingView',
       component: SettingView
+    }, 
+    {
+      path: '/likes',
+      name: 'LikesView',
+      component: LikesView
     }
     // {
     //   path: '/about',
