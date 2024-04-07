@@ -1,17 +1,20 @@
+<script setup>
+import { likedPosts } from '@/store'; // Importing the reactive likedPosts reference
+console.log(likedPosts.value); // Add this line
+</script>
+
+
 <template>
     <div>
       <h1>My Likes</h1>
-      <!-- Add the content and structure of your likes page here -->
+      <div v-for="post in likedPosts" :key="post.id">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.description }}</p>
+      </div>
     </div>
   </template>
-  
-  <script>
-  export default {
-    name: 'Likes',
-    // any script you need for this page
-  }
-  </script>
-  
-  <style scoped>
-    /* Add the styles for your likes page here */
-  </style>
+
+
+<style scoped>
+  /* Add the styles for your likes page here */
+</style>

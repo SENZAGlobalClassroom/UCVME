@@ -3,10 +3,26 @@ import { RouterLink, RouterView } from 'vue-router'
 
 import { ref } from 'vue'
 
+import { likedPosts } from '@/store';
+
 const isMenuVisible = ref(false)
 
 const toggleMenu = () => {
   isMenuVisible.value = !isMenuVisible.value
+}
+
+const posts = ref([
+  // Presumably fetched from an API
+  { id: 1, title: 'Looking for a gardener', description: 'Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.' },
+  // ... other posts
+]);
+
+function likePost(post) {
+  if (!likedPosts.value.some(likedPost => likedPost.id === post.id)) {
+    likedPosts.value.push(post);
+    console.log('Post liked:', post);
+    console.log('All liked posts:', likedPosts.value);
+  }
 }
 </script>
 
@@ -49,7 +65,13 @@ const toggleMenu = () => {
               <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.</p>
             </div>
             <div class="post-actions">
-              <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
+              <div>
+                <div v-for="post in posts" :key="post.id">
+                  <!-- <h2>{{ post.title }}</h2> -->
+                  <!-- <p>{{ post.description }}</p> -->
+                  <button @click="likePost(post)">Save Post</button>
+                </div>
+              </div>
               <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
             </div>
           </div>
@@ -68,7 +90,13 @@ const toggleMenu = () => {
               <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.</p>
             </div>
             <div class="post-actions">
-              <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
+              <div>
+                <div v-for="post in posts" :key="post.id">
+                  <!-- <h2>{{ post.title }}</h2> -->
+                  <!-- <p>{{ post.description }}</p> -->
+                  <button @click="likePost(post)">Save Post</button>
+                </div>
+              </div>
               <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
             </div>
           </div>
@@ -80,6 +108,8 @@ const toggleMenu = () => {
     </ScrollPanel>
   </div>
 </template>
+
+
 
 <style scoped>
 .navbar {
