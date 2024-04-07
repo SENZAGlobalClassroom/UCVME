@@ -15,13 +15,13 @@ const toggleMenu = () => {
     <div class="navbar">
       <!-- Search Bar -->
       <div class="search-container">
-        <i class="pi pi-search search-icon" style="color: black; font-size: 1rem"></i>
+        <i class="pi pi-search search-icon"></i>
         <input type="text" placeholder="Search for users or jobs...">
       </div>
 
       <!-- Hamburger Menu Icon -->
       <div class="hamburger-menu" @click="toggleMenu">
-        <i class="pi pi-bars" style="color: black; font-size: 1.5rem"></i>
+        <i class="pi pi-bars"></i>
       </div>
 
       <!-- Dropdown Menu -->
@@ -32,45 +32,50 @@ const toggleMenu = () => {
           <li><a href="#">Option 3</a></li>
         </ul>
       </div>
-
     </div>
 
     <ScrollPanel style="width: 100%; height: 80dvh" class="posts-background">
       <div class="post-upload-container">
         <div class="post-upload-card">
-          <div class="user-info">
-            <img class="user-avatar" src="@/assets/Pastel_1.png" alt="User Avatar" />
-            <h3 class="user-name">Jane Kim</h3>
-          </div>
-          <div class="post-content">
-            <h2>Looking for a gardener</h2>
-            <p>Needed for 22/04/2024, 16:00</p>
-            <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have
-              bought. Swipe for pictures of my garden and how I want it to look like.</p>
-            <!-- Swipe for pictures if necessary -->
-          </div>
-          <div class="post-actions">
-            <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
-            <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
+          <video class="user-video" autoplay loop muted>
+            <source src="@/assets/test1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <h3 class="user-name">Jane Kim</h3>
+          <div class="post-details-actions">
+            <div class="post-content">
+              <h2>Looking for a gardener</h2>
+              <p>Needed for 22/04/2024, 16:00</p>
+              <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.</p>
+            </div>
+            <div class="post-actions">
+              <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
+              <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
+            </div>
           </div>
         </div>
-        <!-- Second post -->
+
         <div class="post-upload-card">
-          <div class="user-info">
-            <img class="user-avatar" src="@/assets/Pastel_2.png" alt="User Avatar" />
-            <h3 class="user-name">John Doe</h3>
-          </div>
-          <div class="post-content">
-            <h2>Need a Math Tutor</h2>
-            <p>Urgent requirement for my son's exam preparation</p>
-            <p>Looking for an experienced math tutor for my son who is preparing for his final exams. He needs help in
-              calculus and algebra. Sessions needed for the upcoming three weekends.</p>
-          </div>
-          <div class="post-actions">
-            <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
-            <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
+          <video class="user-video" autoplay loop muted>
+            <source src="@/assets/test1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <h3 class="user-name">Jane Kim</h3>
+          <div class="post-details-actions">
+            <div class="post-content">
+              <h2>Looking for a gardener</h2>
+              <p>Needed for 22/04/2024, 16:00</p>
+              <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.</p>
+            </div>
+            <div class="post-actions">
+              <button class="save-post"><i class="far fa-heart"></i> Save Post</button>
+              <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
+            </div>
           </div>
         </div>
+
+
+        <!-- ... additional posts ... -->
       </div>
     </ScrollPanel>
   </div>
@@ -214,6 +219,8 @@ const toggleMenu = () => {
 }
 
 .post-upload-card {
+  display: flex;
+  align-items: stretch;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -234,10 +241,23 @@ const toggleMenu = () => {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover; /* Ensures the video covers the area without stretching. */
 }
 
 .user-name {
-  font-size: 1.5rem;
+  font-size: small;
+  position: absolute;
+  margin: 5px;
+  color: black;
+  padding: 0.5em;
+  border-radius: 5px;
+  z-index: 2; /* Make sure it's above the video layer */
+  transform: translateY(-100%); /* Shift it up by its own height */
+}
+
+.user-video-container {
+  position: relative;
+  flex: 1; /* Adjust the flex value to match the desired width of the video */
 }
 
 .post-content h2 {
@@ -281,9 +301,26 @@ const toggleMenu = () => {
 }
 
 .post-upload-card {
-  background-color: white;
-  margin-top: 20px;
-  width: 90%;
-  max-width: 600px;
+  display: flex;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  align-items: stretch; /* Ensure the children stretch to fill the card */
+}
+
+.user-video {
+  height: auto;
+  width: 50%; /* Half the width of the post-upload-card */
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  object-fit: cover;
+}
+
+.post-details-actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px; /* Add padding to match the video side */
 }
 </style>
