@@ -12,9 +12,21 @@ const toggleMenu = () => {
 }
 
 const posts = ref([
-  // Presumably fetched from an API
-  { id: 1, title: 'Looking for a gardener', description: 'Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.' },
-  // ... other posts
+  { 
+    id: 1, 
+    name: 'Jane Kim',
+    title: 'Looking for a gardener', 
+    date: 'Needed for 22/04/2024, 16:00', 
+    description: 'Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.' 
+  },
+  { 
+    id: 2, 
+    name: 'Hoexeng Park',
+    title: 'Tutor Needed for High School Math', 
+    date: 'Starting May 2024', 
+    description: 'Seeking an experienced math tutor for my high schooler, focusing on algebra and geometry. Preferably twice a week after school hours. Looking for someone patient and engaging.' 
+  }
+  // Add more posts here as needed
 ]);
 
 function likePost(post) {
@@ -57,20 +69,16 @@ function likePost(post) {
             <source src="@/assets/test1.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <h3 class="user-name">Jane Kim</h3>
+          <h3 class="user-name">{{ posts[0].name }}</h3>
           <div class="post-details-actions">
             <div class="post-content">
-              <h2>Looking for a gardener</h2>
-              <p>Needed for 22/04/2024, 16:00</p>
-              <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.</p>
+              <h2>{{ posts[0].title }}</h2>
+              <p>{{ posts[0].date }}</p>
+              <p>{{ posts[0].description }}</p>
             </div>
             <div class="post-actions">
               <div>
-                <div v-for="post in posts" :key="post.id">
-                  <!-- <h2>{{ post.title }}</h2> -->
-                  <!-- <p>{{ post.description }}</p> -->
-                  <button @click="likePost(post)">Save Post</button>
-                </div>
+                <button @click="likePost(posts[0])">Save Post</button>
               </div>
               <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
             </div>
@@ -82,27 +90,21 @@ function likePost(post) {
             <source src="@/assets/test1.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <h3 class="user-name">Jane Kim</h3>
+          <h3 class="user-name">{{ posts[1].name }}</h3>
           <div class="post-details-actions">
             <div class="post-content">
-              <h2>Looking for a gardener</h2>
-              <p>Needed for 22/04/2024, 16:00</p>
-              <p>Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.</p>
+              <h2>{{ posts[1].title }}</h2>
+              <p>{{ posts[1].date }}</p>
+              <p>{{ posts[1].description }}</p>
             </div>
             <div class="post-actions">
               <div>
-                <div v-for="post in posts" :key="post.id">
-                  <!-- <h2>{{ post.title }}</h2> -->
-                  <!-- <p>{{ post.description }}</p> -->
-                  <button @click="likePost(post)">Save Post</button>
-                </div>
+                <button @click="likePost(posts[1])">Save Post</button>
               </div>
               <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
             </div>
           </div>
         </div>
-
-
         <!-- ... additional posts ... -->
       </div>
     </ScrollPanel>
