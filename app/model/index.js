@@ -1,8 +1,8 @@
 // model/index.js
-var registerModel = require('./register');
+var signupModel = require('./signup');
 var loginModel = require('./login');
 
 module.exports = {
-    registerModel,
+    signupModel,
     loginModel
 };
