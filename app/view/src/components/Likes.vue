@@ -3,7 +3,6 @@ import { likedPosts } from '@/store'; // Importing the reactive likedPosts refer
 console.log(likedPosts.value);
 </script>
 
-
 <template>
   <div class="page-background">
     <h1>My Likes</h1>
@@ -12,10 +11,10 @@ console.log(likedPosts.value);
         <!-- Loop over likedPosts and create a card for each -->
         <div class="post-upload-card" v-for="post in likedPosts" :key="post.id">
           <!-- Video element -->
-          <video class="user-video" controls>
+          <!-- <video class="user-video" controls>
             <source :src="post.videoSource" type="video/mp4">
             Your browser does not support the video tag.
-          </video>
+          </video> -->
           <div class="post-details-actions">
             <h3 class="user-name">{{ post.name }}</h3>
             <div class="post-content">
@@ -23,7 +22,6 @@ console.log(likedPosts.value);
               <p>{{ post.date }}</p>
               <p>{{ post.description }}</p>
             </div>
-            <!-- You might want to remove the Apply button or change its function for the likes page -->
             <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
           </div>
         </div>
@@ -33,7 +31,6 @@ console.log(likedPosts.value);
 </template>
 
 <style scoped>
-/* The styles should be same or similar to the ones used in the home page for posts */
 .page-background {
   padding: 2rem;
   background-color: #ededed98;
@@ -47,6 +44,16 @@ console.log(likedPosts.value);
   width: 100%;
   padding: 20px;
   border-radius: 25px;
+}
+
+h1 {
+  font-size: 3em; /* Increase font size */
+  font-weight: bold; /* Make it bold */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5); /* Add shadow */
+  margin-bottom: 0.5em; /* Add more space below the title */
+  text-align: center; /* Center the title text */
+  width: 100%; /* Make sure it spans the width to center properly */
+  color: #4CAF50; /* Optional: Change color to match your design */
 }
 .post-upload-container {
   display: flex;
@@ -67,10 +74,9 @@ console.log(likedPosts.value);
   margin-top: 20px;
 }
 .user-name {
-  font-size: small;
-  margin: 5px;
+  font-size: medium;
   color: black;
-  padding: 0.5em;
+  padding-bottom: 1em;
   border-radius: 5px;
 }
 .user-video {
@@ -88,6 +94,7 @@ console.log(likedPosts.value);
   padding: 20px;
 }
 .apply-post {
+  margin-top: 2em; /* Space between apply post and text */
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -96,11 +103,4 @@ console.log(likedPosts.value);
   cursor: pointer;
 }
 
-.user-photo {
-  height: auto;
-  width: 50%;
-  border-radius: 10px; /* Adjust if you want rounded corners for your images */
-  object-fit: cover; /* Cover might work better for images to fill the area */
-}
-/* ... other styles ... */
 </style>

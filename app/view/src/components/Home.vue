@@ -17,7 +17,7 @@ const posts = ref([
     name: 'Jane Kim',
     title: 'Looking for a gardener', 
     date: 'Needed for 22/04/2024, 16:00', 
-    description: 'Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.' 
+    description: 'Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.'
   },
   { 
     id: 2, 
