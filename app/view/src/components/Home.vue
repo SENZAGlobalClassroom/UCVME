@@ -77,9 +77,9 @@ function likePost(post) {
               <p>{{ posts[0].description }}</p>
             </div>
             <div class="post-actions">
-              <div>
-                <button @click="likePost(posts[0])">Save Post</button>
-              </div>
+              <button class="save-post" @click="likePost(posts[0])">
+                <i class="pi pi-heart" style="margin-right: .5em;"></i> Save Post
+              </button>
               <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
             </div>
           </div>
@@ -98,9 +98,9 @@ function likePost(post) {
               <p>{{ posts[1].description }}</p>
             </div>
             <div class="post-actions">
-              <div>
-                <button @click="likePost(posts[1])">Save Post</button>
-              </div>
+              <button class="save-post" @click="likePost(posts[1])">
+                <i class="pi pi-heart" style="margin-right: .5em;"></i> Save Post
+              </button>
               <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
             </div>
           </div>
@@ -312,7 +312,20 @@ function likePost(post) {
 }
 
 .save-post {
-  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Change the color as needed */
+  color: #333; /* Change text color as needed */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-post:hover {
+  background-color: #e0e0e0; /* Change hover color as needed */
 }
 
 .apply-post {
