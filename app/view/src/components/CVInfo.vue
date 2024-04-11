@@ -1,5 +1,6 @@
 <template>
-    <div class="header-container">
+    <div class="wrapper">
+        <div class="header-container">
         <h1>{{ name }}</h1>
         <div>
             <SpeedDial :model="items" direction="down" showIcon="pi pi-ellipsis-v" hideIcon="pi pi-ellipsis-h"
@@ -16,6 +17,8 @@
                 :description="experience.description" :startDate="experience.startDate" :endDate="experience.endDate" />
         </ScrollPanel>
     </div>
+    </div>
+
 
     <!-- Share CV Popup -->
     <Dialog v-model:visible="sharingDialogue" modal header="Share CV" :style="{ width: '25rem' }">
@@ -143,6 +146,11 @@ const items = ref([
 </script>
 
 <style lang="scss" scoped>
+.wrapper{
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+}
 .center {
     display: flex;
     flex-direction: column;
@@ -151,7 +159,6 @@ const items = ref([
 }
 
 .header-container {
-    max-width: 74dvw;
     display: flex;
     justify-content: space-between;
     padding: 1rem;
@@ -159,21 +166,19 @@ const items = ref([
 
 .video-container {
     padding-top: 1rem;
-    padding-bottom: 2rem;
 }
+
 
 .work-experience-container {
     padding: 1.5rem;
-    min-width: 78dvw;
-    border-radius: 20px;
-    background-color: #d2dff3; //should be decided based on the colour the user picked
+    border-radius:  0px 0px 25px 25px;
+    background-color: #ebdbc2; //should be decided based on the colour the user picked
 }
 
 .scroll-panel {
     padding: 0.5rem;
     width: 100%;
     max-height: 50dvh;
-    max-width: 78dvw;
     overflow: auto;
 }
 
@@ -189,7 +194,7 @@ const items = ref([
 }
 
 .scroll-panel::-webkit-scrollbar-track {
-    background-color: #7998C8;
+    background-color: #756561;
     border-radius: 10px;
 }
 
@@ -215,7 +220,7 @@ const items = ref([
     .video-container {
         padding-top: 0rem;
         padding-bottom: 0.1rem;
-        min-width: 100dvw;
+        min-width: 90dvw;
     }
 
     :deep .p-card .p-card-body {
@@ -224,16 +229,11 @@ const items = ref([
 
     .work-experience-container {
         padding: 1.5rem;
-        min-width: 100dvw;
-        border-radius: 0px;
-        background-color: #d2dff3; //should be decided based on the colour the user picked
     }
 
     .scroll-panel {
-        padding: 0rem;
         width: 100%;
         max-height: 30dvh;
-        max-width: 100dvw;
     }
 
 }

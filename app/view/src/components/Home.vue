@@ -1,66 +1,107 @@
 <template>
-  <ScrollPanel style="width: 100%; height: 80dvh" class="posts-background">
-    <div class="post-upload-container">
-      <div class="post-upload-card">
-        <video class="user-video" autoplay loop muted>
-          <source src="@/assets/test1.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <h3 class="user-name">{{ posts[0].name }}</h3>
-        <div class="post-details-actions">
+  <div>
+    <Card class="card" v-for="post in posts" :key="post.id">
+      <template #header>
+        <div style="display: flex; align-items: center;">
+          <Avatar label="P" size="large" />
+          <h3 style="padding-left: 1rem;" class="user-name">{{ post.name }}</h3>
+        </div>
+      </template>
+      <template #content>
+        <div class="title">
+          <h2>{{ post.title }}</h2> <br>
+          <h4>{{ post.date }}</h4>
+        </div>
+        <br><br>
+        <div class="video-content">
+          <Galleria :value="images" :numVisible="3" containerStyle="max-width: 70dvh" :showThumbnails="false"
+            :showIndicators="true" :changeItemOnIndicatorHover="true">
+            <template #item="slotProps">
+              <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt"
+                style="width: 100%; display: block; border-radius: 25px;" />
+            </template>
+          </Galleria>
+        </div>
+        <div class="post-details">
           <div class="post-content">
-            <h2>{{ posts[0].title }}</h2>
-            <p>{{ posts[0].date }}</p>
-            <p>{{ posts[0].description }}</p>
-          </div>
-          <div class="post-actions">
-            <button class="save-post" @click="likePost(posts[0])">
-              <i class="pi pi-heart" style="margin-right: .5em;"></i> Save Post
-            </button>
-            <button class="apply-post">
-              <i class="pi pi-send"></i> Apply</button>
+            <p v-html="post.description" style="max-height: 40dvh; overflow-y: scroll;" class="scroll-panel"></p>
           </div>
         </div>
-      </div>
-
-      <div class="post-upload-card">
-        <video class="user-video" autoplay loop muted>
-          <source src="@/assets/test1.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <h3 class="user-name">{{ posts[1].name }}</h3>
-        <div class="post-details-actions">
-          <div class="post-content">
-            <h2>{{ posts[1].title }}</h2>
-            <p>{{ posts[1].date }}</p>
-            <p>{{ posts[1].description }}</p>
-          </div>
-          <div class="post-actions">
-            <button class="save-post" @click="likePost(posts[1])">
-              <i class="pi pi-heart" style="margin-right: .5em;"></i> Save Post
-            </button>
-            <button class="apply-post">
-              <i class="pi pi-send"></i> Apply</button>
-          </div>
+      </template>
+      <template #footer>
+        <div class="post-actions">
+          <Button label="&nbsp Like" @click="likePost(post)" icon="pi pi-heart" severity="secondary" text rounded
+            aria-label="Like" />
+          <Button label="&nbsp  Apply" icon="pi pi-send" severity="secondary" text rounded aria-label="Apply" />
         </div>
-      </div>
-      <!-- ... additional posts ... -->
-    </div>
-  </ScrollPanel>
+      </template>
+    </Card>
+  </div>
 </template>
 
 <script setup>
-import { RouterLink, RouterView, useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { likedPosts } from '@/store';
+
+// Test Data The images should come from db
+import cat3 from '@/assets/cat3.jpg';
+import cat1 from '@/assets/cat1.jpg';
+
+const PhotoService = {
+  getData() {
+    return [
+      {
+        itemImageSrc: cat3,
+        thumbnailImageSrc: cat3,
+        alt: 'Description for Image 1',
+        title: 'Title 1'
+      },
+      {
+        itemImageSrc: cat1,
+        thumbnailImageSrc: cat1,
+        alt: 'Description for Image 2',
+        title: 'Title 2'
+      }
+    ];
+  },
+  getImages() {
+    return Promise.resolve(this.getData());
+  }
+};
+
+onMounted(() => {
+  PhotoService.getImages().then((data) => (images.value = data));
+});
+
+// Test data by Mate, all these should come from db
+const images = ref();
 
 const posts = ref([
   {
     id: 1,
     name: 'Jane Kim',
-    title: 'Looking for a gardener',
+    title: 'Looking for a cat sitter',
     date: 'Needed for 22/04/2024, 16:00',
-    description: 'Hi, I am a mom of two and need someone to clean up the garden and plant some of the flowers I have bought. Swipe for pictures of my garden and how I want it to look like.'
+    description: "<strong>Job Description:</strong><br>" +
+      "Hey there! Are you someone who finds solace in the purrs of content kitties? We’re looking for a kind-hearted individual to pamper our two furry friends while we embark on a two-week adventure. If you're a cat whisperer who can make our fur babies feel like royalty, this gig is purr-fect for you!<br><br>" +
+      "<strong>Responsibilities:</strong><br>" +
+      "1. Feeding our cats with love and care, sticking to their meal schedules.<br>" +
+      "2. Ensuring their water bowls are topped up for hydration.<br>" +
+      "3. Keeping their litter boxes clean and cozy for their business.<br>" +
+      "4. Engaging them in playful antics and cuddle sessions to keep their spirits high.<br>" +
+      "5. If needed (though they're generally healthy fluff balls), administering any meds.<br>" +
+      "6. Sharing daily snapshots or updates to assure us they're thriving.<br>" +
+      "7. If you’re up for it, maybe water our plants and collect the mail (we’ll owe you big time!).<br><br>" +
+      "<strong>Requirements:</strong><br>" +
+      "1. A heart brimming with adoration for our furry pals.<br>" +
+      "2. Past experience as a cat's confidant would be paw-some!<br>" +
+      "3. Reliability that's as solid as a cat's nap schedule.<br>" +
+      "4. Willingness to follow our feline friends' routines to the whisker.<br>" +
+      "5. Your calendar should be clear for the whole two-week kitty cuddle fest.<br>" +
+      "6. Access to transportation to whisk you to our home for kitty care.<br><br>" +
+      "<strong>Compensation:</strong><br>" +
+      "Let's chat about what feels fair based on your experience and the TLC you'll be giving our kitties.<br><br>" +
+      "If you’re ready to dive into two weeks of purr-dise with our fur babies, drop us a line with a little about yourself and why you’re the cat’s meow for this job. References from fellow feline enthusiasts would make our whiskers twitch with excitement. Thanks a million!"
   },
   {
     id: 2,
@@ -69,7 +110,6 @@ const posts = ref([
     date: 'Starting May 2024',
     description: 'Seeking an experienced math tutor for my high schooler, focusing on algebra and geometry. Preferably twice a week after school hours. Looking for someone patient and engaging.'
   }
-  // Add more posts here as needed
 ]);
 
 function likePost(post) {
@@ -79,159 +119,105 @@ function likePost(post) {
     console.log('All liked posts:', likedPosts.value);
   }
 }
+
+function applyJob(post) {
+
+}
 </script>
 
 <style scoped>
-.posts-background {
-  background-color: rgba(255, 255, 255, 0.9);
+.panel {
   width: 100%;
-  padding: 20px;
-  border-radius: 25px;
+  height: 100dvh;
+  padding: 2em;
 }
 
-.apply-post {
-  background-color: #4CAF50;
-  color: white;
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.apply-post i {
-  margin-right: 5px;
+.card {
+  padding: 1rem;
+  margin: auto;
 }
 
-.post-upload-container {
+.post-card {
+  display: flex;
+  flex-direction: row;
+}
+
+.video-content {
+  float: left;
+  padding-right: 1rem;
+  max-width: 30dvw;
+  margin: 0 auto;
+}
+
+
+.post-details {
+  flex: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-  gap: 1rem;
 }
 
-.post-upload-card {
-  display: flex;
-  align-items: stretch;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  max-width: 600px;
-  margin: 20px;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  /* Ensures the video covers the area without stretching. */
-}
-
-.user-name {
-  font-size: small;
-  position: absolute;
-  margin: 5px;
-  color: black;
-  padding: 0.5em;
-  border-radius: 5px;
-  z-index: 2;
-  /* Make sure it's above the video layer */
-  transform: translateY(-100%);
-  /* Shift it up by its own height */
-}
-
-.user-video-container {
-  position: relative;
-  flex: 1;
-  /* Adjust the flex value to match the desired width of the video */
-}
-
-.post-content h2 {
-  font-size: 1.25rem;
-  color: #333;
+.post-content {
+  margin-bottom: 1rem;
 }
 
 .post-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-}
-
-.save-post,
-.apply-post {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.save-post {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f0f0f0;
-  /* Change the color as needed */
-  color: #333;
-  /* Change text color as needed */
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.save-post:hover {
-  background-color: #e0e0e0;
-  /* Change hover color as needed */
-}
-
-.apply-post {
-  background-color: #4CAF50;
-  color: white;
 }
 
 
-.post-upload-container+.post-upload-container {
-  margin-top: 30px;
+.scroll-panel::-webkit-scrollbar {
+  width: 6px;
 }
 
-.post-upload-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 20px;
-}
-
-.post-upload-card {
-  display: flex;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.scroll-panel::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
   border-radius: 10px;
-  overflow: hidden;
-  align-items: stretch;
-  /* Ensure the children stretch to fill the card */
+  background-clip: padding-box;
+  border: 2px solid transparent;
 }
 
-.user-video {
-  height: auto;
-  width: 50%;
-  /* Half the width of the post-upload-card */
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  object-fit: cover;
+.scroll-panel::-webkit-scrollbar-track {
+  background-color: #6d6d6d;
+  border-radius: 10px;
+}
+.video-content {
+  float: left;
+  padding-right: 1rem;
+  max-width: 30dvw;
+  margin: 0 auto;
 }
 
-.post-details-actions {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-  /* Add padding to match the video side */
+@media (max-width: 1024px) {
+  .video-content {
+  max-width: 50dvw;
+}
+
+}
+@media (max-width: 768px) {
+  .title {
+    display: inline;
+  }
+
+  .video-content {
+    float: none;
+    max-width: 100dvw;
+  }
+
+  .video-content,
+  .post-details {
+    max-width: 100%;
+  }
+
+  .video-content {
+    padding: 1rem;
+
+  }
 }
 </style>

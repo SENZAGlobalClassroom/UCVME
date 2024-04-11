@@ -34,6 +34,8 @@ import ToggleButton from 'primevue/togglebutton';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
 import Sidebar from 'primevue/sidebar';
+import Galleria from 'primevue/galleria';
+import Avatar from 'primevue/avatar';
 
 const app = createApp(App)
 
@@ -60,6 +62,8 @@ app.component('ConfirmDialog', ConfirmDialog);
 app.component('Toast', Toast);
 app.component('TopBar', TopBar);
 app.component('Sidebar', Sidebar);
+app.component('Galleria', Galleria);
+app.component('Avatar', Avatar);
 
 app.use(router)
 app.use(PrimeVue);

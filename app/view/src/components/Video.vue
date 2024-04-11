@@ -18,16 +18,12 @@ defineProps({
 </script>
 
 <style scoped>
-.video-player-container {
-  max-width: 60dvw;
-  margin: 0 auto;
-}
+
 
 .video-wrapper {
   position: relative;
   width: 100%;
   padding-top: 56.25%;
-  /* 16:9 Aspect Ratio */
 }
 
 .video-player {
@@ -40,17 +36,10 @@ defineProps({
 
 .video-player-container video {
   object-fit: cover !important;
-  border-radius: 20px !important;
+  border-radius:  25px 25px 0px 0px;
 }
 
 @media only screen and (max-width: 850px) {
-  .video-player-container {
-  max-width: 100dvw;
-  margin: 0 auto;
-}
-.video-player-container video {
-  object-fit: cover !important;
-  border-radius: 0px !important;
-}
+
 }
 </style>
