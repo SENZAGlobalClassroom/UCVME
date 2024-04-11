@@ -16,12 +16,18 @@ import Home from '@/components/Home.vue';
 </template>
 
 <style>
+.card-container {
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.808);
+    align-items: center;
+}
+
 .gray-background {
     padding-top: 2rem;
     padding-bottom: 2rem;
     padding-left: 10dvw;
     padding-right: 10dvw;
-    background-color: #edededa7;
+    background-color: #ededed98;
     background-image: url('@/assets/Pastel_13.png');
     background-size: cover;
     background-repeat: no-repeat;

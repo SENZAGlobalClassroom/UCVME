@@ -1,88 +1,55 @@
 <template>
-  <div class="login-view">
-    <TopBarFirstTime />
 
-    <div class="form-container">
-      <LoginForm @submit-form="handleLogin" />
-    </div>
-    
+  <div class="gray-background">
+    <TopBarFirstTime />
+    <Card class="card-container">
+      <template #content>
+        <LoginForm @submit-form="handleLogin" />
+      </template>
+    </Card>
     <Footer />
   </div>
 </template>
 
 
 <script setup>
-  import TopBarFirstTime from '@/components/topBarFirstTime.vue';
-  import LoginForm from '@/components/LoginForm.vue';
-  import Footer from '@/components/Footer.vue';
+import TopBarFirstTime from '@/components/topBarFirstTime.vue';
+import LoginForm from '@/components/LoginForm.vue';
+import Footer from '@/components/Footer.vue';
 
-  const handleLogin = (credentials) => {
-    console.log('Login credentials:', credentials);
+const handleLogin = (credentials) => {
+  console.log('Login credentials:', credentials);
 
-    // Send the credentials to the server
-    // For now, just log the credentials to the console
-  };
+  // Send the credentials to the server
+  // For now, just log the credentials to the console
+};
 </script>
 
 <style scoped>
-  .login-view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    height: 100vh;
-    padding-top: 0;
-
-    background-image: url('@/assets/Pastel_12.png');
-    background-position: left center, right center;
-    background-repeat: no-repeat, no-repeat;
-    background-size: cover;
-  }
-
-  .form-container {
-    width: 100%;
-    max-width: 400px;
+.card-container {
     padding: 2rem;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.808);
     align-items: center;
-  }
+    max-width: 40dvw;
+    margin: auto;
+}
 
-  .top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  width: 100%;
-  }
+.gray-background {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 10dvw;
+    padding-right: 10dvw;
+    background-color: #ededed98;
+    background-image: url('@/assets/Pastel_13.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
 
-  .logo {
-    max-height: 60px; 
-  }
-
-  .globe-icon {
-    font-size: 2rem; 
-  }
-
-  footer {
-    position: fixed;
-    bottom: 2rem;
-  }
-
-  @media (max-width: 600px) {
-    .login-view {
-      padding: 10px;
-    }
-
-    .form-container {
-      padding: 1rem;
-    }
-  }
+@media (max-width: 767px) {
+    .card-container {
+    max-width: 80dvw;
+    margin: auto;
+}
+}
 </style>

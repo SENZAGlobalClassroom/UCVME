@@ -1,180 +1,158 @@
 <template>
-  <div class="login-form">
-    <h2>Sign In</h2>
-    <form @submit.prevent="onSubmit">
-      <div class="form-group">
-        <input type="text" id="username" v-model="username" placeholder="Username" required>
-      </div>
-      <div class="form-group">
-        <input type="password" id="password" v-model="password" placeholder="Password" required>
-        <br>
-        <div class="actions">
-          <label class="checkbox-container">
-            <p>Remember me</p>
-            <input type="checkbox" v-model="rememberMe">
-            <span class="checkmark"></span>
-          </label>
-          <a href="#" class="forgot-password">Forgot Password?</a>
-        </div>
-      </div>
-      <button type="submit" class="login-button">Login</button>
-      <div class="signup-link">Don’t have an account? <a href="/signup">Sign up</a></div>
-      <div class="separator">or</div>
-      <button type="button" class="google-sign-in">Sign in with Google</button>
-    </form>
-  </div>
-</template>
+  <h2>Sign In</h2>
+  <form @submit.prevent="onSubmit">
+    <div class="form-group">
+      <input type="text" id="username" v-model="username" placeholder="Username" required>
+    </div>
+    <div class="form-group">
+      <input type="password" id="password" v-model="password" placeholder="Password" required>
+    </div>
+    <a href="#" class="forgot-password">Forgot Password?</a>
 
+    <div style="padding: 0.5rem;">
+      <div class="checkbox-group" style="padding: 0.5rem;">
+        <Checkbox v-model="rememberMe" inputId="rememberMe" name="remember" value="RememberMe" />
+        <label for="rememberMe">&nbsp Remember me</label>
+      </div>
+    </div>
+    <button type="submit" class="login-button">Login</button>
+
+    <div class="form-separator">
+      <span class="line"></span>
+      <span class="or-text">or</span>
+      <span class="line"></span>
+    </div>
+    <button type="button" class="google-sign-in">Sign in with Google</button>
+    <div class="signup-link">Don’t have an account? <a href="/signup">Sign up</a></div>
+  </form>
+</template>
 <script>
-  export default {
-    data() {
-      return {
-        username: '',
-        password: '',
-        rememberMe: false
-      };
-    },
-    methods: {
-      onSubmit() {
-        this.$emit('submit-form', {
-          username: this.username,
-          password: this.password,
-          rememberMe: this.rememberMe
-        });
-      }
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+      rememberMe: false
+    };
+  },
+  methods: {
+    onSubmit() {
+      this.$emit('submit-form', {
+        username: this.username,
+        password: this.password,
+        rememberMe: this.rememberMe
+      });
     }
-  };
+  }
+};
 </script>
 
-  <style scoped>
-  .login-form {
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    box-sizing: border-box;
-  }
+<style scoped>
+.form-group input,
+.login-button,
+.google-sign-in {
+  width: calc(100% - 20px); 
+  max-width: 300px; 
+  margin: 10px auto; 
+}
 
-  h2 {
-    text-align: center;
-    margin-bottom: 30px;
-  }
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-  .form-group {
-    margin-bottom: 20px;
-  }
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .form-group input {
-    width: calc(100% - 60px); 
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    }
+.form-group input {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+}
 
-  .actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.actions {
+  align-items: center;
+  padding: 0 10%;
+  flex-direction: row;
+}
 
-  .checkbox-container {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 14px;
-    user-select: none;
-  }
+.checkbox-group {
+  text-align: center; 
+}
 
-  .checkbox-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
+.forgot-password {
+  display: block; 
+  text-align: center; 
+  font-size: 12px;
+  color: #3498db;
+  text-decoration: none;
+  margin: 10px 0; 
+}
 
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #eee;
-    border-radius: 4px;
-  }
+.forgot-password:hover {
+  text-decoration: underline;
+}
 
-  .checkbox-container:hover input ~ .checkmark {
-    background-color: #ccc;
-  }
+.login-button,
+.google-sign-in {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+  display: block;
+  background: #ffffff;
+  border: 1px solid rgb(132, 87, 187);
+  color: #2e2e2e;
+  padding: 0.8rem;
+  border-radius: 25px;
+  cursor: pointer;
+}
 
-  .checkbox-container input:checked ~ .checkmark {
-    background-color: #3498db;
-  }
+.signup-link,
+.separator {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
 
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
+.form-separator {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
 
-  .checkbox-container input:checked ~ .checkmark:after {
-    display: block;
-  }
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #ccc;
+  margin: 0 10px;
+}
 
-  .checkbox-container .checkmark:after {
-    left: 7px;
-    top: 3px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
+.or-text {
+  color: #aaa;
+  white-space: nowrap;
+}
 
-  .login-form button {
-    width: calc(100% - 60px);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-
-  .login-form button:hover {
-    background: #e5e5e5;
-  }
-
+@media (max-width: 766px) {
+  .form-group input,
+  .login-button,
   .google-sign-in {
-    background: #435efa;
-    border-color: #435efa;
-    color: #fff;
+    width: 70dvw;
+    max-width: none;
   }
 
-  .google-sign-in:hover {
-    background: #3b4d91 !important;
-  }
-
-  .signup-link, .separator {
-    text-align: center;
-    margin-top: 20px;
-  }
-
+  .form-group,
+  .form-separator,
+  .signup-link,
   .forgot-password {
-    font-size: 12px;
-    color: #3498db;
-    padding-bottom: 10px;
-    text-decoration: none;
+    padding: 0 20px; 
   }
+  
 
-  .forgot-password:hover {
-    text-decoration: underline;
-  }
+}
 </style>

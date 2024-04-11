@@ -25,12 +25,6 @@ import Likes from '@/components/Likes.vue';
     align-items: center;
 }
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-}
-
 .gray-background {
     padding-top: 2rem;
     padding-bottom: 2rem;

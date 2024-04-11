@@ -36,6 +36,7 @@ import Toast from 'primevue/toast';
 import Sidebar from 'primevue/sidebar';
 import Galleria from 'primevue/galleria';
 import Avatar from 'primevue/avatar';
+import Checkbox from 'primevue/checkbox';
 
 const app = createApp(App)
 
@@ -64,6 +65,7 @@ app.component('TopBar', TopBar);
 app.component('Sidebar', Sidebar);
 app.component('Galleria', Galleria);
 app.component('Avatar', Avatar);
+app.component('Checkbox', Checkbox);
 
 app.use(router)
 app.use(PrimeVue);
