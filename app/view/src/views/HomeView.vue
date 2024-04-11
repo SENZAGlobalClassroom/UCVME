@@ -4,11 +4,15 @@ import Home from '@/components/Home.vue';
 </script>
 
 <template>
-  <div class="gray-background">
-      <TopBar></TopBar>
-      <Home />
-      <Navbar></Navbar>
-  </div>
+    <div class="gray-background">
+        <TopBar></TopBar>
+        <Card class="card-container">
+            <template #content>
+            <Home></Home>
+            </template>
+        </Card>
+        <Navbar></Navbar>
+    </div>
 </template>
 
 <style>

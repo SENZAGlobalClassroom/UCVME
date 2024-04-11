@@ -1,97 +1,175 @@
+<template>
+
+<Card class="card" v-for="post in likedPosts" :key="post.id">
+      <template #header>
+        <div style="display: flex; align-items: center;">
+          <Avatar label="P" size="large" />
+          <h3 style="padding-left: 1rem;" class="user-name">{{ post.name }}</h3>
+        </div>
+      </template>
+      <template #content>
+        <div class="title">
+          <h2>{{ post.title }}</h2> <br>
+          <h4>{{ post.date }}</h4>
+        </div>
+        <br><br>
+        <div class="video-content">
+          <Galleria :value="images" :numVisible="3" containerStyle="max-width: 70dvh" :showThumbnails="false"
+            :showIndicators="true" :changeItemOnIndicatorHover="true">
+            <template #item="slotProps">
+              <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt"
+                style="width: 100%; display: block; border-radius: 25px;" />
+            </template>
+          </Galleria>
+        </div>
+        <div class="post-details">
+          <div class="post-content">
+            <p v-html="post.description" style="max-height: 40dvh; overflow-y: scroll;" class="scroll-panel"></p>
+          </div>
+        </div>
+      </template>
+      <template #footer>
+        <div class="post-actions">
+          <Button label="&nbsp Dislike" @click="disLike(post)" icon="pi pi-heart-fill" severity="secondary" text rounded
+            aria-label="Dislike" />
+          <Button label="&nbsp  Apply" icon="pi pi-send" severity="secondary" text rounded aria-label="Apply" />
+        </div>
+      </template>
+    </Card>
+
+</template>
+
 <script setup>
 import { likedPosts } from '@/store'; // Importing the reactive likedPosts reference
 console.log(likedPosts.value);
+import { ref, onMounted } from 'vue'
+
+// Test Data The images should come from db
+import cat3 from '@/assets/cat3.jpg';
+import cat1 from '@/assets/cat1.jpg';
+
+const images = ref();
+
+const PhotoService = {
+  getData() {
+    return [
+      {
+        itemImageSrc: cat3,
+        thumbnailImageSrc: cat3,
+        alt: 'Description for Image 1',
+        title: 'Title 1'
+      },
+      {
+        itemImageSrc: cat1,
+        thumbnailImageSrc: cat1,
+        alt: 'Description for Image 2',
+        title: 'Title 2'
+      }
+    ];
+  },
+  getImages() {
+    return Promise.resolve(this.getData());
+  }
+};
+
+onMounted(() => {
+  PhotoService.getImages().then((data) => (images.value = data));
+});
 </script>
 
-<template>
-    <h1>My Likes</h1>
-    <div class="posts-background">
-      <div class="post-upload-container">
-        <!-- Loop over likedPosts and create a card for each -->
-        <div class="post-upload-card" v-for="post in likedPosts" :key="post.id">
-          <!-- Video element -->
-          <!-- <video class="user-video" controls>
-            <source :src="post.videoSource" type="video/mp4">
-            Your browser does not support the video tag.
-          </video> -->
-          <div class="post-details-actions">
-            <h3 class="user-name">{{ post.name }}</h3>
-            <div class="post-content">
-              <h2>{{ post.title }}</h2>
-              <p>{{ post.date }}</p>
-              <p>{{ post.description }}</p>
-            </div>
-            <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
-          </div>
-        </div>
-      </div>
-    </div>
-</template>
-
 <style scoped>
-
-.posts-background {
-  background-color: rgba(255, 255, 255, 0.9);
+.panel {
   width: 100%;
-  padding: 20px;
-  border-radius: 25px;
+  height: 100dvh;
+  padding: 2em;
 }
 
-h1 {
-  font-size: 3em; /* Increase font size */
-  font-weight: bold; /* Make it bold */
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.5); /* Add shadow */
-  margin-bottom: 0.5em; /* Add more space below the title */
-  text-align: center; /* Center the title text */
-  width: 100%; /* Make sure it spans the width to center properly */
-  color: #4CAF50; /* Optional: Change color to match your design */
-}
-.post-upload-container {
+.title {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-  gap: 1rem;
-}
-.post-upload-card {
-  display: flex;
-  align-items: stretch;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  max-width: 600px;
-  width: 100%;
-  margin-top: 20px;
-}
-.user-name {
-  font-size: medium;
-  color: black;
-  padding-bottom: 1em;
-  border-radius: 5px;
-}
-.user-video {
-  height: auto;
-  width: 50%;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  object-fit: cover;
-}
-.post-details-actions {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
-}
-.apply-post {
-  margin-top: 2em; /* Space between apply post and text */
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  align-items: center;
 }
 
+.card {
+  padding: 1rem;
+  margin: auto;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: row;
+}
+
+.video-content {
+  float: left;
+  padding-right: 1rem;
+  max-width: 30dvw;
+  margin: 0 auto;
+}
+
+
+.post-details {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-content {
+  margin-bottom: 1rem;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.scroll-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-panel::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.scroll-panel::-webkit-scrollbar-track {
+  background-color: #6d6d6d;
+  border-radius: 10px;
+}
+.video-content {
+  float: left;
+  padding-right: 1rem;
+  max-width: 30dvw;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .video-content {
+  max-width: 50dvw;
+}
+
+}
+@media (max-width: 768px) {
+  .title {
+    display: inline;
+  }
+
+  .video-content {
+    float: none;
+    max-width: 100dvw;
+  }
+
+  .video-content,
+  .post-details {
+    max-width: 100%;
+  }
+
+  .video-content {
+    padding: 1rem;
+
+  }
+}
 </style>

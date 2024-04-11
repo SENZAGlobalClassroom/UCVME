@@ -72,9 +72,9 @@ const PhotoService = {
 onMounted(() => {
   PhotoService.getImages().then((data) => (images.value = data));
 });
+const images = ref();
 
 // Test data by Mate, all these should come from db
-const images = ref();
 
 const posts = ref([
   {

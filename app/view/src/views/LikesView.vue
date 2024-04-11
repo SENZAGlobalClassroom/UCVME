@@ -4,11 +4,18 @@ import Likes from '@/components/Likes.vue';
 </script>
 
 <template>
-  <div class="gray-background">
-      <TopBar></TopBar>
-      <Likes />
-      <Navbar></Navbar>
-  </div>
+    <div class="gray-background">
+        <TopBar></TopBar>
+        <Card class="card-container">
+            <template #header>
+                <h3>Liked Posts</h3>
+            </template>
+            <template #content>
+            <Likes></Likes>
+            </template>
+        </Card>
+        <Navbar></Navbar>
+    </div>
 </template>
 
 <style>
