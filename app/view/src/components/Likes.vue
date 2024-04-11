@@ -4,8 +4,6 @@ console.log(likedPosts.value);
 </script>
 
 <template>
-  <div class="page-background">
-    <TopBar></TopBar>
     <h1>My Likes</h1>
     <div class="posts-background">
       <div class="post-upload-container">
@@ -28,18 +26,10 @@ console.log(likedPosts.value);
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
-.page-background {
-  padding: 2rem;
-  background-color: #ededed98;
-  background-image: url('@/assets/Pastel_11.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-}
+
 .posts-background {
   background-color: rgba(255, 255, 255, 0.9);
   width: 100%;

@@ -1,53 +1,52 @@
 <template>
-  <div class="page-background">
-    <TopBar></TopBar>
-    <ScrollPanel style="width: 100%; height: 80dvh" class="posts-background">
-      <div class="post-upload-container">
-        <div class="post-upload-card">
-          <video class="user-video" autoplay loop muted>
-            <source src="@/assets/test1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-          <h3 class="user-name">{{ posts[0].name }}</h3>
-          <div class="post-details-actions">
-            <div class="post-content">
-              <h2>{{ posts[0].title }}</h2>
-              <p>{{ posts[0].date }}</p>
-              <p>{{ posts[0].description }}</p>
-            </div>
-            <div class="post-actions">
-              <button class="save-post" @click="likePost(posts[0])">
-                <i class="pi pi-heart" style="margin-right: .5em;"></i> Save Post
-              </button>
-              <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
-            </div>
+  <ScrollPanel style="width: 100%; height: 80dvh" class="posts-background">
+    <div class="post-upload-container">
+      <div class="post-upload-card">
+        <video class="user-video" autoplay loop muted>
+          <source src="@/assets/test1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <h3 class="user-name">{{ posts[0].name }}</h3>
+        <div class="post-details-actions">
+          <div class="post-content">
+            <h2>{{ posts[0].title }}</h2>
+            <p>{{ posts[0].date }}</p>
+            <p>{{ posts[0].description }}</p>
+          </div>
+          <div class="post-actions">
+            <button class="save-post" @click="likePost(posts[0])">
+              <i class="pi pi-heart" style="margin-right: .5em;"></i> Save Post
+            </button>
+            <button class="apply-post">
+              <i class="pi pi-send"></i> Apply</button>
           </div>
         </div>
-
-        <div class="post-upload-card">
-          <video class="user-video" autoplay loop muted>
-            <source src="@/assets/test1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-          <h3 class="user-name">{{ posts[1].name }}</h3>
-          <div class="post-details-actions">
-            <div class="post-content">
-              <h2>{{ posts[1].title }}</h2>
-              <p>{{ posts[1].date }}</p>
-              <p>{{ posts[1].description }}</p>
-            </div>
-            <div class="post-actions">
-              <button class="save-post" @click="likePost(posts[1])">
-                <i class="pi pi-heart" style="margin-right: .5em;"></i> Save Post
-              </button>
-              <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
-            </div>
-          </div>
-        </div>
-        <!-- ... additional posts ... -->
       </div>
-    </ScrollPanel>
-  </div>
+
+      <div class="post-upload-card">
+        <video class="user-video" autoplay loop muted>
+          <source src="@/assets/test1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <h3 class="user-name">{{ posts[1].name }}</h3>
+        <div class="post-details-actions">
+          <div class="post-content">
+            <h2>{{ posts[1].title }}</h2>
+            <p>{{ posts[1].date }}</p>
+            <p>{{ posts[1].description }}</p>
+          </div>
+          <div class="post-actions">
+            <button class="save-post" @click="likePost(posts[1])">
+              <i class="pi pi-heart" style="margin-right: .5em;"></i> Save Post
+            </button>
+            <button class="apply-post">
+              <i class="pi pi-send"></i> Apply</button>
+          </div>
+        </div>
+      </div>
+      <!-- ... additional posts ... -->
+    </div>
+  </ScrollPanel>
 </template>
 
 <script setup>
@@ -83,15 +82,6 @@ function likePost(post) {
 </script>
 
 <style scoped>
-.page-background {
-  padding: 2rem;
-  background-color: #ededed98;
-  background-image: url('@/assets/Pastel_11.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-}
-
 .posts-background {
   background-color: rgba(255, 255, 255, 0.9);
   width: 100%;
