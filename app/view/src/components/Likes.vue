@@ -5,6 +5,7 @@ console.log(likedPosts.value);
 
 <template>
   <div class="page-background">
+    <TopBar></TopBar>
     <h1>My Likes</h1>
     <div class="posts-background">
       <div class="post-upload-container">

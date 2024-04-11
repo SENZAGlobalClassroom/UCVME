@@ -1,6 +1,7 @@
 <template>
+    <TopBar/>
+
   <div class="setting-view">
-    <TopBarFT/>
 
     <div class="form-container">
       <SettingForm @submit-form="handleSettingChange" />

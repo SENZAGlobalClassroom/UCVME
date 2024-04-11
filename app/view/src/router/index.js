@@ -8,6 +8,7 @@ import WalletView from '../views/WalletView.vue'
 import HelpView from '../views/HelpView.vue'
 import SettingView from '../views/SettingView.vue'
 import LikesView from '../views/LikesView.vue'
+import AddPostView from '../views/AddPostView.vue'
 
 
 const router = createRouter({
@@ -62,6 +63,11 @@ const router = createRouter({
       path: '/likes',
       name: 'LikesView',
       component: LikesView
+    },
+    {
+      path: '/addpost',
+      name: 'AddPostView',
+      component: AddPostView
     }
     // {
     //   path: '/about',

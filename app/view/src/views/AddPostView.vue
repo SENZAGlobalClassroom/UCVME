@@ -1,5 +1,6 @@
 <template>
     <div class="gray-background">
+        <TopBar></TopBar>
         <Card style="min-height: 80dvh; padding: 2rem; ">
             <template #header>
                 <h3 class="post-heading">Post a new job</h3>

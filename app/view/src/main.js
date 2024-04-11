@@ -18,6 +18,7 @@ import FloatLabel from 'primevue/floatlabel';
 import Card from 'primevue/card';
 import Footer from './components/Footer.vue';
 import TopBarFT from './components/topBarFirstTime.vue';
+import TopBar from './components/TopBar.vue';
 import Steps from 'primevue/steps';
 import InputMask from 'primevue/inputmask';
 import Stepper from 'primevue/stepper';
@@ -32,6 +33,7 @@ import Dialog from 'primevue/dialog';
 import ToggleButton from 'primevue/togglebutton';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
+import Sidebar from 'primevue/sidebar';
 
 const app = createApp(App)
 
@@ -56,6 +58,8 @@ app.component('Dialog', Dialog);
 app.component('ToggleButton', ToggleButton);
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('Toast', Toast);
+app.component('TopBar', TopBar);
+app.component('Sidebar', Sidebar);
 
 app.use(router)
 app.use(PrimeVue);

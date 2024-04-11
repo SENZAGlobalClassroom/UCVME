@@ -1,6 +1,6 @@
 <template>
   <div class="gray-background">
-    <!-- top bar needs to be added -->
+    <TopBar></TopBar>
     <Card class="card-container">
       <template #content>
       <CVInfo></CVInfo>

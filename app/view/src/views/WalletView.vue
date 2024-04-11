@@ -1,6 +1,6 @@
 <template>
     <div class="gray-background">
-        <!-- need to add top bar -->
+        <TopBar></TopBar>
         <Card class="card-container">
             <template #header>
                 <h3>Saved CVs</h3>

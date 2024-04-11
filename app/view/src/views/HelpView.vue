@@ -3,7 +3,7 @@
       <title>Help Centre</title>
     </head>
     <div class="gray-background">
-      <TopBarFT></TopBarFT>
+      <TopBar></TopBar>
         <div class="helpForm centered">
             <HelpForm @submit="handleHelpForm" />
         </div>
@@ -14,7 +14,6 @@
   
 <script>
   import HelpForm from '@/components/HelpForm.vue';
-  
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   
