@@ -1,20 +1,106 @@
 <script setup>
 import { likedPosts } from '@/store'; // Importing the reactive likedPosts reference
-console.log(likedPosts.value); // Add this line
+console.log(likedPosts.value);
 </script>
 
 
 <template>
-    <div>
-      <h1>My Likes</h1>
-      <div v-for="post in likedPosts" :key="post.id">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.description }}</p>
+  <div class="page-background">
+    <h1>My Likes</h1>
+    <div class="posts-background">
+      <div class="post-upload-container">
+        <!-- Loop over likedPosts and create a card for each -->
+        <div class="post-upload-card" v-for="post in likedPosts" :key="post.id">
+          <!-- Video element -->
+          <video class="user-video" controls>
+            <source :src="post.videoSource" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="post-details-actions">
+            <h3 class="user-name">{{ post.name }}</h3>
+            <div class="post-content">
+              <h2>{{ post.title }}</h2>
+              <p>{{ post.date }}</p>
+              <p>{{ post.description }}</p>
+            </div>
+            <!-- You might want to remove the Apply button or change its function for the likes page -->
+            <button class="apply-post"><i class="fas fa-paper-plane"></i> Apply</button>
+          </div>
+        </div>
       </div>
     </div>
-  </template>
-
+  </div>
+</template>
 
 <style scoped>
-  /* Add the styles for your likes page here */
+/* The styles should be same or similar to the ones used in the home page for posts */
+.page-background {
+  padding: 2rem;
+  background-color: #ededed98;
+  background-image: url('@/assets/Pastel_11.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+.posts-background {
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  padding: 20px;
+  border-radius: 25px;
+}
+.post-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  gap: 1rem;
+}
+.post-upload-card {
+  display: flex;
+  align-items: stretch;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  margin-top: 20px;
+}
+.user-name {
+  font-size: small;
+  margin: 5px;
+  color: black;
+  padding: 0.5em;
+  border-radius: 5px;
+}
+.user-video {
+  height: auto;
+  width: 50%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  object-fit: cover;
+}
+.post-details-actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+.apply-post {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-photo {
+  height: auto;
+  width: 50%;
+  border-radius: 10px; /* Adjust if you want rounded corners for your images */
+  object-fit: cover; /* Cover might work better for images to fill the area */
+}
+/* ... other styles ... */
 </style>
