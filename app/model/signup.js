@@ -2,6 +2,8 @@
 const { Pool } = require('pg'); // PostgreSQL client library
 
 const signupModel = function(userData, response) {
+    console.log('Request body:', userData); // Log the request body to verify data received
+
     const pool = new Pool({ // create a pool of connections
         user: 'postgres',
         host: 'localhost',
@@ -22,11 +24,13 @@ const signupModel = function(userData, response) {
             'INSERT INTO signup (signup_username, signup_email, signup_password) VALUES ($1, $2, $3)',
             // insert query to add a new user to the signup table, $1, $2, $3 are placeholders for the user inputs
             [
-                userData.signup_username, // stores in userData
-                userData.signup_email,
-                userData.signup_password
+                userData.username, // stores in userData
+                userData.email,
+                userData.password
             ],
+            
             (err, result) => {
+                release(); // Release the client to the pool regardless of the outcome
                 if (err) { // error occurs when inserting in the database
                     console.error('Error executing INSERT query:', err);
 
@@ -43,10 +47,8 @@ const signupModel = function(userData, response) {
                     }
                 }
 
-                console.log('User registered with ID:', result.rows[0].id); // log the ID of the inserted record to the console
+                console.log('User registered successfully');
                 response({ success: true, message: 'Registration successful' }); // send response in web server
-
-                release(); // release the client to the pool
             }
         );
     });

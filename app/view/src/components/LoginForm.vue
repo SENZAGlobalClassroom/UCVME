@@ -37,10 +37,25 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$emit('submit-form', {
-        username: this.username,
-        password: this.password,
-        rememberMe: this.rememberMe
+      // Send POST request to your server
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle response from the server
+        console.log(data); // You can do something based on the response, like redirecting to another page or showing a message
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle error
       });
     }
   }

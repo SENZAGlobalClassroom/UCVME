@@ -1,6 +1,7 @@
 // sql for selecting user from database based on email, used for when logging in, checks email and password from the database
 // login.js
 const { Pool } = require('pg'); // PostgreSQL client library
+const bcrypt = require('bcrypt');
 
 const loginModel = function(username, password, response) {
     const pool = new Pool({ // create a pool of connections
@@ -23,23 +24,24 @@ const loginModel = function(username, password, response) {
             'SELECT * FROM signup WHERE signup_username = $1',
             [username],
             (err, result) => {
-                if (err) { // error occurs when executing query
-                    console.error('Error executing SELECT query:', err);
-                    return response({ success: false, message: 'Login failed' });
-                }
 
+                
                 if (result.rows.length === 0) { // user not found
                     return response({ success: false, message: 'User not found' });
                 }
-
+    
                 const user = result.rows[0]; // get the first user
-                if (user.signup_password === password) { // password matches
-                    return response({ success: true, message: 'Login successful', user });
-                } else { // password does not match
-                    return response({ success: false, message: 'Invalid password' });
-                }
-
-                release(); // release the client to the pool
+                bcrypt.compare(password, user.signup_password, function(err, success) {
+                    if (err) {
+                        console.error('Error comparing passwords:', err);
+                        return response({ success: false, message: 'Internal Server Error' });
+                    }
+                    if (success) {
+                        return response({ success: true, message: 'Login successful', user });
+                    } else {
+                        return response({ success: false, message: 'Invalid password' });
+                    }
+                });
             }
         );
     });

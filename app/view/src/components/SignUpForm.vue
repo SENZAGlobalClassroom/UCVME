@@ -37,36 +37,56 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        agreeToTerms: false
-      };
-    },
-    methods: {
-      onSubmit() {
-        if (!this.agreeToTerms) {
-          alert('You must agree to the Terms and Privacy policies');
-          return;
-        }
+export default {
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      agreeToTerms: false
+    };
+  },
+  methods: {
+    onSubmit() {
+      if (!this.agreeToTerms) {
+        alert('You must agree to the Terms and Privacy policies');
+        return;
+      }
 
-        if (this.password !== this.confirmPassword) {
-          alert('Passwords do not match');
-          return;
-        }
+      if (this.password !== this.confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
 
-        this.$emit('submit-form', {
+      console.log('Username:', this.username);
+      console.log('Email:', this.email);
+      console.log('Password:', this.password);
+
+      // Send POST request to your server
+      fetch('/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
           username: this.username,
           email: this.email,
           password: this.password
-        });
-      }
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle response from the server
+        console.log(data); // You can do something based on the response, like redirecting to another page or showing a message
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle error
+      });
     }
-  };
+  }
+};
 </script>
 
   
