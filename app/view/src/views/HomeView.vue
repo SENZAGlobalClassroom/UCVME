@@ -6,21 +6,12 @@ import Home from '@/components/Home.vue';
 <template>
     <div class="gray-background">
         <TopBar></TopBar>
-        <Card class="card-container">
-            <template #content>
             <Home></Home>
-            </template>
-        </Card>
         <Navbar></Navbar>
     </div>
 </template>
 
 <style>
-.card-container {
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.808);
-    align-items: center;
-}
 
 .gray-background {
     padding-top: 2rem;

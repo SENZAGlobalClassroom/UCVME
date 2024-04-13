@@ -24,7 +24,7 @@
         </div>
         <div class="post-details">
           <div class="post-content">
-            <p v-html="post.description" style="max-height: 40dvh; overflow-y: scroll;" class="scroll-panel"></p>
+            <p v-html="post.description" class="scroll-panel"></p>
           </div>
         </div>
       </template>
@@ -126,13 +126,8 @@ function applyJob(post) {
 </script>
 
 <style scoped>
-.panel {
-  width: 100%;
-  height: 100dvh;
-  padding: 2em;
-}
-
-.title {
+.title,
+.post-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -141,6 +136,8 @@ function applyJob(post) {
 .card {
   padding: 1rem;
   margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-card {
@@ -149,15 +146,11 @@ function applyJob(post) {
 }
 
 .video-content {
-  float: left;
-  padding-right: 1rem;
-  max-width: 30dvw;
-  margin: 0 auto;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
-
 .post-details {
-  flex: 2;
   display: flex;
   flex-direction: column;
 }
@@ -171,6 +164,10 @@ function applyJob(post) {
   justify-content: space-between;
 }
 
+.scroll-panel {
+  max-height: 40vh;
+  overflow-y: scroll;
+}
 
 .scroll-panel::-webkit-scrollbar {
   width: 6px;
@@ -187,31 +184,26 @@ function applyJob(post) {
   background-color: #6d6d6d;
   border-radius: 10px;
 }
+
 .video-content {
   float: left;
   padding-right: 1rem;
   max-width: 30dvw;
-  margin: 0 auto;
 }
 
 @media (max-width: 1024px) {
-  .video-content {
-  max-width: 50dvw;
-}
-
-}
-@media (max-width: 768px) {
   .title {
     display: inline;
   }
 
   .video-content {
     float: none;
-    max-width: 100dvw;
   }
 
   .video-content,
   .post-details {
+    display: flex;
+    justify-content: center;
     max-width: 100%;
   }
 
