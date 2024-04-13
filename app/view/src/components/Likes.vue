@@ -1,6 +1,5 @@
 <template>
-
-<Card class="card" v-for="post in likedPosts" :key="post.id">
+    <Card class="card" v-for="post in likedPosts" :key="post.id">
       <template #header>
         <div style="display: flex; align-items: center;">
           <Avatar label="P" size="large" />
@@ -24,19 +23,18 @@
         </div>
         <div class="post-details">
           <div class="post-content">
-            <p v-html="post.description" style="max-height: 40dvh; overflow-y: scroll;" class="scroll-panel"></p>
+            <p v-html="post.description" class="scroll-panel"></p>
           </div>
         </div>
       </template>
       <template #footer>
         <div class="post-actions">
-          <Button label="&nbsp Dislike" @click="disLike(post)" icon="pi pi-heart-fill" severity="secondary" text rounded
+          <Button label="&nbsp Dislike" @click="dislikePost(post)" icon="pi pi-heart-fill" severity="secondary" text rounded
             aria-label="Dislike" />
           <Button label="&nbsp  Apply" icon="pi pi-send" severity="secondary" text rounded aria-label="Apply" />
         </div>
       </template>
     </Card>
-
 </template>
 
 <script setup>
@@ -77,14 +75,10 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-.panel {
-  width: 100%;
-  height: 100dvh;
-  padding: 2em;
-}
 
-.title {
+<style scoped>
+.title,
+.post-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,6 +87,8 @@ onMounted(() => {
 .card {
   padding: 1rem;
   margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-card {
@@ -101,15 +97,11 @@ onMounted(() => {
 }
 
 .video-content {
-  float: left;
-  padding-right: 1rem;
-  max-width: 30dvw;
-  margin: 0 auto;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
-
 .post-details {
-  flex: 2;
   display: flex;
   flex-direction: column;
 }
@@ -123,6 +115,10 @@ onMounted(() => {
   justify-content: space-between;
 }
 
+.scroll-panel {
+  max-height: 40vh;
+  overflow-y: scroll;
+}
 
 .scroll-panel::-webkit-scrollbar {
   width: 6px;
@@ -139,31 +135,26 @@ onMounted(() => {
   background-color: #6d6d6d;
   border-radius: 10px;
 }
+
 .video-content {
   float: left;
   padding-right: 1rem;
   max-width: 30dvw;
-  margin: 0 auto;
 }
 
 @media (max-width: 1024px) {
-  .video-content {
-  max-width: 50dvw;
-}
-
-}
-@media (max-width: 768px) {
   .title {
     display: inline;
   }
 
   .video-content {
     float: none;
-    max-width: 100dvw;
   }
 
   .video-content,
   .post-details {
+    display: flex;
+    justify-content: center;
     max-width: 100%;
   }
 
