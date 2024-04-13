@@ -1,5 +1,4 @@
 <template>
-
   <div class="gray-background">
     <TopBarFirstTime />
     <Card class="card-container">

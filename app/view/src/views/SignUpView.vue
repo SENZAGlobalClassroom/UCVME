@@ -1,12 +1,12 @@
 <template>
-  <div class="sign-up-view">
+  <div class="gray-background">
     <TopBarFirstTime />
-
-    <div class="form-container">
-      <SignUpForm @submit-form="handleSignUp" />
-    </div>
+    <Card class="card-container">
+      <template #content>
+        <SignUpForm @submit-form="handleSignUp" />
+      </template>
+    </Card>
     <Footer />
-
   </div>
 </template>
 
@@ -24,62 +24,30 @@ const handleSignUp = (credentials) => {
 </script>
 
 <style scoped>
-.sign-up-view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding-top: 0; 
-  background-image: url('@/assets/Pastel_11.png'), url('@/assets/Pastel_12.png');
-  background-position: left center, right center;
-  background-repeat: no-repeat, no-repeat;
-  background-size: cover;
+.card-container {
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.808);
+    align-items: center;
+    max-width: 40dvw;
+    margin: auto;
 }
 
-.form-container {
-  width: 100%;
-  max-width: 500px; 
-  padding: 2rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.gray-background {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 10dvw;
+    padding-right: 10dvw;
+    background-color: #ededed98;
+    background-image: url('@/assets/Pastel_13.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
-.top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  width: 100%;
+@media (max-width: 767px) {
+    .card-container {
+    max-width: 80dvw;
+    margin: auto;
 }
-
-.logo {
-  max-height: 60px;
-}
-
-.globe-icon {
-  font-size: 2rem; 
-}
-
-footer {
-  position: fixed;
-  bottom: 2rem;
-}
-
-@media (max-width: 600px) {
-  .sign-up-view {
-    padding: 10px;
-  }
-
-  .form-container {
-    padding: 1rem;
-  }
 }
 </style>
