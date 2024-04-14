@@ -21,8 +21,16 @@
       <ul class="sidebar-links">
         <li><a href="javascript:void(0)" @click="goToSettingsPage">Settings Page</a></li>
         <li><a href="javascript:void(0)" @click="goToHelpPage">Help Page</a></li>
-        <li><a href="javascript:void(0)">Option 3</a></li>
       </ul>
+
+      <div class="user-panel">
+        <Avatar image="/src/assets/user.jpg" shape="circle" />
+        {{ username }}
+        <button class="sign-out-btn" @click="signOut">
+          <i class="pi pi-sign-out"></i>
+        </button>
+      </div>
+
     </Sidebar>
   </div>
 </template>
@@ -52,6 +60,16 @@ const goToHomePage = () => {
   router.push({ name: 'Home' });
   visible.value = false;
 };
+
+const signOut = () => {
+  // sign out function for now just go back to login
+  router.push({ name: 'Login' });
+}
+
+
+// test data should come from db
+const username = ref('Stelle Robbins');
+
 </script>
 
 <style scoped>
@@ -110,5 +128,24 @@ const goToHomePage = () => {
 
 .sidebar-links li a:hover {
   background-color: #f6f6f6;
+}
+
+.user-panel {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem;
+}
+
+.sign-out-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.sign-out-btn .pi {
+  font-size: 1.5em;
 }
 </style>

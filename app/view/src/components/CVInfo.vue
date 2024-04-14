@@ -172,7 +172,7 @@ const items = ref([
 .work-experience-container {
     padding: 1.5rem;
     border-radius:  0px 0px 25px 25px;
-    background-color: #ebdbc2; //should be decided based on the colour the user picked
+    background-color: #e3e3e367; //should be decided based on the colour the user picked
 }
 
 .scroll-panel {
@@ -183,19 +183,17 @@ const items = ref([
 }
 
 .scroll-panel::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 .scroll-panel::-webkit-scrollbar-thumb {
     background-color: #ffffff;
-    border-radius: 10px;
     background-clip: padding-box;
     border: 2px solid transparent;
 }
 
 .scroll-panel::-webkit-scrollbar-track {
-    background-color: #756561;
-    border-radius: 10px;
+    background-color: #a8a8a8;
 }
 
 :deep .p-speeddial-button {

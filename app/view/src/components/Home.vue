@@ -14,11 +14,10 @@
         </div>
         <br><br>
         <div class="video-content">
-          <Galleria :value="images" :numVisible="3" containerStyle="max-width: 70dvh" :showThumbnails="false"
+          <Galleria :value="post.images" :numVisible="3" containerStyle="max-width: 70dvh" :showThumbnails="false"
             :showIndicators="true" :changeItemOnIndicatorHover="true">
             <template #item="slotProps">
-              <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt"
-                style="width: 100%; display: block; border-radius: 25px;" />
+              <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" class="galleria-image" />
             </template>
           </Galleria>
         </div>
@@ -45,34 +44,9 @@ import { likedPosts } from '@/store';
 
 // Test Data The images should come from db
 import cat3 from '@/assets/cat3.jpg';
-import cat1 from '@/assets/cat1.jpg';
-
-const PhotoService = {
-  getData() {
-    return [
-      {
-        itemImageSrc: cat3,
-        thumbnailImageSrc: cat3,
-        alt: 'Description for Image 1',
-        title: 'Title 1'
-      },
-      {
-        itemImageSrc: cat1,
-        thumbnailImageSrc: cat1,
-        alt: 'Description for Image 2',
-        title: 'Title 2'
-      }
-    ];
-  },
-  getImages() {
-    return Promise.resolve(this.getData());
-  }
-};
-
-onMounted(() => {
-  PhotoService.getImages().then((data) => (images.value = data));
-});
-const images = ref();
+import cat1 from '@/assets/cat5.jpeg';
+import garden1 from '@/assets/garden1.jpg';
+import garden2 from '@/assets/garden2.jpg';
 
 // Test data by Mate, all these should come from db
 
@@ -101,14 +75,57 @@ const posts = ref([
       "6. Access to transportation to whisk you to our home for kitty care.<br><br>" +
       "<strong>Compensation:</strong><br>" +
       "Let's chat about what feels fair based on your experience and the TLC you'll be giving our kitties.<br><br>" +
-      "If you’re ready to dive into two weeks of purr-dise with our fur babies, drop us a line with a little about yourself and why you’re the cat’s meow for this job. References from fellow feline enthusiasts would make our whiskers twitch with excitement. Thanks a million!"
+      "If you’re ready to dive into two weeks of purr-dise with our fur babies, drop us a line with a little about yourself and why you’re the cat’s meow for this job. References from fellow feline enthusiasts would make our whiskers twitch with excitement. Thanks a million!",
+    images: [
+      {
+        itemImageSrc: cat3,
+        thumbnailImageSrc: cat3,
+        alt: 'Description for Image 1',
+        title: 'Title 1'
+      },
+      {
+        itemImageSrc: cat1,
+        thumbnailImageSrc: cat1,
+        alt: 'Description for Image 2',
+        title: 'Title 2'
+      }
+    ]
   },
   {
     id: 2,
-    name: 'Hoexeng Park',
-    title: 'Tutor Needed for High School Math',
-    date: 'Starting May 2024',
-    description: 'Seeking an experienced math tutor for my high schooler, focusing on algebra and geometry. Preferably twice a week after school hours. Looking for someone patient and engaging.'
+    name: 'Steve Lee',
+    title: 'Backyard Cleanup Specialist Needed!',
+    date: 'Needed for 14/04/2024',
+    description: "<strong>Job Description:</strong><br>" +
+      "Are you someone who loves transforming outdoor spaces from chaos to tranquility? We're on the hunt for a backyard cleanup specialist to tackle a project that's brimming with potential. If you have a knack for tidying up and creating inviting outdoor environments, this gig is for you!<br><br>" +
+      "<strong>Responsibilities:</strong><br>" +
+      "1. Clearing out debris, fallen branches, and other clutter from the backyard.<br>" +
+      "2. Trimming overgrown vegetation, including bushes, hedges, and grass.<br>" +
+      "3. Raking and disposing of leaves and other organic matter.<br>" +
+      "4. Sweeping and power washing surfaces to remove dirt and grime.<br>" +
+      "5. Organizing outdoor furniture, garden tools, and other items.<br><br>" +
+      "<strong>Requirements:</strong><br>" +
+      "1. Previous experience in yard cleanup or landscaping preferred.<br>" +
+      "2. Physical fitness and ability to perform tasks that require bending, lifting, and manual labor.<br>" +
+      "3. Attention to detail and a passion for creating neat and orderly outdoor spaces.<br>" +
+      "4. Reliable transportation to access the job site.<br><br>" +
+      "<strong>Compensation:</strong><br>" +
+      "Let's discuss compensation based on the scope of the project and your expertise.<br><br>" +
+      "If you're ready to roll up your sleeves and turn a neglected backyard into a backyard oasis, we want to hear from you! Please send us a brief overview of your relevant experience and why you're the perfect fit for this cleanup project. Let's transform this backyard together!",
+    images: [
+      {
+        itemImageSrc: garden1,
+        thumbnailImageSrc: garden1,
+        alt: 'Description for Image 1',
+        title: 'Title 1'
+      },
+      {
+        itemImageSrc: garden2,
+        thumbnailImageSrc: garden2,
+        alt: 'Description for Image 2',
+        title: 'Title 2'
+      }
+    ]
   }
 ]);
 
@@ -150,6 +167,12 @@ function applyJob(post) {
   margin-bottom: 1rem;
 }
 
+.galleria-image {
+  width: 100%;
+  height: 35vh;
+  object-fit: cover;
+}
+
 .post-details {
   display: flex;
   flex-direction: column;
@@ -165,7 +188,7 @@ function applyJob(post) {
 }
 
 .scroll-panel {
-  max-height: 40vh;
+  max-height: 35vh;
   overflow-y: scroll;
 }
 
@@ -175,14 +198,12 @@ function applyJob(post) {
 
 .scroll-panel::-webkit-scrollbar-thumb {
   background-color: #ffffff;
-  border-radius: 10px;
   background-clip: padding-box;
   border: 2px solid transparent;
 }
 
 .scroll-panel::-webkit-scrollbar-track {
   background-color: #6d6d6d;
-  border-radius: 10px;
 }
 
 .video-content {
@@ -210,6 +231,12 @@ function applyJob(post) {
   .video-content {
     padding: 1rem;
 
+  }
+
+  .galleria-image {
+    object-fit: cover;
+    width: 100dvw;
+    height: 35dvh;
   }
 }
 </style>

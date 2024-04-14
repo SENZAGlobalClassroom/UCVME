@@ -23,15 +23,12 @@ import { ref,onMounted } from 'vue';
 import Wallet from '@/components/Wallet.vue';
 
 //test data imports
-import test1 from '@/assets/test1.mp4';
 import test2 from '@/assets/test2.mp4';
 import test3 from '@/assets/test3.mp4';
-import test4 from '@/assets/test4.mp4';
 
 import cat1 from '@/assets/cat1.jpg';
 import cat2 from '@/assets/cat2.jpg';
 import cat3 from '@/assets/cat3.jpg';
-import cat4 from '@/assets/cat4.jpg';
 
 // funcs to handle emits from Wallet
 const handleNewCollection = (collectionName) => {
@@ -60,7 +57,7 @@ const allCVs = ref([
     {
         id: 'cv1',
         name: 'Erica Lee',
-        video: test1,
+        video: test2,
         stillImage: cat1,
         workExperience: [
             {
@@ -122,7 +119,7 @@ const collections = ref([
             {
                 id: 'cv1',
                 name: 'Erica Lee',
-                video: test1,
+                video: test2,
                 stillImage: cat1,
                 workExperience: [
                     {
@@ -160,7 +157,7 @@ const collections = ref([
             {
                 id: 'cv1',
                 name: 'Erica Lee',
-                video: test1,
+                video: test2,
                 stillImage: cat1,
                 workExperience: [
                     {
@@ -214,7 +211,7 @@ const collections = ref([
             {
                 id: 'cv1',
                 name: 'Erica Lee',
-                video: test1,
+                video: test2,
                 stillImage: cat1,
                 workExperience: [
                     {
