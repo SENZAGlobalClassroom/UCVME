@@ -37,7 +37,7 @@ import Likes from '@/components/Likes.vue';
     min-height: 100vh;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1028px) {
     .gray-background {
         padding-top: 0rem;
         padding-bottom: 0rem;

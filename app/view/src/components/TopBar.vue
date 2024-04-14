@@ -19,8 +19,18 @@
       </div>
 
       <ul class="sidebar-links">
-        <li><a href="javascript:void(0)" @click="goToSettingsPage">Settings Page</a></li>
-        <li><a href="javascript:void(0)" @click="goToHelpPage">Help Page</a></li>
+        <li><a href="javascript:void(0)" @click="goToHistoryPage">
+          <i class="pi pi-history"></i>
+          History</a>
+        </li>
+        <li><a href="javascript:void(0)" @click="goToSettingsPage">
+            <i class="pi pi-cog"></i>
+            Settings</a>
+        </li>
+        <li><a href="javascript:void(0)" @click="goToHelpPage">
+          <i class="pi pi-question-circle"></i>
+          Help Centre</a>
+        </li>
       </ul>
 
       <div class="user-panel">

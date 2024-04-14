@@ -138,7 +138,8 @@ function likePost(post) {
 }
 
 function applyJob(post) {
-
+// get the post's user email
+// send stylysed email informing the recipient that the user has applied for their job and a qr code/link to their CV
 }
 </script>
 

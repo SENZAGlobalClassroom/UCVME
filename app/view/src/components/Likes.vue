@@ -16,8 +16,7 @@
           <Galleria :value="images" :numVisible="3" containerStyle="max-width: 70dvh" :showThumbnails="false"
             :showIndicators="true" :changeItemOnIndicatorHover="true">
             <template #item="slotProps">
-              <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt"
-                style="width: 100%; display: block; border-radius: 25px;" />
+              <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" class="galleria-image" />
             </template>
           </Galleria>
         </div>
@@ -75,7 +74,6 @@ onMounted(() => {
 });
 </script>
 
-
 <style scoped>
 .title,
 .post-actions {
@@ -101,6 +99,12 @@ onMounted(() => {
   margin-bottom: 1rem;
 }
 
+.galleria-image {
+  width: 100%;
+  height: 35vh;
+  object-fit: cover;
+}
+
 .post-details {
   display: flex;
   flex-direction: column;
@@ -116,7 +120,7 @@ onMounted(() => {
 }
 
 .scroll-panel {
-  max-height: 40vh;
+  max-height: 35vh;
   overflow-y: scroll;
 }
 
@@ -126,14 +130,12 @@ onMounted(() => {
 
 .scroll-panel::-webkit-scrollbar-thumb {
   background-color: #ffffff;
-  border-radius: 10px;
   background-clip: padding-box;
   border: 2px solid transparent;
 }
 
 .scroll-panel::-webkit-scrollbar-track {
   background-color: #6d6d6d;
-  border-radius: 10px;
 }
 
 .video-content {
@@ -161,6 +163,12 @@ onMounted(() => {
   .video-content {
     padding: 1rem;
 
+  }
+
+  .galleria-image {
+    object-fit: cover;
+    width: 100dvw;
+    height: 35dvh;
   }
 }
 </style>

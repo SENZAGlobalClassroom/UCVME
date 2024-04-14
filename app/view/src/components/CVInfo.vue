@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="header-container">
-        <h1>{{ name }}</h1>
+        <h1>{{ firstname }} {{ lastname }}</h1>
         <div>
             <SpeedDial :model="items" direction="down" showIcon="pi pi-ellipsis-v" hideIcon="pi pi-ellipsis-h"
                 :tooltipOptions="{ position: 'left' }" />
@@ -86,7 +86,8 @@ const workExperiences = ref([
 
 const videoUrl = video
 
-const name = "Linda Smith"
+const firstname = "Linda"
+const lastname = "Smith"
 
 //SpeedDial menu 
 const sharingDialogue = ref(false);
