@@ -1,16 +1,18 @@
 <template>
-    <head>
-      <title>Help Centre</title>
-    </head>
-    <div class="gray-background">
+  <div class="gray-background">
       <TopBar></TopBar>
-        <div class="helpForm centered">
+      <Card class="card-container">
+          <template #header>
+              <h3>Help Centre</h3>
+          </template>
+          <template #content>
             <HelpForm @submit="handleHelpForm" />
-        </div>
-    <Footer></Footer>
-    </div>
+          </template>
+      </Card>
+      <Navbar></Navbar>
+  </div>
 </template>
-  
+
   
 <script>
   import HelpForm from '@/components/HelpForm.vue';
@@ -59,69 +61,30 @@
 </script>
 
 <style scoped>
-  .gray-background {
-    padding: 1rem;
+.card-container {
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.808);
+    align-items: center;
+}
+
+.gray-background {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 10dvw;
+    padding-right: 10dvw;
     background-color: #ededed98;
-    background-image: url('@/assets/Pastel_10.png');
+    background-image: url('@/assets/Pastel_15.png');
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
-  }
-  
-  .centered {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .space {
-    padding: 1rem;
-  }
-  
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  :deep .p-stepper .p-stepper-panels {
-    width: 100dvh;
-    margin-top: 1rem;
-    background-color: rgba(255, 255, 255, 0.703);
-    border-radius: 30px;
-  }
-  
-  .p-button {
-    background-image: linear-gradient(to right, #B993D6 0%, #8CA6DB 51%, #B993D6 100%);
-    margin: 10px;
-    padding: 15px 35px;
-    background-size: 200% auto;
-    color: white;
-    border-radius: 50px;
-  }
-  
-  
-  @media only screen and (max-width: 1200px) {
-    .p-stepper .p-stepper-panels {
-      width: 75%;
-      padding: 1rem;
+}
+
+@media (max-width: 767px) {
+    .gray-background {
+        padding-top: 0rem;
+        padding-bottom: 0rem;
+        padding-left: 0dvw;
+        padding-right: 0dvw;
     }
-  }
-  
-  @media only screen and (max-width: 768px) {
-    :deep .p-stepper .p-stepper-panels {
-      width: 100%;
-      padding: 1rem;
-    }
-  
-  
-    .p-button {
-      margin: 5px;
-      padding: 15px 15px;
-    }
-  
-    .centered {
-      align-items: normal;
-    }
-  }
+}
 </style>
-  

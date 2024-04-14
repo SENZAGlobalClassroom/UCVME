@@ -1,7 +1,7 @@
 <template>
     <div class="gray-background">
         <TopBar></TopBar>
-        <Card style="min-height: 80dvh; padding: 2rem; ">
+        <Card class="card-container">
             <template #header>
                 <h3 class="post-heading">Post a new job</h3>
             </template>
@@ -82,8 +82,17 @@ function postJob() {
 </script>
 
 <style scoped>
+.card-container {
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.838);
+    align-items: center;
+}
+
 .gray-background {
-    padding: 2rem 10vw;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 10dvw;
+    padding-right: 10dvw;
     background-color: #ededed98;
     background-image: url('@/assets/Pastel_2.png');
     background-size: cover;
@@ -100,7 +109,7 @@ function postJob() {
     display: flex;
     flex-direction: column;
     margin: auto;
-    max-width: 40dvw;
+    min-width: 40dvw;
 }
 
 .pictures-container {
@@ -148,10 +157,6 @@ function postJob() {
 }
 
 @media (max-width: 1100px) {
-    .gray-background {
-        padding: 1rem;
-    }
-
     .form-container {
         padding: 0;
         max-width: 100%;
@@ -159,6 +164,14 @@ function postJob() {
 
     .pictures-container {
         gap: 0.5rem;
+    }
+}
+@media (max-width: 767px) {
+    .gray-background {
+        padding-top: 0rem;
+        padding-bottom: 0rem;
+        padding-left: 0dvw;
+        padding-right: 0dvw;
     }
 }
 </style>

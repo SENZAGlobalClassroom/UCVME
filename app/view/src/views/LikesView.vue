@@ -18,7 +18,7 @@ import Likes from '@/components/Likes.vue';
     </div>
 </template>
 
-<style>
+<style scoped>
 .card-container {
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.808);

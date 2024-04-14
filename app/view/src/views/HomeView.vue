@@ -11,8 +11,7 @@ import Home from '@/components/Home.vue';
     </div>
 </template>
 
-<style>
-
+<style scoped>
 .gray-background {
     padding-top: 2rem;
     padding-bottom: 2rem;

@@ -1,6 +1,5 @@
 <template>
   <div class="setting-form">
-    <h2>Update Settings</h2>
     <form @submit.prevent="onSubmit">
       <div class="form-group">
         <label for="username">Username</label>
@@ -60,48 +59,80 @@
   }
 </script>
 
+
 <style scoped>
-.settings-form {
-  width: 100%;
-  max-width: 400px;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.form-group input,
+.button {
+  width: calc(100% - 20px); 
+  max-width: 300px; 
+  margin: 10px auto; 
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.form-group {
-  margin-bottom: 1rem;
+.form-group input {
   width: 100%;
+  min-width: 400px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input,
 .form-group select {
   width: 100%;
-  padding: 0.5rem;
+  min-width: 400px;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 25px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.form-group select:focus {
+  border-color: rgb(132, 87, 187);
+  outline: none;
 }
 
 .btn {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+  display: block;
+  background: #ffffff;
+  border: 1px solid rgb(132, 87, 187);
+  color: #2e2e2e;
+  padding: 0.8rem;
+  border-radius: 25px;
   cursor: pointer;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  margin-top: 1rem;
 }
-
 .btn-danger {
-  background-color: red;
-  color: white;
+  background: #f73737;
+  border: 1px solid rgb(255, 255, 255);
+  color: #ffffff;
+  font-weight: bold;
 }
 
+
+@media (max-width: 766px) {
+  .form-group input,
+  .btn {
+    width: 70dvw;
+    max-width: none;
+  }
+
+  .form-group {
+    padding: 0 20px; 
+  }
+
+}
 </style>
