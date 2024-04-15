@@ -24,8 +24,8 @@
         </select>
       </div>
 
-      <button type="submit" class="btn">Update Settings</button>
-      <button type="button" class="btn btn-danger" @click="onDeleteAccount">Delete Account</button>
+      <button type="submit" class="btn">Update Profile</button>
+      <button type="button" class="btn btn-danger" @click="onDeleteAccount">Deactivate Account</button>
     </form>
   </div>
 </template>

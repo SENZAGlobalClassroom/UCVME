@@ -28,7 +28,7 @@ const handleSignUp = (credentials) => {
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.808);
     align-items: center;
-    max-width: 40dvw;
+    max-width: 25dvw;
     margin: auto;
 }
 

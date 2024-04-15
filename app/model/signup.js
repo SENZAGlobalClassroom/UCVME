@@ -21,8 +21,8 @@ const signupModel = function(userData, response) {
         console.log('Connected to database'); // console log database connected
 
         client.query(
-            'INSERT INTO signup (signup_username, signup_email, signup_password) VALUES ($1, $2, $3)',
-            // insert query to add a new user to the signup table, $1, $2, $3 are placeholders for the user inputs
+            'INSERT INTO profile (profile_username, profile_email, profile_password) VALUES ($1, $2, $3)',
+            // insert query to add a new user to the profile table, $1, $2, $3 are placeholders for the user inputs
             [
                 userData.username, // stores in userData
                 userData.email,

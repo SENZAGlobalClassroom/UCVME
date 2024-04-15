@@ -23,6 +23,10 @@
 
 <style scoped>
 .card-container {
+    margin: auto;
+    margin-top: 2dvw;
+    width: 50dvw;
+    min-width: 500px;
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.808);
     align-items: center;
@@ -40,12 +44,18 @@
     min-height: 100vh;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
     .gray-background {
         padding-top: 0rem;
         padding-bottom: 0rem;
         padding-left: 0dvw;
         padding-right: 0dvw;
+    }
+
+    .card-container {
+      max-width: 500px;
+      min-width: 425px;
+      width: 75dvw;
     }
 }
 </style>

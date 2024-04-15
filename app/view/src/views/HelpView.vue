@@ -13,23 +13,23 @@
   </div>
 </template>
 
-  
+
 <script>
   import HelpForm from '@/components/HelpForm.vue';
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  
+
   export default {
     components: {
       HelpForm
     },
     setup() {
       const router = useRouter();
-  
+
       const sendDataToDatabase = () => {
         // Send data here @jia
       };
-  
+
       const completeHelpForm = async () => {
         try {
           await sendDataToDatabase();
@@ -39,7 +39,7 @@
           console.error('Error while completing Help Form:', error);
         }
       };
-  
+
       const name = ref("");
       const updateName = (value) => {
         name.value = value;
@@ -50,7 +50,7 @@
         email.value = value;
         console.log(email.value);
       };
-  
+
       return {
         name,
         email,
@@ -62,6 +62,10 @@
 
 <style scoped>
 .card-container {
+    margin: auto;
+    margin-top: 2dvw;
+    width: 30dvw;
+    min-width: 500px;
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.808);
     align-items: center;
@@ -86,5 +90,12 @@
         padding-left: 0dvw;
         padding-right: 0dvw;
     }
+
+    .card-container {
+      max-width: 500px;
+      min-width: 425px;
+      width: 75dvw;
+    }
 }
+
 </style>
