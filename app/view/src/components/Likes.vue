@@ -1,8 +1,9 @@
 <template>
-  <div class="header">
+ <div class="header" :class="{ 'rounded-header': !likedPosts.length }">
     <h3>Liked Posts</h3>
+    <h4 v-if="!likedPosts.length" style="padding: 2rem;">No Posts Added</h4>
   </div>
-  <Card class="card" v-for="post in likedPosts" :key="post.id">
+  <Card class="card" v-for="post in likedPosts" :key="post.id" v-if="likedPosts.length">
     <template #header>
       <div style="display: flex; align-items: center;">
         <Avatar label="E" size="large" />
@@ -86,11 +87,18 @@ onMounted(() => {
 
 <style scoped>
 .header{
-  background-color: #ffffff;
+  background-color: #ffffffec;
   padding: 2rem;
   text-align: center;
   color: #454545;
   border-radius: 25px 25px 0px 0px;
+}
+.rounded-header {
+  border-radius: 10px;
+  min-height: 80dvh;
+  max-width: 80dvw;
+  margin: auto;
+  box-shadow: 0 2px 2px 0 rgba(93, 93, 93, 0.2);
 }
 .title,
 .post-actions {
