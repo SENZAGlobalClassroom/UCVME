@@ -6,25 +6,12 @@ import Likes from '@/components/Likes.vue';
 <template>
     <div class="gray-background">
         <TopBar></TopBar>
-        <Card class="card-container">
-            <template #header>
-                <h3>Liked Posts</h3>
-            </template>
-            <template #content>
-            <Likes></Likes>
-            </template>
-        </Card>
+        <Likes></Likes>
         <Navbar></Navbar>
     </div>
 </template>
 
 <style scoped>
-.card-container {
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.808);
-    align-items: center;
-}
-
 .gray-background {
     padding-top: 2rem;
     padding-bottom: 2rem;

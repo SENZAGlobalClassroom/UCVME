@@ -3,8 +3,8 @@
     <Card class="card" v-for="post in posts" :key="post.id">
       <template #header>
         <div style="display: flex; align-items: center;">
-          <Avatar label="P" size="large" />
-          <h3 style="padding-left: 1rem;" class="user-name">{{ post.name }}</h3>
+          <Avatar label="E" size="large" />
+          <h3 style="padding-left: 1rem;" class="user-name">{{ post.firstname }} {{ post.lastname }}</h3>
         </div>
       </template>
       <template #content>
@@ -13,13 +13,19 @@
           <h4>{{ post.date }}</h4>
         </div>
         <br><br>
-        <div class="video-content">
+        <div class="galleria-content" v-if="!post.video && post.images.length">
           <Galleria :value="post.images" :numVisible="3" containerStyle="max-width: 70dvh" :showThumbnails="false"
             :showIndicators="true" :changeItemOnIndicatorHover="true">
             <template #item="slotProps">
               <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" class="galleria-image" />
             </template>
           </Galleria>
+        </div>
+        <div class="video-content" v-if="post.video">
+          <video class="video" controls>
+              <source :src="post.video" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
         </div>
         <div class="post-details">
           <div class="post-content">
@@ -39,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { likedPosts } from '@/store';
 
 // Test Data The images should come from db
@@ -47,13 +53,21 @@ import cat3 from '@/assets/cat3.jpg';
 import cat1 from '@/assets/cat5.jpeg';
 import garden1 from '@/assets/garden1.jpg';
 import garden2 from '@/assets/garden2.jpg';
+import video from '@/assets/test3.mp4';
 
 // Test data by Mate, all these should come from db
-
 const posts = ref([
   {
     id: 1,
-    name: 'Jane Kim',
+    firstname: "Erica",
+    lastname: "Harris",
+    title: 'Your perfect pet sitter',
+    video: video,
+  },
+  {
+    id: 2,
+    firstname: "Joe",
+    lastname: "Alade",
     title: 'Looking for a cat sitter',
     date: 'Needed for 22/04/2024, 16:00',
     description: "<strong>Job Description:</strong><br>" +
@@ -92,8 +106,9 @@ const posts = ref([
     ]
   },
   {
-    id: 2,
-    name: 'Steve Lee',
+    id: 3,
+    firstname: "Steve",
+    lastname: "Lee",
     title: 'Backyard Cleanup Specialist Needed!',
     date: 'Needed for 14/04/2024',
     description: "<strong>Job Description:</strong><br>" +
@@ -138,8 +153,8 @@ function likePost(post) {
 }
 
 function applyJob(post) {
-// get the post's user email
-// send stylysed email informing the recipient that the user has applied for their job and a qr code/link to their CV
+  // get the post's user email
+  // send stylysed email informing the recipient that the user has applied for their job and a qr code/link to their CV
 }
 </script>
 
@@ -163,15 +178,32 @@ function applyJob(post) {
   flex-direction: row;
 }
 
-.video-content {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
 .galleria-image {
   width: 100%;
   height: 35vh;
   object-fit: cover;
+}
+
+.galleria-content {
+  float: left;
+  padding-right: 1rem;
+  max-width: 30dvw;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.video-content {
+  width: 70%;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+  border-radius: 25px; 
+  overflow: hidden; 
+  margin: auto;
+}
+
+video {
+  width: 100%; 
+  height: auto;
+  display: block;
 }
 
 .post-details {
@@ -207,31 +239,25 @@ function applyJob(post) {
   background-color: #6d6d6d;
 }
 
-.video-content {
-  float: left;
-  padding-right: 1rem;
-  max-width: 30dvw;
-}
 
 @media (max-width: 1024px) {
   .title {
     display: inline;
   }
 
-  .video-content {
+  .galleria-content {
     float: none;
   }
 
-  .video-content,
+  .galleria-content,
   .post-details {
     display: flex;
     justify-content: center;
     max-width: 100%;
   }
 
-  .video-content {
+  .galleria-content {
     padding: 1rem;
-
   }
 
   .galleria-image {
@@ -239,5 +265,11 @@ function applyJob(post) {
     width: 100dvw;
     height: 35dvh;
   }
+
+  .video-content {
+  width: 100%;
+  margin: auto;
+}
+
 }
 </style>

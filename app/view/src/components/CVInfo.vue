@@ -69,19 +69,7 @@ const workExperiences = ref([
         description: "I have worked previously as a pet sitter for my friend Anna. She was gone on a holiday to France for 2 weeks and I had the pleasure to take care of her 3 lovely cats, Samuel, Candy and Lilly. I played with them every day for 1 hour before their morning meal. I made sure they have fresh water and are brushed daily. I also clipped their nails and made sure their toilet is always clean. See the cute pictures I took of them. I also sent daily updates to Anna with video and pictures of her babies happy.",
         startDate: "10/03/23",
         endDate: "20/03/23"
-    },
-    {
-        jobTitle: "Pet Sitter",
-        description: "I have worked previously as a pet sitter for my friend Anna. She was gone on a holiday to France for 2 weeks and I had the pleasure to take care of her 3 lovely cats, Samuel, Candy and Lilly. I played with them every day for 1 hour before their morning meal. I made sure they have fresh water and are brushed daily. I also clipped their nails and made sure their toilet is always clean. See the cute pictures I took of them. I also sent daily updates to Anna with video and pictures of her babies happy.",
-        startDate: "10/03/23",
-        endDate: "20/03/23"
-    },
-    {
-        jobTitle: "Pet Sitter",
-        description: "I have worked previously as a pet sitter for my friend Anna. She was gone on a holiday to France for 2 weeks and I had the pleasure to take care of her 3 lovely cats, Samuel, Candy and Lilly. I played with them every day for 1 hour before their morning meal. I made sure they have fresh water and are brushed daily. I also clipped their nails and made sure their toilet is always clean. See the cute pictures I took of them. I also sent daily updates to Anna with video and pictures of her babies happy.",
-        startDate: "10/03/23",
-        endDate: "20/03/23"
-    },
+    }
 ]);
 
 const videoUrl = video

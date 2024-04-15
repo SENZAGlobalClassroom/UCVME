@@ -26,9 +26,9 @@ import Wallet from '@/components/Wallet.vue';
 import test2 from '@/assets/test2.mp4';
 import test3 from '@/assets/test3.mp4';
 
-import cat1 from '@/assets/cat1.jpg';
-import cat2 from '@/assets/cat2.jpg';
-import cat3 from '@/assets/cat3.jpg';
+import person1 from '@/assets/wonyoung.png';
+import person2 from '@/assets/person2.jpg';
+import person3 from '@/assets/person4.png';
 
 // funcs to handle emits from Wallet
 const handleNewCollection = (collectionName) => {
@@ -58,7 +58,7 @@ const allCVs = ref([
         id: 'cv1',
         name: 'Erica Lee',
         video: test2,
-        stillImage: cat1,
+        stillImage: person1,
         workExperience: [
             {
                 jobTitle: 'Hairstylist',
@@ -74,7 +74,7 @@ const allCVs = ref([
         id: 'cv2',
         name: 'John Doe',
         video: test2,
-        stillImage: cat2,
+        stillImage: person2,
         workExperience: [
             {
                 jobTitle: 'Gardener',
@@ -90,7 +90,7 @@ const allCVs = ref([
         id: 'cv3',
         name: 'Amanda Doe',
         video: test3,
-        stillImage: cat3,
+        stillImage: person3,
         workExperience: [
             {
                 jobTitle: 'Pet Sitter',
@@ -120,7 +120,7 @@ const collections = ref([
                 id: 'cv1',
                 name: 'Erica Lee',
                 video: test2,
-                stillImage: cat1,
+                stillImage: person1,
                 workExperience: [
                     {
                         jobTitle: 'Hairstylist',
@@ -136,7 +136,7 @@ const collections = ref([
                 id: 'cv2',
                 name: 'John Doe',
                 video: test2,
-                stillImage: cat2,
+                stillImage: person2,
                 workExperience: [
                     {
                         jobTitle: 'Gardener',
@@ -158,7 +158,7 @@ const collections = ref([
                 id: 'cv1',
                 name: 'Erica Lee',
                 video: test2,
-                stillImage: cat1,
+                stillImage: person1,
                 workExperience: [
                     {
                         jobTitle: 'Hairstylist',
@@ -174,7 +174,7 @@ const collections = ref([
                 id: 'cv2',
                 name: 'John Doe',
                 video: test2,
-                stillImage: cat2,
+                stillImage: person2,
                 workExperience: [
                     {
                         jobTitle: 'Gardener',
@@ -190,7 +190,7 @@ const collections = ref([
                 id: 'cv3',
                 name: 'Amanda Doe',
                 video: test3,
-                stillImage: cat3,
+                stillImage: person3,
                 workExperience: [
                     {
                         jobTitle: 'Pet Sitter',
@@ -212,7 +212,7 @@ const collections = ref([
                 id: 'cv1',
                 name: 'Erica Lee',
                 video: test2,
-                stillImage: cat1,
+                stillImage: person1,
                 workExperience: [
                     {
                         jobTitle: 'Hairstylist',

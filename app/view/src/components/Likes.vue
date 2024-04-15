@@ -1,39 +1,48 @@
 <template>
-    <Card class="card" v-for="post in likedPosts" :key="post.id">
-      <template #header>
-        <div style="display: flex; align-items: center;">
-          <Avatar label="P" size="large" />
-          <h3 style="padding-left: 1rem;" class="user-name">{{ post.name }}</h3>
+  <div class="header">
+    <h3>Liked Posts</h3>
+  </div>
+  <Card class="card" v-for="post in likedPosts" :key="post.id">
+    <template #header>
+      <div style="display: flex; align-items: center;">
+        <Avatar label="E" size="large" />
+        <h3 style="padding-left: 1rem;" class="user-name">{{ post.firstname }} {{ post.lastname }}</h3>
+      </div>
+    </template>
+    <template #content>
+      <div class="title">
+        <h2>{{ post.title }}</h2> <br>
+        <h4>{{ post.date }}</h4>
+      </div>
+      <br><br>
+      <div class="galleria-content" v-if="!post.video && post.images.length">
+        <Galleria :value="post.images" :numVisible="3" containerStyle="max-width: 70dvh" :showThumbnails="false"
+          :showIndicators="true" :changeItemOnIndicatorHover="true">
+          <template #item="slotProps">
+            <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" class="galleria-image" />
+          </template>
+        </Galleria>
+      </div>
+      <div class="video-content" v-if="post.video">
+        <video class="video" controls>
+          <source :src="post.video" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="post-details">
+        <div class="post-content">
+          <p v-html="post.description" class="scroll-panel"></p>
         </div>
-      </template>
-      <template #content>
-        <div class="title">
-          <h2>{{ post.title }}</h2> <br>
-          <h4>{{ post.date }}</h4>
-        </div>
-        <br><br>
-        <div class="video-content">
-          <Galleria :value="images" :numVisible="3" containerStyle="max-width: 70dvh" :showThumbnails="false"
-            :showIndicators="true" :changeItemOnIndicatorHover="true">
-            <template #item="slotProps">
-              <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" class="galleria-image" />
-            </template>
-          </Galleria>
-        </div>
-        <div class="post-details">
-          <div class="post-content">
-            <p v-html="post.description" class="scroll-panel"></p>
-          </div>
-        </div>
-      </template>
-      <template #footer>
-        <div class="post-actions">
-          <Button label="&nbsp Dislike" @click="dislikePost(post)" icon="pi pi-heart-fill" severity="secondary" text rounded
-            aria-label="Dislike" />
-          <Button label="&nbsp  Apply" icon="pi pi-send" severity="secondary" text rounded aria-label="Apply" />
-        </div>
-      </template>
-    </Card>
+      </div>
+    </template>
+    <template #footer>
+      <div class="post-actions">
+        <Button label="&nbsp Like" @click="likePost(post)" icon="pi pi-heart" severity="secondary" text rounded
+          aria-label="Like" />
+        <Button label="&nbsp  Apply" icon="pi pi-send" severity="secondary" text rounded aria-label="Apply" />
+      </div>
+    </template>
+  </Card>
 </template>
 
 <script setup>
@@ -74,7 +83,15 @@ onMounted(() => {
 });
 </script>
 
+
 <style scoped>
+.header{
+  background-color: #ffffff;
+  padding: 2rem;
+  text-align: center;
+  color: #454545;
+  border-radius: 25px 25px 0px 0px;
+}
 .title,
 .post-actions {
   display: flex;
@@ -87,6 +104,8 @@ onMounted(() => {
   margin: auto;
   display: flex;
   flex-direction: column;
+  border-radius: 0px;
+
 }
 
 .post-card {
@@ -94,15 +113,32 @@ onMounted(() => {
   flex-direction: row;
 }
 
-.video-content {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
 .galleria-image {
   width: 100%;
   height: 35vh;
   object-fit: cover;
+}
+
+.galleria-content {
+  float: left;
+  padding-right: 1rem;
+  max-width: 30dvw;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.video-content {
+  width: 70%;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  overflow: hidden;
+  margin: auto;
+}
+
+video {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .post-details {
@@ -138,31 +174,25 @@ onMounted(() => {
   background-color: #6d6d6d;
 }
 
-.video-content {
-  float: left;
-  padding-right: 1rem;
-  max-width: 30dvw;
-}
 
 @media (max-width: 1024px) {
   .title {
     display: inline;
   }
 
-  .video-content {
+  .galleria-content {
     float: none;
   }
 
-  .video-content,
+  .galleria-content,
   .post-details {
     display: flex;
     justify-content: center;
     max-width: 100%;
   }
 
-  .video-content {
+  .galleria-content {
     padding: 1rem;
-
   }
 
   .galleria-image {
@@ -170,5 +200,11 @@ onMounted(() => {
     width: 100dvw;
     height: 35dvh;
   }
+
+  .video-content {
+    width: 100%;
+    margin: auto;
+  }
+
 }
 </style>
