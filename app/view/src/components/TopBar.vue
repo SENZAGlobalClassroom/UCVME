@@ -46,16 +46,34 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const visible = ref(false);
 const router = useRouter();
+const navbarBackground = ref('transparent');
 
 const toggleMenu = () => {
   visible.value = !visible.value;
 };
 
+const handleScroll = () => {
+  if (window.scrollY > 0) {
+    navbarBackground.value = 'white';
+  } else {
+    navbarBackground.value = 'transparent';
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
+
+// routing
 const goToSettingsPage = () => {
   router.push({ name: 'SettingView' });
   visible.value = false;
@@ -88,6 +106,11 @@ const username = ref('Stelle Robbins');
   align-items: center;
   justify-content: space-between;
   padding: 10px;
+  position: sticky; 
+  top: 0;
+  width: 100%;
+  z-index: 1000; 
+  background-color: v-bind(navbarBackground);
 }
 
 .hamburger-menu {
@@ -157,5 +180,9 @@ const username = ref('Stelle Robbins');
 
 .sign-out-btn .pi {
   font-size: 1.5em;
+}
+
+@media (max-width: 767px) {
+
 }
 </style>
