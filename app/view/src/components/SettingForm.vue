@@ -15,6 +15,10 @@
         <label for="password">Password</label>
         <input id="password" v-model="user.password" type="password" required>
       </div>
+
+      <div class="form-group">
+        <input type="password" v-model="confirmPassword" placeholder="Confirm Password" required>
+      </div>
       
       <div class="form-group">
         <label for="theme">Theme</label>
@@ -38,13 +42,17 @@
           username: '',
           email: '',
           password: '',
+          confirmPassword: '',
           theme: 'light', // Default theme
         },
       };
     },
     methods: {
       onSubmit() {
-        // Implement submission logic here
+        if (this.password !== this.confirmPassword) {
+          alert('Passwords do not match');
+          return;
+        }
 
         alert('Settings updated!');
       },
