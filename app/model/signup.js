@@ -9,7 +9,7 @@ const signupModel = function(userData, response) {
         host: 'localhost',
         database: 'postgres',
         password: 'Sp00ky!',
-        port: 54321 // default PostgreSQL port
+        port: 5432 // default PostgreSQL port
     });
 
     pool.connect((err, client, release) => { // Connect to the database
