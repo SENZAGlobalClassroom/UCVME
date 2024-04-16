@@ -61,7 +61,7 @@ export default {
       console.log('Password:', this.password);
 
       // Send POST request to your server
-      fetch('/signup', {
+      fetch('http://localhost:8080/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

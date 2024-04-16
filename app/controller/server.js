@@ -7,9 +7,10 @@ const bcrypt = require('bcrypt'); // using bcrypt for security when storing pass
 // const cookieParser = require('cookie-parser'); // using cookie parser to use cookies for user sessions
 // const jwt = require('jsonwebtoken'); // using jsonwebtoken to use token for user authentication for private access
 const app = express(); // set app as express js
+const cors = require('cors');
 
 // serve static file in view/index.html
-const staticPath = path.join(__dirname, '../view/dist'); // set index path to index.html in view directory
+const staticPath = path.join(__dirname, '../'); // set index path to index.html in view directory
 const saltRounds = 10; // salt round set to 10 for hashing password
 
 var model = require('../model/index'); 
@@ -17,12 +18,12 @@ var model = require('../model/index');
 app.use(express.static(staticPath)); // configure app to serve static files from the view directory
 app.use(express.json()); // handle json and form data
 app.use(express.urlencoded({ extended: true })); 
+app.use(cors());
 
 // when i refresh any pages it cannot GET / the route
 app.get('/home', function (req, res) 
 {
   console.log('Home page');
-  res.sendFile(path.join(staticPath, 'index.html'));
 });
 
 // serve login route using express
@@ -32,11 +33,15 @@ app.get('/login', function (req, res)
   res.sendFile(path.join(staticPath, 'index.html')); // send index file
 });
 
-// serve register route using express
-app.get('/signup', function (req, res) 
-{
-  console.log('Signup page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
+// Handle POST request to /signup
+app.post('/signup', function (req, res) {
+  console.log('A signup attempt has been made!');
+  console.log('Received data:', req.body); // Log the posted data
+
+  
+
+  // You can add validation and further processing here
+  res.status(200).json({ message: "Signup successful!" });
 });
 
 // serve create cv route using express
