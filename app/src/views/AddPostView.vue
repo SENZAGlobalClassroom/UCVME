@@ -4,59 +4,45 @@
         <Card class="card-container">
             <template #header>
                 <h3 class="post-heading">Create a New Post</h3>
-                <div class="form-item">
-                    <select v-model="postType">
-                        <option v-for="type in postTypes" :value="type.code" :key="type.code">{{ type.name }}</option>
-                    </select>
-                </div>
+                <div class="form-item"></div>
             </template>
             <template #content>
                 <div class="form-container">
+                    <div class="pictures-container">
+                        <div v-for="(picture, index) in media" :key="index" class="picture-preview">
+                            <img :src="picture.url" class="image-preview" />
+                            <Button icon="pi pi-times" class="remove-picture-button" @click="removeMedia(index)" />
+                        </div>
+                        <Button icon="pi pi-plus" class="add-picture-button" @click="() => mediaInput.click()" />
+                    </div>
+                    
+                    <div class="media-container">
+                        <video v-if="video.url" controls class="video-preview">
+                            <source :src="video.url" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <Button icon="pi pi-times" v-if="video.url" class="remove-video-button"
+                            @click="removeVideo()" />
+                        <Button icon="pi pi-plus" class="add-video-button" v-else
+                            @click="() => videoInput.click()" />
+                    </div><br>
+
                     <div class="form-item">
                         <input placeholder="Title" v-model="title" />
-                    </div>
-                    <br>
+                    </div><br>
+                    
                     <div v-if="postType === 'JOB'">
                         <div class="form-item">
-                            <select v-model="selectedCategory">
-                                <option v-for="type in categories" :value="type.code" :key="type.code">{{ type.name }}
-                                </option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="form-item">
                             <Calendar placeholder="Job date" v-model="jobDate" />
-                        </div>
-                        <br>
+                        </div><br>
+                        
                         <div class="form-item">
                             <textarea placeholder="Job description" v-model="description" style="min-height: 5rem;" />
                         </div>
                         <br>
-                        <div class="pictures-container">
-                            <div v-for="(picture, index) in media" :key="index" class="picture-preview">
-                                <img :src="picture.url" class="image-preview" />
-                                <Button icon="pi pi-times" class="remove-picture-button" @click="removeMedia(index)" />
-                            </div>
-                            <Button icon="pi pi-plus" class="add-picture-button" @click="() => mediaInput.click()" />
-                        </div>
                         <input type="file" ref="mediaInput" hidden @change="handleMediaUpload" accept="image/*" />
-                    </div>
-                    <div v-if="postType === 'PROMO'">
-                        <InputTextarea placeholder="Short description" v-model="description" rows="2"></InputTextarea>
-                        <br>
-                        <div class="media-container">
-                            <video v-if="video.url" controls class="video-preview">
-                                <source :src="video.url" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <Button icon="pi pi-times" v-if="video.url" class="remove-video-button"
-                                @click="removeVideo()" />
-                            <Button icon="pi pi-plus" class="add-video-button" v-else
-                                @click="() => videoInput.click()" />
-                        </div>
-                        <input type="file" ref="videoInput" hidden @change="handleVideoUpload" accept="video/*" />
-                    </div>
-                    <br>
+                    </div><br>
+
                     <Button label="Post" class="post-button" @click="post" />
                 </div>
             </template>
@@ -73,17 +59,8 @@ const postTypes = ref([
     { name: 'Self Promotion', code: 'PROMO' }
 ]);
 
-const categories = ref([
-    { name: 'Tech', code: 'TECH' },
-    { name: 'Healthcare', code: 'HC' },
-    { name: 'Education', code: 'EDU' },
-    { name: 'Construction', code: 'CONS' },
-    { name: 'Finance', code: 'FIN' }
-]);
-
 const postType = ref('JOB');
 const title = ref('');
-const selectedCategory = ref('TECH');
 const jobDate = ref(null);
 const description = ref('');
 const media = ref([]);
