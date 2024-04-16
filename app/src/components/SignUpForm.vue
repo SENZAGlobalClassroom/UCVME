@@ -102,7 +102,7 @@ export default {
         } else {
           // Success logic here
           alert('Signup successful!');
-          this.$router.push('/');
+          this.$router.push('/CVProcess');
         }
       })
     }

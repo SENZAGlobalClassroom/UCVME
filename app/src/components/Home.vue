@@ -62,6 +62,9 @@ const posts = ref([
     firstname: "Erica",
     lastname: "Harris",
     title: 'Your perfect pet sitter',
+    date: 'Needed for 22/04/2024, 16:00',
+    description: "<strong>Job Description:</strong><br>" +
+      "Hey there! Are you someone who finds solace in the purrs of content kitties? We’re looking for a kind-hearted individual to pamper our two furry friends while we embark on a two-week adventure. If you're a cat whisperer who can make our fur babies feel like royalty, this gig is purr-fect for you!<br><br>",
     video: video,
   },
   {
@@ -169,8 +172,10 @@ function applyJob(post) {
 .card {
   padding: 1rem;
   margin: auto;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
+  width: 120vh;
 }
 
 .post-card {
@@ -193,11 +198,13 @@ function applyJob(post) {
 }
 
 .video-content {
-  width: 70%;
+  width: 90%;
   box-shadow: 0 4px 25px rgba(0,0,0,0.1);
   border-radius: 25px; 
   overflow: hidden; 
   margin: auto;
+  margin-bottom: 30px;
+
 }
 
 video {
@@ -241,6 +248,15 @@ video {
 
 
 @media (max-width: 1024px) {
+  .card {
+    padding: 1rem;
+    margin: auto;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 100vh;
+  }
+
   .title {
     display: inline;
   }
@@ -269,6 +285,7 @@ video {
   .video-content {
   width: 100%;
   margin: auto;
+  margin-bottom: 30px;
 }
 
 }
