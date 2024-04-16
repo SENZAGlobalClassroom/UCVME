@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { jwtDecode } from 'jwt-decode'
 import CVProcessView from '../views/CVProcessView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignUpView from '../views/SignUpView.vue'
@@ -17,7 +18,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
@@ -32,22 +34,26 @@ const router = createRouter({
     {
       path: '/cvProcess',
       name: 'CVProcess',
-      component: CVProcessView
+      component: CVProcessView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/CVComplete',
       name: 'CVComplete',
-      component: CVProcessCompleteView
+      component: CVProcessCompleteView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/CVUsername',
       name: 'CVUsername',
-      component: CV
+      component: CV,
+      meta: { requiresAuth: true }
     },
     {
       path: '/wallet',
       name: 'WalletView',
-      component: WalletView
+      component: WalletView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/help',
@@ -57,27 +63,48 @@ const router = createRouter({
     {
       path: '/settings',
       name: 'SettingView',
-      component: SettingView
+      component: SettingView,
+      meta: { requiresAuth: true }
     }, 
     {
       path: '/likes',
       name: 'LikesView',
-      component: LikesView
+      component: LikesView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/addpost',
       name: 'AddPostView',
-      component: AddPostView
+      component: AddPostView,
+      meta: { requiresAuth: true }
     }
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue')
-    // }
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+
+  // If the webpage the user is trying to go to is marked as protected, verify token
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const { exp } = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (exp < currentTime) {
+          next('/login');  // Token is expired, need a new token
+        } else {
+          next();  // Token exists and is valid
+        }
+      } catch (error) {
+        console.error('Token decoding failed:', error);
+        next('/login');  // Push to log in to cover the error
+      }
+    } else {
+      next('/login');  // No token found, go to login
+    }
+  } else { // Not protected, just go there
+    next();  
+  }
+});
 
 export default router
