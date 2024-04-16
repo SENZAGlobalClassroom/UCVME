@@ -3,39 +3,75 @@
         <TopBar></TopBar>
         <Card class="card-container">
             <template #header>
-                <h3 class="post-heading">Post a new job</h3>
+                <h3 class="post-heading">Create a New Post</h3>
+                <div class="form-item">
+                    <select v-model="postType">
+                        <option v-for="type in postTypes" :value="type.code" :key="type.code">{{ type.name }}</option>
+                    </select>
+                </div>
             </template>
             <template #content>
                 <div class="form-container">
-                    <InputText placeholder="Job title" v-model="jobTitle" />
-                    <br>
-                    <Dropdown placeholder="Job category" v-model="selectedCategory" :options="categories"
-                        optionLabel="name" />
-                    <br>
-                    
-                    <Calendar placeholder="Job date" v-model="jobDate" />
-                    <br>
-                    <InputText placeholder="Job description" v-model="jobDescription" style="min-height: 5rem;" />
-                    <br>
-                    <div class="pictures-container">
-                        <div v-for="(picture, index) in jobPictures" :key="index" class="picture-preview">
-                            <img :src="picture.url" class="image-preview" />
-                            <Button icon="pi pi-times" class="remove-picture-button" @click="removePicture(index)" />
-                        </div>
-                        <Button icon="pi pi-plus" class="add-picture-button" @click="() => fileInput.click()" />
+                    <div class="form-item">
+                        <input placeholder="Title" v-model="title" />
                     </div>
-                    <input type="file" ref="fileInput" hidden @change="handlePictureUpload" accept="image/*" />
-                    <Button label="Post" class="post-button" @click="postJob" />
+                    <br>
+                    <div v-if="postType === 'JOB'">
+                        <div class="form-item">
+                            <select v-model="selectedCategory">
+                                <option v-for="type in categories" :value="type.code" :key="type.code">{{ type.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-item">
+                            <Calendar placeholder="Job date" v-model="jobDate" />
+                        </div>
+                        <br>
+                        <div class="form-item">
+                            <textarea placeholder="Job description" v-model="description" style="min-height: 5rem;" />
+                        </div>
+                        <br>
+                        <div class="pictures-container">
+                            <div v-for="(picture, index) in media" :key="index" class="picture-preview">
+                                <img :src="picture.url" class="image-preview" />
+                                <Button icon="pi pi-times" class="remove-picture-button" @click="removeMedia(index)" />
+                            </div>
+                            <Button icon="pi pi-plus" class="add-picture-button" @click="() => mediaInput.click()" />
+                        </div>
+                        <input type="file" ref="mediaInput" hidden @change="handleMediaUpload" accept="image/*" />
+                    </div>
+                    <div v-if="postType === 'PROMO'">
+                        <InputTextarea placeholder="Short description" v-model="description" rows="2"></InputTextarea>
+                        <br>
+                        <div class="media-container">
+                            <video v-if="video.url" controls class="video-preview">
+                                <source :src="video.url" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <Button icon="pi pi-times" v-if="video.url" class="remove-video-button"
+                                @click="removeVideo()" />
+                            <Button icon="pi pi-plus" class="add-video-button" v-else
+                                @click="() => videoInput.click()" />
+                        </div>
+                        <input type="file" ref="videoInput" hidden @change="handleVideoUpload" accept="video/*" />
+                    </div>
+                    <br>
+                    <Button label="Post" class="post-button" @click="post" />
                 </div>
             </template>
-
         </Card>
         <Navbar></Navbar>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+
+const postTypes = ref([
+    { name: 'Job Post', code: 'JOB' },
+    { name: 'Self Promotion', code: 'PROMO' }
+]);
 
 const categories = ref([
     { name: 'Tech', code: 'TECH' },
@@ -45,38 +81,59 @@ const categories = ref([
     { name: 'Finance', code: 'FIN' }
 ]);
 
-const jobTitle = ref('');
-const selectedCategory = ref(null);
+const postType = ref('JOB');
+const title = ref('');
+const selectedCategory = ref('TECH');
 const jobDate = ref(null);
-const jobDescription = ref('');
-const jobPictures = ref([]);
-const fileInput = ref(null);
+const description = ref('');
+const media = ref([]);
+const video = ref({});
+const mediaInput = ref(null);
+const videoInput = ref(null);
 
-function handlePictureUpload(event) {
+watch(postType, (newVal, oldVal) => {
+    console.log('postType changed from', oldVal, 'to', newVal);
+});
+
+function handleMediaUpload(event) {
     const files = event.target.files;
     if (!files.length) return;
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        // Create a URL for the file, which can be used in an <img> element
         const url = URL.createObjectURL(file);
-        jobPictures.value.push({ file, url });
+        media.value.push({ file, url });
     }
 }
 
-function removePicture(index) {
-    // Revoke the object URL to free up memory
+function handleVideoUpload(event) {
+    const files = event.target.files;
+    if (!files.length || video.value.url) return;
+
+    const file = files[0];
+    const url = URL.createObjectURL(file);
+    video.value = { file, url };
+}
+
+function removeVideo() {
+    URL.revokeObjectURL(video.value.url);
+    video.value = {};
+}
+function removeMedia(index) {
     URL.revokeObjectURL(jobPictures.value[index].url);
     jobPictures.value.splice(index, 1);
 }
-function postJob() {
+
+function post() {
     //add db logic
     console.log({
-        title: jobTitle.value,
+        type: postType.value,
+        title: title.value,
         category: selectedCategory.value,
         date: jobDate.value,
-        description: jobDescription.value,
-        pictures: jobPictures.value
+        description: description.value,
+        media: media.value,
+        video: video.value
     });
 }
 </script>
@@ -101,15 +158,34 @@ function postJob() {
 }
 
 .post-heading {
-    margin-top: 1rem;
-    text-align: center;
+    padding-bottom: 1rem
 }
 
-.form-container {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    min-width: 40dvw;
+.form-item input,
+.form-item select,
+.form-item textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+}
+
+.form-item input:hover,
+.form-item select:hover,
+.form-item textarea:hover {
+    border-color: #888;
+}
+
+.form-item input:focus,
+.form-item select:focus,
+.form-item textarea:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.25);
 }
 
 .pictures-container {
@@ -132,6 +208,12 @@ function postJob() {
     border-radius: 8px;
 }
 
+.video-preview {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
+
 .remove-picture-button {
     position: absolute;
     right: 10px;
@@ -151,9 +233,29 @@ function postJob() {
     background-color: rgb(220, 220, 220);
 }
 
+.remove-video-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-video-button {
+    width: 10rem;
+    height: 10rem;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background-color: rgb(220, 220, 220);
+}
+
 .post-button {
-    margin-top: 1rem;
-    width: 100%;
+    display: flex;
+    margin: auto;
+    width: 40dvw;
 }
 
 @media (max-width: 1100px) {
@@ -166,12 +268,20 @@ function postJob() {
         gap: 0.5rem;
     }
 }
+
 @media (max-width: 767px) {
     .gray-background {
         padding-top: 0rem;
         padding-bottom: 0rem;
         padding-left: 0dvw;
         padding-right: 0dvw;
+    }
+
+    .form-item input,
+    .form-item select,
+    .form-item textarea {
+        padding: 0.5rem;
+        font-size: 0.9rem;
     }
 }
 </style>
