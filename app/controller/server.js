@@ -12,6 +12,7 @@ const cors = require('cors');
 // serve static file in view/index.html
 const staticPath = path.join(__dirname, '../'); // set index path to index.html in view directory
 const saltRounds = 10; // salt round set to 10 for hashing password
+const jwt = require('jsonwebtoken'); // JWT library for cookies
 const { Pool } = require('pg'); // PostgreSQL client library
 
 
@@ -38,11 +39,19 @@ app.post('/signup', (req, res) => {
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
-  model.loginModel(email, password, (result) => {
+  model.loginModel( email, password, (result) => {
     if (result.success) {
-      res.status(200).json(result);
+      // User has been authenticated, create a cookie
+      const token = jwt.sign(
+        { username: result.user.profile_username }, // Payload username
+        'This_1_Is_2_A_3_Secret_4!', // Secret key, hardcoded for demonstration purposes
+        { expiresIn: '3d' } // Options
+      );
+
+
+      res.status(200).json({ success: true, token: token });
     } else {
-      res.status(401).json(result);
+      res.status(401).json({ success: false, message: result.message });
     }
   });
 })

@@ -58,7 +58,7 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            email: email,  // The username is the email
+            email: email,
             password: this.password
           })
         })
@@ -67,7 +67,7 @@
           if (!data.success) {
 
             this.errors = {};
-            
+
             switch (data.message) {
               case 'User not found':
                 this.errors.email = 'Email address does not exist!';
@@ -78,13 +78,12 @@
             }
 
           } else {
-            alert('Login Successful!');
+            localStorage.setItem('token', data.token);
             this.$router.push('/'); 
           }
         })
         .catch(error => {
           console.error('Error during fetch:', error);
-          alert('Failed to connect to the server.');
         });
       }
     }

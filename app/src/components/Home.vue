@@ -48,6 +48,9 @@
 import { ref } from 'vue'
 import { likedPosts } from '@/store';
 
+const token = localStorage.getItem('token');
+
+
 // Test Data The images should come from db
 import cat3 from '@/assets/cat3.jpg';
 import cat1 from '@/assets/cat5.jpeg';

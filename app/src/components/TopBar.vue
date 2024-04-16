@@ -42,12 +42,20 @@
 </template>
 
 <script setup>
+import { jwtDecode } from 'jwt-decode';
+import { NULL } from 'sass';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const visible = ref(false);
 const router = useRouter();
 const navbarBackground = ref('transparent');
+const token = localStorage.getItem('token');
+var username = 'username'; // Placeholder username
+
+if (token) {
+  username = jwtDecode(token).username;
+}
 
 const toggleMenu = () => {
   visible.value = !visible.value;
@@ -89,10 +97,6 @@ const signOut = () => {
   // sign out function for now just go back to login
   router.push({ name: 'Login' });
 }
-
-
-// test data should come from db
-const username = ref('Stelle Robbins');
 
 </script>
 
