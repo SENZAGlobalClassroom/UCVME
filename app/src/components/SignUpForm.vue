@@ -62,70 +62,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-  data() {
-    return {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      agreeToTerms: false
-    };
-  },
-  methods: {
-    onSubmit() {
-      document.getElementById('userexists').style.display = 'none';
-      document.getElementById('userformat').style.display = 'none';
-      document.getElementById('emailexists').style.display = 'none';
-      document.getElementById('emailformat').style.display = 'none';
-      document.getElementById('passformat').style.display = 'none';
-      document.getElementById('passmatch').style.display = 'none';
-
-      if (!this.agreeToTerms) {
-        alert('You must agree to the Terms and Privacy policies');
-        return;
-      }
-
-      if (this.password !== this.confirmPassword) {
-        document.getElementById('passmatch').style.display = 'block';
-        return;
-      }
-
-      console.log('Username:', this.username);
-      console.log('Email:', this.email);
-      console.log('Password:', this.password);
-
-      // Send POST request to your server
-      fetch('http://localhost:8080/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.username,
-          email: this.email,
-          password: this.password
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          // Show the corresponding error message on the form
-          const errorMap = {
-            'Username-dupe': 'userexists',
-            'Email-dupe': 'emailexists',
-            'Invalid-username': 'userformat',
-            'Invalid-email': 'emailformat',
-            'Invalid-password': 'passformat'
-          };
-          
-          document.getElementById(errorMap[data.error]).style.display = 'block';
-        } else {
-          // Success logic here
-          alert('Signup successful!');
-          this.$router.push('/CVProcess');
-=======
   export default {
     data() {
       return {
@@ -140,7 +76,6 @@ export default {
           password: '',
           confirmPassword: '',
           terms: ''
->>>>>>> f15983a3bbbb2d01ed0940c9e9c3fecbb8a232c4
         }
       };
     },
