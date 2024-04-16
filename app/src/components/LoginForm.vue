@@ -4,11 +4,15 @@
   <form @submit.prevent="onSubmit">
     <div class="form-group">
       <input type="text" id="email" v-model="email" placeholder="Email" required>
-      <p class="errortext" id="emailexists" style="display: none;">Email does not exist!</p>
+      <p class="errortext" v-if="errors.email">
+        {{ errors.email }}
+      </p>
     </div>
     <div class="form-group">
       <input type="password" id="password" v-model="password" placeholder="Password" required>
-      <p class="errortext" id="passworderror" style="display: none;">Incorrect password entered!</p>
+      <p class="errortext" v-if="errors.password">
+        {{ errors.password }}
+      </p>
     </div>
     <a href="#" class="forgot-password">Forgot Password?</a>
 
@@ -33,43 +37,58 @@
 
 <script>
   export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      rememberMe: false
-    };
-  },
-  methods: {
-    onSubmit() {
-      fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.email,  // Assuming the username is the email
-          password: this.password
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          console.log('Login successful:', data.message);
-          this.$router.push('/');  // Assuming you have a dashboard route
-        } else {
-          console.error('Login failed:', data.message);
-          alert(data.message);
+    data() {
+      return {
+        email: '',
+        password: '',
+        rememberMe: false,
+        errors: {
+          email: '',
+          password: ''
         }
-      })
-      .catch(error => {
-        console.error('Error during fetch:', error);
-        alert('Failed to connect to the server.');
-      });
+      };
+    },
+    methods: {
+      onSubmit() {
+        const email = this.email.toLowerCase();
+
+        fetch('http://localhost:8080/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,  // The username is the email
+            password: this.password
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (!data.success) {
+
+            this.errors = {};
+            
+            switch (data.message) {
+              case 'User not found':
+                this.errors.email = 'Email address does not exist!';
+                break;
+              case 'Invalid password':
+                this.errors.password = 'Invalid password entered!';
+                break;
+            }
+
+          } else {
+            alert('Login Successful!');
+            this.$router.push('/'); 
+          }
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          alert('Failed to connect to the server.');
+        });
+      }
     }
   }
-}
-
 </script>
 
 <style scoped>
@@ -164,11 +183,11 @@ h2 {
 }
 
 .errortext {
-  color: red;
-  font-size: smaller;
-  text-align: justify;
-  text-align-last: center;
-}
+    color: red;
+    font-size: x-small;
+    text-align: center;
+    text-align-last: center;
+  }
 
 @media (max-width: 766px) {
   .form-group input,

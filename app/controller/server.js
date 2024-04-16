@@ -36,9 +36,9 @@ app.post('/signup', (req, res) => {
 
 
 app.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  model.loginModel(username, password, (result) => {
+  model.loginModel(email, password, (result) => {
     if (result.success) {
       res.status(200).json(result);
     } else {

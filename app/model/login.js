@@ -2,8 +2,7 @@ const { Pool } = require('pg');
 const bcrypt = require('bcrypt')
 
 const loginModel = function(username, password, callback) {
-    console.log('Request body:', {username, password}); // Log the request body to verify data received
-
+    
     const pool = new Pool({ // create a pool of connections
         user: 'postgres',
         host: 'localhost',
@@ -27,7 +26,7 @@ const loginModel = function(username, password, callback) {
          
         bcrypt.compare(password, user.profile_password, (err, isMatch) => {
             if (err) {
-                console.log(err);   
+                console.error('Error comparing password:', err);
                 callback({ success: false, message: 'Login error' });
                 return;
             }
@@ -37,6 +36,7 @@ const loginModel = function(username, password, callback) {
                 callback({ success: false, message: 'Invalid password' });
             }
         });
+
     }); 
 };
 
