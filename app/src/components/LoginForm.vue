@@ -1,11 +1,18 @@
 <template>
+<div>
   <h2>Sign In</h2>
   <form @submit.prevent="onSubmit">
     <div class="form-group">
       <input type="text" id="email" v-model="email" placeholder="Email" required>
+      <p class="errortext" v-if="errors.email">
+        {{ errors.email }}
+      </p>
     </div>
     <div class="form-group">
       <input type="password" id="password" v-model="password" placeholder="Password" required>
+      <p class="errortext" v-if="errors.password">
+        {{ errors.password }}
+      </p>
     </div>
     <a href="#" class="forgot-password">Forgot Password?</a>
 
@@ -25,53 +32,63 @@
     <button type="button" class="google-sign-in">Sign in with Google</button>
     <div class="signup-link">Don’t have an account? <a href="/signup">Sign up</a></div>
   </form>
+</div>
 </template>
+
 <script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      rememberMe: false
-    };
-  },
-  methods: {
-    onSubmit() {
-      // Send POST request to your server
-      fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: this.email,
-          password: this.password
+  export default {
+    data() {
+      return {
+        email: '',
+        password: '',
+        rememberMe: false,
+        errors: {
+          email: '',
+          password: ''
+        }
+      };
+    },
+    methods: {
+      onSubmit() {
+        const email = this.email.toLowerCase();
+
+        fetch('http://localhost:8080/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,  // The username is the email
+            password: this.password
+          })
         })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Login failed');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Check if login was successful based on the response data
-        if (data.status === 'success') {
-          console.log(data); 
-          // If login is successful, redirect to HomeView
-          this.$router.push('/'); // Replace 'HomeView' with your route name if it's different
-        } else {
-          // If data.status is not 'success', handle the unsuccessful login
-          console.error('Login failed:', data.message);
-          // Here, you can set an error message in your data to display to the user
-          // this.errorMessage = data.message; // Assuming you have an errorMessage data property
-        }
-      })
-      .catch(error => {  });
+        .then(response => response.json())
+        .then(data => {
+          if (!data.success) {
+
+            this.errors = {};
+            
+            switch (data.message) {
+              case 'User not found':
+                this.errors.email = 'Email address does not exist!';
+                break;
+              case 'Invalid password':
+                this.errors.password = 'Invalid password entered!';
+                break;
+            }
+
+          } else {
+            alert('Login Successful!');
+            this.$router.push('/'); 
+          }
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+          alert('Failed to connect to the server.');
+        });
+      }
     }
   }
-
-};
 </script>
 
 <style scoped>
@@ -164,6 +181,13 @@ h2 {
   color: #aaa;
   white-space: nowrap;
 }
+
+.errortext {
+    color: red;
+    font-size: x-small;
+    text-align: center;
+    text-align-last: center;
+  }
 
 @media (max-width: 766px) {
   .form-group input,

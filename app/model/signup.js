@@ -1,57 +1,73 @@
-// sql query for registering an account into the database
-const { Pool } = require('pg'); // PostgreSQL client library
+const { Pool } = require('pg');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-const signupModel = function(userData, response) {
-    console.log('Request body:', userData); // Log the request body to verify data received
+// Validation functions
+function isValidName(value) { 
+  const nameRegex = /^[A-Za-z\s]+$/;
+  return nameRegex.test(value);
+}
 
-    const pool = new Pool({ // create a pool of connections
+function isValidPassword(password) {
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+  return passwordRegex.test(password);
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+async function signupModel(username, email, password, callback) {
+    const pool = new Pool({
         user: 'postgres',
         host: 'localhost',
         database: 'postgres',
         password: 'Sp00ky!',
-        port: 5432 // default PostgreSQL port
+        port: 5432
     });
 
-    pool.connect((err, client, release) => { // Connect to the database
-        if (err) { // error occurs, display console message
-            console.error('Error connecting to database:', err);
-            return response({ success: false, message: 'Registration failed' });
+
+    try {
+        // Validate user data before database queries
+        if (!isValidName(username)) {
+            return callback({ success: false, message: "Invalid username" });
+        } else if (!isValidEmail(email)) {
+            return callback({ success: false, message: "Invalid email address" });
+        } else if (!isValidPassword(password)) {
+            return callback({ success: false, message: "Invalid password format" });
         }
 
-        console.log('Connected to database'); // console log database connected
+        // Check if the username or email already exists
+        const existingUserQuery = 'SELECT 1 FROM profile WHERE profile_username = $1';
+        const existingUserResult = await pool.query(existingUserQuery, [username]);
 
-        client.query(
-            'INSERT INTO profile (profile_username, profile_email, profile_password) VALUES ($1, $2, $3)',
-            // insert query to add a new user to the profile table, $1, $2, $3 are placeholders for the user inputs
-            [
-                userData.username, // stores in userData
-                userData.email,
-                userData.password
-            ],
-            
-            (err, result) => {
-                release(); // Release the client to the pool regardless of the outcome
-                if (err) { // error occurs when inserting in the database
-                    console.error('Error executing INSERT query:', err);
+        if (existingUserResult.rows.length > 0) {
+            return callback({ success: false, message: "Username already exists" });
+        }
 
-                    if (err.code === '23505') { // if email is already registered (unique constraint violation)
-                        return response({
-                            success: false,
-                            message: 'Email address is already registered.'
-                        });
-                    } else { // if email not registered but there's still an error
-                        return response({
-                            success: false,
-                            message: 'Registration failed. Please try again.'
-                        });
-                    }
-                }
+        const existingEmailQuery = 'SELECT 1 FROM profile WHERE profile_email = $1';
+        const existingEmailResult = await pool.query(existingEmailQuery, [email]);
 
-                console.log('User registered successfully');
-                response({ success: true, message: 'Registration successful' }); // send response in web server
-            }
-        );
-    });
-};
+        if (existingEmailResult.rows.length > 0) {
+            return callback({ success: false, message: "Email already exists" });
+        }
+
+        // Hash the password and insert the new user
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const insertUserQuery = 'INSERT INTO profile(profile_username, profile_email, profile_password) VALUES($1, $2, $3) RETURNING *';
+        const newUser = await pool.query(insertUserQuery, [username, email, hashedPassword]);
+
+        if (newUser.rows.length > 0) {
+            return callback({ success: true, message: "Signup successful" });
+        } else {
+            return callback({ success: false, message: "Registration failed" });
+        }
+    } catch (error) {
+        console.error('Error during registration:', error);
+        return callback({ success: false, message: "Internal Server Error" });
+    } finally {
+        pool.end(); // Properly close the pool resources after the operation
+    }
+}
 
 module.exports = signupModel;
