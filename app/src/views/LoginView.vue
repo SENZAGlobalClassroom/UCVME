@@ -18,9 +18,6 @@ import Footer from '@/components/Footer.vue';
 
 const handleLogin = (credentials) => {
   console.log('Login credentials:', credentials);
-
-  // Send the credentials to the server
-  // For now, just log the credentials to the console
 };
 </script>
 

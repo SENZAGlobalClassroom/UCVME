@@ -48,17 +48,29 @@ export default {
           password: this.password
         })
       })
-      .then(response => response.json())
-      .then(data => {
-        // Handle response from the server
-        console.log(data); // You can do something based on the response, like redirecting to another page or showing a message
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Login failed');
+        }
+        return response.json();
       })
-      .catch(error => {
-        console.error('Error:', error);
-        // Handle error
-      });
+      .then(data => {
+        // Check if login was successful based on the response data
+        if (data.status === 'success') {
+          console.log(data); 
+          // If login is successful, redirect to HomeView
+          this.$router.push('/'); // Replace 'HomeView' with your route name if it's different
+        } else {
+          // If data.status is not 'success', handle the unsuccessful login
+          console.error('Login failed:', data.message);
+          // Here, you can set an error message in your data to display to the user
+          // this.errorMessage = data.message; // Assuming you have an errorMessage data property
+        }
+      })
+      .catch(error => {  });
     }
   }
+
 };
 </script>
 
