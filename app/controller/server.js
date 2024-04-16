@@ -12,6 +12,8 @@ const cors = require('cors');
 // serve static file in view/index.html
 const staticPath = path.join(__dirname, '../'); // set index path to index.html in view directory
 const saltRounds = 10; // salt round set to 10 for hashing password
+const { Pool } = require('pg'); // PostgreSQL client library
+
 
 var model = require('../model/index'); 
 
@@ -20,85 +22,65 @@ app.use(express.json()); // handle json and form data
 app.use(express.urlencoded({ extended: true })); 
 app.use(cors());
 
-// when i refresh any pages it cannot GET / the route
-app.get('/home', function (req, res) 
-{
-  console.log('Home page');
+app.post('/signup', async (req, res) => {
+  const { username, email, password } = req.body;
+
+  const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: 'Sp00ky!',
+    port: 5432
+  });
+
+  try {
+    // Check if the user already exists
+    const userExistsQuery = 'SELECT * FROM profile WHERE profile_username = $1';
+    const userResult = await pool.query(userExistsQuery, [username]);
+
+    const emailExistsQuery = 'SELECT * FROM profile WHERE profile_email = $1';
+    const emailResult = await pool.query(emailExistsQuery, [email]);
+
+    if (userResult.rows.length > 0) {
+      // If user exists, send a conflict response and stop further execution
+      return res.status(409).json({ error: "Username-dupe" });
+    }
+
+    if (emailResult.rows.length > 0) {
+      // If user exists, send a conflict response and stop further execution
+      return res.status(409).json({ error: "Email-dupe" });
+    }
+
+    // Validate user data
+    if (!isValidName(username)) {
+      return res.status(409).json({ error: "Invalid-username" });
+    } else if (!isValidEmail(email)) {
+      return res.status(409).json({ error: "Invalid-email" });
+    } else if (!isValidPassword(password)) {
+      return res.status(409).json({ error: "Invalid-password" });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Insert the new user
+    const insertUserQuery = 'INSERT INTO profile(profile_username, profile_email, profile_password) VALUES($1, $2, $3) RETURNING *';
+    const newUser = await pool.query(insertUserQuery, [username, email, hashedPassword]);
+
+    // If insertion is successful, send a success response
+    if (newUser.rows.length > 0) {
+      console.log('Registration successful.');
+      return res.status(201).json({ message: "Signup successful" });
+    } else {
+      // Handle unexpected failure
+      return res.status(500).json({ error: "Registration failed for unknown reasons" });
+    }
+  } catch (error) {
+    console.error('Error during registration:', error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-// serve login route using express
-app.get('/login', function (req, res) 
-{
-  console.log('Login page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
-});
-
-// Handle POST request to /signup
-app.post('/signup', function (req, res) {
-  console.log('A signup attempt has been made!');
-  console.log('Received data:', req.body); // Log the posted data
-
-  
-
-  // You can add validation and further processing here
-  res.status(200).json({ message: "Signup successful!" });
-});
-
-// serve create cv route using express
-app.get('/cvProcess', function (req, res) 
-{
-  console.log('Create CV page');
-  res.sendFile(path.join(staticPath, 'index.html'));
-});
-
-// serve complete cv route using express
-app.get('/CVComplete', function (req, res) 
-{
-  console.log('CV page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
-});
-
-// serve username cv route using express
-app.get('/CVUsername', function (req, res) 
-{
-  console.log('CV username page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
-});
-
-// serve wallet route using express
-app.get('/wallet', function (req, res) 
-{
-  console.log('Wallet page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
-});
-
-// serve help route using express
-app.get('/help', function (req, res) 
-{
-  console.log('Help page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
-});
-
-// serve settings route using express
-app.get('/settings', function (req, res) 
-{
-  console.log('Settings page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
-});
-
-// serve likes route using express
-app.get('/likes', function (req, res) 
-{
-  console.log('Likes page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
-});
-
-// serve add post route using express
-app.get('/addpost', function (req, res) 
-{
-  console.log('Add post page');
-  res.sendFile(path.join(staticPath, 'index.html')); // send index file
-});
 
 function isValidName(value) // function to validate name as strings when registering
 { 
@@ -221,71 +203,6 @@ app.post('/login', function (req, res) {
       }
     });
   });    
-});
-
-app.post('/signup', function (req, res) 
-{
-  console.log('Request body:', req.body);
-
-  var userData = // user information store in userData
-  {
-    username: req.body.username, // firstname sent from client
-    email: req.body.email, // email sent from client
-    password: req.body.password, // password sent from the client
-  };
-  console.log('User data:', userData);
-
-  if (!isValidName(userData.username)) // validate firstname
-  {
-    return res.status(400).json("Invalid username");
-  } 
-  else if (!isValidEmail(userData.email)) // validate email
-  {
-    return res.status(400).json("Invalid email address");
-  } 
-  else if (!isValidPassword(userData.password)) // validate password
-  {
-    return res.status(400).json("Invalid password format");
-  }
-
-  bcrypt.hash(userData.password, saltRounds, function(err, hash) // hash the password before storing it in the database
-  {
-    if (err) // error occur trying to hash the password
-    {
-      console.error('Error hashing password:', err);
-      return res.status(500).json("Internal Server Error");
-    }
-
-    userData.password = hash; // replace the plain text password with the hashed password
-
-    model.signupModel(userData, function(result) // execute register query
-    {
-      if (result.error) // error trying to register
-      {
-        console.error('Error during registration:', result.error);
-        return res.status(500).json('Internal Server Error');
-      } 
-      else if (result.success) // registration successful
-      {
-        console.log('Registration successful.');
-        // console.log('Session:', req.session);
-        // console.log('Cookies:', req.cookies);
-
-        // const token = jwt.sign({ userId: userData.email }, secretKey);// generate token using secret key
-        // req.session.token = token; // set token in session
-        // res.cookie('token', token, { maxAge: 60 * 60 * 6000, httpOnly: true, path: '/' }); // set token in cookies, 1 hours, http true for security, paht  can be access by any path
-        // res.json({ success: true, isAuthenticated: true, user: { firstName: userData.firstName, lastName: userData.lastName, email: userData.email },  token }); // send back json response
-        // console.log('Token set in session:', req.session.token); // log token in session
-        // console.log('Token set in cookie:', token); // log token in cookie
-      } 
-      else // handle other cases if needed
-      {
-        console.error('Registration failed for some reason.');
-        // res.status(400).json({ success: false, isAuthenticated: false, user: null });
-        res.status(400).json({ success: false, user: null });
-      }
-    });
-  });
 });
 
 

@@ -4,17 +4,24 @@
     <form @submit.prevent="onSubmit">
       <div class="form-group">
         <input type="text" v-model="username" placeholder="Username" required>
+        <p class="errortext" id="userexists" style="display: none;">Username already exists!</p>
+        <p class="errortext" id="userformat" style="display: none;">Username can only contain characters!</p>
       </div>
       <div class="form-group">
         <input type="email" v-model="email" placeholder="E-mail" required>
+        <p class="errortext" id="emailexists" style="display: none;">Email already exists!</p>
+        <p class="errortext" id="emailformat" style="display: none;">Invalid email format!</p>
+
       </div>
       <div class="form-group">
         <input type="password" v-model="password" placeholder="Password" required>
+        <p class="errortext" id="passformat" style="display: none;">Password requires a number, a capital letter and a special character, and must be at least 8 characters long!</p>
       </div>
       <div class="form-group">
         <input type="password" v-model="confirmPassword" placeholder="Confirm Password" required>
+        <p class="errortext" id="passmatch" style="display: none;">Passwords do not match!</p>
       </div>
-
+      
       <div class="checkbox-group" style="padding: 0.5rem;">
         <Checkbox v-model="agreeToTerms" inputId="terms" name="terms" value="terms" />
         <label for="rememberMe">&nbsp I agree to all the Terms and Privacy Policies</label>
@@ -46,13 +53,20 @@ export default {
   },
   methods: {
     onSubmit() {
+      document.getElementById('userexists').style.display = 'none';
+      document.getElementById('userformat').style.display = 'none';
+      document.getElementById('emailexists').style.display = 'none';
+      document.getElementById('emailformat').style.display = 'none';
+      document.getElementById('passformat').style.display = 'none';
+      document.getElementById('passmatch').style.display = 'none';
+
       if (!this.agreeToTerms) {
         alert('You must agree to the Terms and Privacy policies');
         return;
       }
 
       if (this.password !== this.confirmPassword) {
-        alert('Passwords do not match');
+        document.getElementById('passmatch').style.display = 'block';
         return;
       }
 
@@ -72,15 +86,25 @@ export default {
           password: this.password
         })
       })
-        .then(response => response.json())
-        .then(data => {
-          // Handle response from the server
-          console.log(data); // You can do something based on the response, like redirecting to another page or showing a message
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          // Handle error
-        });
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          // Show the corresponding error message on the form
+          const errorMap = {
+            'Username-dupe': 'userexists',
+            'Email-dupe': 'emailexists',
+            'Invalid-username': 'userformat',
+            'Invalid-email': 'emailformat',
+            'Invalid-password': 'passformat'
+          };
+          
+          document.getElementById(errorMap[data.error]).style.display = 'block';
+        } else {
+          // Success logic here
+          alert('Signup successful!');
+          this.$router.push('/');
+        }
+      })
     }
   }
 };
@@ -175,6 +199,13 @@ h2 {
 .or-text {
   color: #aaa;
   white-space: nowrap;
+}
+
+.errortext {
+  color: red;
+  font-size: smaller;
+  text-align: justify;
+  text-align-last: center;
 }
 
 @media (max-width: 766px) {
