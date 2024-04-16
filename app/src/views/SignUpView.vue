@@ -17,9 +17,6 @@ import Footer from '@/components/Footer.vue';
 
 const handleSignUp = (credentials) => {
   console.log('Sign-up credentials:', credentials);
-
-  // Here you can send the credentials to the server
-  // For now, we will just log them
 };
 </script>
 
