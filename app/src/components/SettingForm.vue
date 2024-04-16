@@ -17,7 +17,8 @@
       </div>
 
       <div class="form-group">
-        <input type="password" v-model="confirmPassword" placeholder="Confirm Password" required>
+        <label for="password">Confirm Password</label>
+        <input id="confirmPassword" type="password" v-model="confirmPassword"  required>
       </div>
       
       <div class="form-group">
