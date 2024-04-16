@@ -10,6 +10,16 @@
       <div class="form-group">
         <textarea type="description" v-model="description" placeholder="Enter Text Here" required></textarea>
       </div>
+      <div class="form-separator">
+        <span class="line"></span>
+        <span class="or-text">or</span>
+        <span class="line"></span>
+      </div>
+      <div class="form-separator">
+        <span class="line"></span>
+        <span class="or-text"><p class="contact-email">Contact us directly at ucvme@senza.ie</p></span>
+        <span class="line"></span>
+      </div>
     <button class="button">Submit</button>
 
     </form>
@@ -92,5 +102,33 @@ cursor: pointer;
 }
 
 
+}
+
+.separator {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.form-separator {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #ccc;
+  margin: 0 10px;
+}
+
+.or-text {
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.contact-email {
+  font-style: italic;
 }
 </style>

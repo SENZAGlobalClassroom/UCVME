@@ -5,11 +5,11 @@
       <i class="pi pi-bars"></i>
     </div>
 
-    <!-- Search Bar -->
+    <!-- Search Bar 
     <div class="search-container">
       <i class="pi pi-search search-icon"></i>
       <input type="text" placeholder="Search for users or jobs...">
-    </div>
+    </div> -->
 
     <!-- Sidebar Menu -->
     <Sidebar v-model:visible="visible" position="left">
@@ -19,10 +19,6 @@
       </div>
 
       <ul class="sidebar-links">
-        <li><a href="javascript:void(0)" @click="goToHistoryPage">
-          <i class="pi pi-history"></i>
-          History</a>
-        </li>
         <li><a href="javascript:void(0)" @click="goToSettingsPage">
             <i class="pi pi-cog"></i>
             Settings</a>
@@ -106,7 +102,6 @@ const username = ref('Stelle Robbins');
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  position: sticky; 
   top: 0;
   width: 100%;
   z-index: 1000; 
@@ -116,6 +111,18 @@ const username = ref('Stelle Robbins');
 .hamburger-menu {
   cursor: pointer;
   font-size: 30px;
+  position: fixed; /* Fixed position */
+  left: 30px; /* Distance from the left side of the viewport */
+  top: 50%; /* Align vertically at the center of the viewport */
+  transform: translateY(-50%); /* Offset by half of its height to truly center it */
+  z-index: 1001; /* Ensure it's above other content */
+}
+
+.hamburger-menu:hover {
+  background-color: #84818148; /* Highlight color */
+  border-radius: 5px; /* Optional: Adds rounded corners */
+  padding: 5px; /* Optional: Adds some space around the icon */
+  padding-bottom: 13px;
 }
 
 .search-container {

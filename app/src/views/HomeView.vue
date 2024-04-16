@@ -6,7 +6,7 @@ import Home from '@/components/Home.vue';
 <template>
     <div class="gray-background">
         <TopBar></TopBar>
-            <Home></Home>
+        <Home></Home>
         <Navbar></Navbar>
     </div>
 </template>
