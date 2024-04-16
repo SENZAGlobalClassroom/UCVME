@@ -24,7 +24,7 @@
       
       <div class="checkbox-group" style="padding: 0.5rem;">
         <Checkbox v-model="agreeToTerms" inputId="terms" name="terms" value="terms" />
-        <label for="rememberMe">&nbsp I agree to all the Terms and Privacy Policies</label>
+        <label for="terms">&nbsp; I agree to all the <a href="../assets/UCVME_Terms_and_Conditions.pdf" download="Terms_and_Privacy_Policies.pdf">Terms and Privacy Policies</a></label>
       </div>
 
       <button type="submit" class="login-button">Create account</button>
