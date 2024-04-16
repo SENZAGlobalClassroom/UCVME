@@ -2,7 +2,7 @@
   <h2>Sign In</h2>
   <form @submit.prevent="onSubmit">
     <div class="form-group">
-      <input type="text" id="username" v-model="username" placeholder="Username" required>
+      <input type="text" id="email" v-model="email" placeholder="Email" required>
     </div>
     <div class="form-group">
       <input type="password" id="password" v-model="password" placeholder="Password" required>
@@ -30,7 +30,7 @@
 export default {
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
       rememberMe: false
     };
@@ -44,7 +44,7 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: this.username,
+          email: this.email,
           password: this.password
         })
       })
