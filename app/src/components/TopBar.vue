@@ -5,40 +5,44 @@
       <i class="pi pi-bars"></i>
     </div>
 
-    <!-- Search Bar 
+    <!-- Search Bar -->
     <div class="search-container">
       <i class="pi pi-search search-icon"></i>
       <input type="text" placeholder="Search for users or jobs...">
-    </div> -->
+    </div>
 
-    <!-- Sidebar Menu -->
-    <Sidebar v-model:visible="visible" position="left">
-      <div class="sidebar-logo">
-        <img @click="goToHomePage" style="  max-width: 10rem; height: auto; cursor: pointer;"
-          src="/src/assets/UCVME_logo-removebg-preview.png" alt="UCVME Logo" class="logo-img" />
-      </div>
-
-      <ul class="sidebar-links">
-        <li><a href="javascript:void(0)" @click="goToSettingsPage">
-            <i class="pi pi-cog"></i>
-            Settings</a>
-        </li>
-        <li><a href="javascript:void(0)" @click="goToHelpPage">
-          <i class="pi pi-question-circle"></i>
-          Help Centre</a>
-        </li>
-      </ul>
-
-      <div class="user-panel">
-        <Avatar image="/src/assets/user.jpg" shape="circle" />
-        {{ username }}
-        <button class="sign-out-btn" @click="signOut">
-          <i class="pi pi-sign-out"></i>
-        </button>
-      </div>
-
-    </Sidebar>
   </div>
+  <!-- Sidebar Menu -->
+  <Sidebar v-model:visible="visible" position="left">
+    <div class="sidebar-logo">
+      <img @click="goToHomePage" style="  max-width: 10rem; height: auto; cursor: pointer;"
+        src="/src/assets/UCVME_logo-removebg-preview.png" alt="UCVME Logo" class="logo-img" />
+    </div>
+
+    <ul class="sidebar-links">
+      <li><a href="javascript:void(0)" @click="goToHistoryPage">
+        <i class="pi pi-history"></i>
+        History</a>
+      </li>
+      <li><a href="javascript:void(0)" @click="goToSettingsPage">
+          <i class="pi pi-cog"></i>
+          Settings</a>
+      </li>
+      <li><a href="javascript:void(0)" @click="goToHelpPage">
+        <i class="pi pi-question-circle"></i>
+        Help Centre</a>
+      </li>
+    </ul>
+
+    <div class="user-panel">
+      <Avatar image="/src/assets/user.jpg" shape="circle" />
+      {{ username }}
+      <button class="sign-out-btn" @click="signOut">
+        <i class="pi pi-sign-out"></i>
+      </button>
+    </div>
+
+  </Sidebar>
 </template>
 
 <script setup>
@@ -50,6 +54,7 @@ import { useRouter } from 'vue-router';
 const visible = ref(false);
 const router = useRouter();
 const navbarBackground = ref('transparent');
+const border = ref('none')
 const token = localStorage.getItem('token');
 var username = 'username'; // Placeholder username
 
@@ -64,8 +69,10 @@ const toggleMenu = () => {
 const handleScroll = () => {
   if (window.scrollY > 0) {
     navbarBackground.value = 'white';
+    border.value = '1px solid #ccc';
   } else {
     navbarBackground.value = 'transparent';
+    border.value = 'none';
   }
 };
 
@@ -103,30 +110,18 @@ const signOut = () => {
 <style scoped>
 .navbar {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
+  padding: 1rem;
+  position: sticky; 
   top: 0;
   width: 100%;
   z-index: 1000; 
   background-color: v-bind(navbarBackground);
+  border-bottom: v-bind(border);
 }
 
 .hamburger-menu {
   cursor: pointer;
   font-size: 30px;
-  position: fixed; /* Fixed position */
-  left: 30px; /* Distance from the left side of the viewport */
-  top: 50%; /* Align vertically at the center of the viewport */
-  transform: translateY(-50%); /* Offset by half of its height to truly center it */
-  z-index: 1001; /* Ensure it's above other content */
-}
-
-.hamburger-menu:hover {
-  background-color: #84818148; /* Highlight color */
-  border-radius: 5px; /* Optional: Adds rounded corners */
-  padding: 5px; /* Optional: Adds some space around the icon */
-  padding-bottom: 13px;
 }
 
 .search-container {
@@ -191,9 +186,5 @@ const signOut = () => {
 
 .sign-out-btn .pi {
   font-size: 1.5em;
-}
-
-@media (max-width: 767px) {
-
 }
 </style>
