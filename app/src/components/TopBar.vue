@@ -56,10 +56,12 @@ const router = useRouter();
 const navbarBackground = ref('transparent');
 const border = ref('none')
 const token = localStorage.getItem('token');
+var decoded = jwtDecode(token).username;
 var username = 'username'; // Placeholder username
 
-if (token) {
-  username = jwtDecode(token).username;
+if (token && decoded) {
+  decoded = toTitleCase(decoded);
+  username = decoded;
 }
 
 const toggleMenu = () => {
@@ -101,8 +103,17 @@ const goToHomePage = () => {
 };
 
 const signOut = () => {
-  // sign out function for now just go back to login
+  // Delete the users cookie which persists their log in
+  localStorage.removeItem('token');
+
+  // Route them to log in
   router.push({ name: 'Login' });
+}
+
+function toTitleCase(str) {
+  return str.replace(/\b(\w)/g, function(match, capture) {
+    return capture.toUpperCase();
+  });
 }
 
 </script>
