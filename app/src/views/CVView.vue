@@ -28,6 +28,7 @@ import CVInfo from '@/components/CVInfo.vue';
   justify-content: center;
   padding: 2rem;
   background-color: rgba(255, 255, 255, 0.808);
+  margin-top: 25px;
 }
 
 .button-container {
