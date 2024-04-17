@@ -21,11 +21,14 @@
             </template>
           </Galleria>
         </div>
-        <div class="video-content" v-if="post.video">
-          <video class="video" controls>
+        <div v-if="post.video">
+          <div class="video-content">
+            <video class="video" controls>
               <source :src="post.video" type="video/mp4">
               Your browser does not support the video tag.
             </video>
+          </div>
+          <br><br>
         </div>
         <div class="post-details">
           <div class="post-content">
@@ -49,7 +52,6 @@ import { ref } from 'vue'
 import { likedPosts } from '@/store';
 
 const token = localStorage.getItem('token');
-
 
 // Test Data The images should come from db
 import cat3 from '@/assets/cat3.jpg';
@@ -175,10 +177,10 @@ function applyJob(post) {
 .card {
   padding: 1rem;
   margin: auto;
-  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
-  width: 120vh;
+  border-radius: 0px;
+  border-bottom: 1px solid rgba(206, 206, 206, 0.753);
 }
 
 .post-card {
@@ -201,17 +203,15 @@ function applyJob(post) {
 }
 
 .video-content {
-  width: 90%;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.1);
-  border-radius: 25px; 
-  overflow: hidden; 
+  width: 70%;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  overflow: hidden;
   margin: auto;
-  margin-bottom: 30px;
-
 }
 
 video {
-  width: 100%; 
+  width: 100%;
   height: auto;
   display: block;
 }
@@ -251,15 +251,6 @@ video {
 
 
 @media (max-width: 1024px) {
-  .card {
-    padding: 1rem;
-    margin: auto;
-    margin-bottom: 50px;
-    display: flex;
-    flex-direction: column;
-    width: 100vh;
-  }
-
   .title {
     display: inline;
   }
@@ -275,10 +266,6 @@ video {
     max-width: 100%;
   }
 
-  .galleria-content {
-    padding: 1rem;
-  }
-
   .galleria-image {
     object-fit: cover;
     width: 100dvw;
@@ -286,10 +273,14 @@ video {
   }
 
   .video-content {
-  width: 100%;
-  margin: auto;
-  margin-bottom: 30px;
-}
+    width: 100%;
+    margin: auto;
+  }
+
+  .post-details {
+    padding-top: 1rem;
+
+  }
 
 }
 </style>
