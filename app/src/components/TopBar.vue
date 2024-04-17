@@ -53,8 +53,6 @@ import { useRouter } from 'vue-router';
 
 const visible = ref(false);
 const router = useRouter();
-const navbarBackground = ref('transparent');
-const border = ref('none')
 const token = localStorage.getItem('token');
 var decoded = jwtDecode(token).username;
 var username = 'username'; // Placeholder username
@@ -68,6 +66,7 @@ const toggleMenu = () => {
   visible.value = !visible.value;
 };
 
+/*
 const handleScroll = () => {
   if (window.scrollY > 0) {
     navbarBackground.value = 'white';
@@ -84,7 +83,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
-});
+});*/
 
 // routing
 const goToSettingsPage = () => {
@@ -120,14 +119,12 @@ function toTitleCase(str) {
 
 <style scoped>
 .navbar {
-  display: flex;
-  padding: 1rem;
-  position: sticky; 
+  display: flex;   
   top: 0;
   width: 100%;
   z-index: 1000; 
-  background-color: v-bind(navbarBackground);
-  border-bottom: v-bind(border);
+  background-color: transparent;
+  border-bottom: none;
 }
 
 .hamburger-menu {

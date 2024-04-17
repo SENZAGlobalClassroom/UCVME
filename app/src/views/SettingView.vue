@@ -24,10 +24,10 @@
 <style scoped>
 .card-container {
     margin: auto;
-    margin-top: 2dvw;
-    width: 50dvw;
+    margin-top: 1dvw;
+    width: 40dvw;
     min-width: 500px;
-    padding: 2rem;
+    padding: 1.5rem;
     background-color: rgba(255, 255, 255, 0.808);
     align-items: center;
 }

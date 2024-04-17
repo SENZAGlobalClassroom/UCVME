@@ -3,22 +3,31 @@
     <form @submit.prevent="onSubmit">
       <div class="form-group">
         <label for="username">Username</label>
-        <input id="username" v-model="user.username" type="text" required>
+        <input id="username" v-model="user.username" type="text" placeholder="Enter a new username">
+        <p class="errortext" v-if="errors.username">
+          {{ errors.username }}
+        </p>
       </div>
       
       <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" v-model="user.email" type="email" required>
+        <input id="email" v-model="user.email" type="email"  placeholder="Enter a new email">
+        <p class="errortext" v-if="errors.email">
+          {{ errors.email }}
+        </p>
       </div>
       
       <div class="form-group">
         <label for="password">Password</label>
-        <input id="password" v-model="user.password" type="password" required>
+        <input id="password" v-model="user.password" type="password" placeholder="Enter your password" required>
       </div>
 
       <div class="form-group">
         <label for="password">Confirm Password</label>
-        <input id="confirmPassword" type="password" v-model="confirmPassword"  required>
+        <input id="confirmPassword" type="password" v-model="confirmPassword" placeholder="Confirm your password" required>
+        <p class="errortext" v-if="errors.password">
+          {{ errors.password }}
+        </p>
       </div>
       
       <div class="form-group">
@@ -43,8 +52,13 @@
           username: '',
           email: '',
           password: '',
-          confirmPassword: '',
           theme: 'light', // Default theme
+        },
+        confirmPassword: '',
+        errors: {
+          username: '',
+          email: '',
+          password: ''
         },
       };
     },
@@ -83,10 +97,10 @@ h2 {
 }
 
 .form-group {
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .form-group input {
