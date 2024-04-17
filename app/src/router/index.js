@@ -24,12 +24,14 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: LoginView
+      component: LoginView,
+      meta: { requiresGuest: true }
     },
     {
       path: '/signup',
       name: 'SignUp',
-      component: SignUpView
+      component: SignUpView,
+      meta: { requiresGuest: true }
     },
     {
       path: '/cvProcess',
@@ -82,29 +84,48 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  // Attempt to get a token from local storage
+  const token = localStorage.getItem('token');
 
-  // If the webpage the user is trying to go to is marked as protected, verify token
+  // If the route the user is trying to go to is protected, verify the user is logged in
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    const token = localStorage.getItem('token');
+    // If token exists, make sure it is valid
     if (token) {
-      try {
-        const { exp } = jwtDecode(token);
-        const currentTime = Date.now() / 1000;
-        if (exp < currentTime) {
-          next('/login');  // Token is expired, need a new token
-        } else {
-          next();  // Token exists and is valid
-        }
-      } catch (error) {
-        console.error('Token decoding failed:', error);
-        next('/login');  // Push to log in to cover the error
+      const { exp } = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+
+      // Token expiry check, delete token if expired and force login again
+      if (exp < currentTime) {
+        localStorage.removeItem('token');
+        next('/login');
+      } else {
+        next();
+      }
+    } else { // User has no token, send them to login
+      next('/login');
+    }
+  }
+  // Else if the webpage the user is going to is only for non logged in users
+  else if (to.matched.some(record => record.meta.requiresGuest)) {
+    // If the user has a token
+    if (token) {
+      const { exp } = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+
+      // If the token is valid
+      if (exp > currentTime) {
+        next('/');  // Redirect to home, already logged in
+      } else { // Token is not valid
+        localStorage.removeItem('token');
+        next();  // Proceed to the page the user wanted to
       }
     } else {
-      next('/login');  // No token found, go to login
+      next();  // No token found, proceed
     }
-  } else { // Not protected, just go there
-    next();  
+  } else {
+    next();  // For any routes that do not require any authentication, catchall
   }
 });
+
 
 export default router

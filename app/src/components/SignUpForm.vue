@@ -153,6 +153,9 @@
           } else {
             // Success logic here
             alert('Signup successful!');
+            
+            localStorage.setItem('token', data.token);
+
             this.$router.push('/');
           }
         })

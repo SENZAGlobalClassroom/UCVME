@@ -28,24 +28,35 @@ app.post('/signup', (req, res) => {
 
   model.signupModel(username, email, password, (result) => {
     if (result.success) {
-      res.status(201).json(result);
+
+      // User has signed in, give them a short cookie
+      const token = jwt.sign(
+        { username: result.username }, // Payload username
+        'This_1_Is_2_A_3_Secret_4!', // Secret key, hardcoded for demonstration purposes
+        { expiresIn: '12h' }
+      );
+
+      res.status(200).json({ success: true, token: token });
     } else {
-      res.status(400).json(result);
+      res.status(401).json({ success: false, message: result.message });
     }
   });
 });
 
 
 app.post('/login', (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, rememberMe} = req.body;
 
   model.loginModel( email, password, (result) => {
     if (result.success) {
+      // Set cookie expiration time based on if the user selected remember me
+      const expiresIn = rememberMe ? '7d' : '12h'; 
+
       // User has been authenticated, create a cookie
       const token = jwt.sign(
         { username: result.user.profile_username }, // Payload username
         'This_1_Is_2_A_3_Secret_4!', // Secret key, hardcoded for demonstration purposes
-        { expiresIn: '3d' } // Options
+        { expiresIn: expiresIn }
       );
 
 
