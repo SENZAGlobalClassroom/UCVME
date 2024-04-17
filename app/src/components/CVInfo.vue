@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="header-container">
-        <h1>{{ firstname }} {{ lastname }}</h1>
+        <h1>{{ username }}</h1>
         <div>
             <SpeedDial :model="items" direction="down" showIcon="pi pi-ellipsis-v" hideIcon="pi pi-ellipsis-h"
                 :tooltipOptions="{ position: 'left' }" />
@@ -52,6 +52,7 @@ import Video from '@/components/Video.vue';
 import video from '../assets/TestVideo.mp4'
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { jwtDecode } from 'jwt-decode'; 
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -74,8 +75,20 @@ const workExperiences = ref([
 
 const videoUrl = video
 
-const firstname = "Linda"
-const lastname = "Smith"
+const token = localStorage.getItem('token');
+var decoded = jwtDecode(token).username;
+var username = 'username'; // Placeholder username
+
+if (token && decoded) {
+  decoded = toTitleCase(decoded);
+  username = decoded;
+}
+
+function toTitleCase(str) {
+  return str.replace(/\b(\w)/g, function(match, capture) {
+    return capture.toUpperCase();
+  });
+}
 
 //SpeedDial menu 
 const sharingDialogue = ref(false);
