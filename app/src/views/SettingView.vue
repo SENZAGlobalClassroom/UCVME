@@ -17,6 +17,7 @@
   import SettingForm from '@/components/SettingForm.vue';
 
   const handleSettingChange = (settings) => {
+    // Todo
   };
 
 </script>
