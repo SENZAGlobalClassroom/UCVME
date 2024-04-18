@@ -2,30 +2,48 @@
   <div class="signup-form">
       <h2>Sign Up</h2>
       <form @submit.prevent="onSubmit">
-        <div class="form-group">
-          <input type="text" v-model="username" placeholder="Username" required />
-          <p class="errortext" v-if="errors.username">{{ errors.username }}</p>
-      </div>
-      <div class="form-group">
-          <input type="email" v-model="email" placeholder="E-mail" required />
-          <p class="errortext" v-if="errors.email">{{ errors.email }}</p>
-      </div>
-      <div class="form-group">
-          <input type="password" v-model="password" placeholder="Password" required />
-          <p class="errortext" v-if="errors.password">{{ errors.password }}</p>
-      </div>
-      <div class="form-group">
-          <input
-              type="password"
-              v-model="confirmPassword"
-              placeholder="Confirm Password"
-              required
-          />
-          <p class="errortext" v-if="errors.confirmPassword">
-              {{ errors.confirmPassword }}
-          </p>
-      </div>
-
+          <div class="form-group">
+              <input
+                  type="text"
+                  v-model="username"
+                  placeholder="Username"
+                  required
+              />
+              <p class="errortext" v-if="errors.username">
+                  {{ errors.username }}
+              </p>
+          </div>
+          <div class="form-group">
+              <input
+                  type="email"
+                  v-model="email"
+                  placeholder="E-mail"
+                  required
+              />
+              <p class="errortext" v-if="errors.email">{{ errors.email }}</p>
+          </div>
+          <div class="form-group">
+              <input
+                  type="password"
+                  v-model="password"
+                  placeholder="Password"
+                  required
+              />
+              <p class="errortext" v-if="errors.password">
+                  {{ errors.password }}
+              </p>
+          </div>
+          <div class="form-group">
+              <input
+                  type="password"
+                  v-model="confirmPassword"
+                  placeholder="Confirm Password"
+                  required
+              />
+              <p class="errortext" v-if="errors.confirmPassword">
+                  {{ errors.confirmPassword }}
+              </p>
+          </div>
 
           <div class="checkbox-group" style="padding: 0.5rem">
               <Checkbox
@@ -42,9 +60,7 @@
                       >Terms and Privacy Policies</a
                   ></label
               >
-              <p class="errortext" v-if="errors.terms">
-              {{ errors.terms }}
-          </p>
+              <p class="errortext" v-if="errors.terms">{{ errors.terms }}</p>
           </div>
 
           <button type="submit" class="login-button">Create account</button>
@@ -102,7 +118,7 @@
 
         const username = this.username.toLowerCase();
         const email = this.email.toLowerCase();
-        
+
         if (!this.agreeToTerms) {
           this.errors.terms = "You must agree to the terms and privacy policies!";
           return;
@@ -153,7 +169,7 @@
           } else {
             // Success logic here
             alert('Signup successful!');
-            
+
             localStorage.setItem('token', data.token);
 
             this.$router.push('/');
@@ -256,10 +272,10 @@
   }
 
   .errortext {
-    color: red;
-    font-size: x-small;
-    text-align: center;
-    text-align-last: center;
+      color: red;
+      font-size: x-small;
+      text-align: center;
+      text-align-last: center;
   }
 
   @media (max-width: 766px) {
