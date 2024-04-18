@@ -16,5 +16,5 @@ import Likes from '@/components/Likes.vue';
 <style>
 * {
     margin: 0%;
-};
+}
 </style>

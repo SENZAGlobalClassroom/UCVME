@@ -198,7 +198,7 @@ export default {
   justify-content: space-between;
 }
 
-:deep .p-stepper .p-stepper-panels {
+:deep(.p-stepper .p-stepper-panels) {
   width: 100dvh;
   margin-top: 1rem;
   background-color: rgba(255, 255, 255, 0.703);
@@ -223,7 +223,7 @@ export default {
 }
 
 @media only screen and (max-width: 768px) {
-  :deep .p-stepper .p-stepper-panels {
+  :deep(.p-stepper .p-stepper-panels) {
     width: 100%;
     padding: 1rem;
   }
