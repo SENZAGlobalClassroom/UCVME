@@ -60,17 +60,19 @@
 </template>
 
 <script>
+  import { jwtDecode } from 'jwt-decode';
+
+  var user = jwtDecode( localStorage.getItem('token')).username;
+
   export default {
     data() {
       return {
         username: '',
-        email: '',
         password: '',
         confirmPassword: '',
         theme: 'light', // Default theme
         errors: {
           username: '',
-          email: '',
           password: '',
           confirmPassword: ''
         },
@@ -98,19 +100,66 @@
       onSubmit() {
 
          // Check if passwords match before sending the form
-         if (this.password !== this.confirmPassword) {
+        if (this.password !== this.confirmPassword) {
           this.errors.confirmPassword = 'Passwords do not match!';
+
           return; // Stop the submission if the passwords don't match
         } else {
           this.errors.confirmPassword = ''; // Clear the error if the passwords match
         }
 
+        // If no new username was entered
         if (!this.username) {
           this.errors.username = 'New username required!';
           return;
         }
 
-        alert('Settings updated!');
+        const username = this.username.toLowerCase();
+
+        fetch('/settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            curUser: user,
+            username: username,
+            password: this.password
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(!data.success) {
+            
+            this.errors = {};
+
+            switch (data.message) {
+              case 'Username already exists':
+                this.errors.username = 'That username already exists!';
+                break;
+
+              case 'Update failed':
+                this.errors.username = 'Failed to update username, try again!';
+                break;
+
+              case 'Incorrect password':
+                this.errors.password = 'Incorrect password entered!';
+                break;
+              
+              case 'Login Error':
+                this.errors.password = 'An error occured, try again!';
+                break
+            }
+          }
+          else {
+            // Settings updated successfully, delete the token and ask user to log in again
+            localStorage.removeItem('token');
+
+            alert('Settings updated! Please log in again!');
+
+            this.$router.push('/login');
+          }
+        });
       },
       onDeleteAccount() {
         // Implement account deletion logic here

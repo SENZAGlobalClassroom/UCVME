@@ -61,6 +61,19 @@ app.post('/login', (req, res) => {
   });
 });
 
+// Settings post request
+app.post('/settings', (req, res) => {
+  const {curUser, username, password} = req.body;
+
+  // Call the settings model to verify information
+  model.settingModel(curUser, username, password, (result) => {
+    if (result.success)
+      res.status(200).json({ success: true});
+    else
+      res.status(401).json({ success: false, message: result.message});
+  });
+});
+
 app.get('*', function (req, res) {
   res.sendFile(path.join(staticPath, 'index.html'));
 });
