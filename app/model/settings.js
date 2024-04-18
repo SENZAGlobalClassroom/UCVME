@@ -1,7 +1,7 @@
 const pool = require('./db');
 const bcrypt = require('bcrypt');
 
-const settingModel = function(curUser, username, currentPassword, callback) {
+const changeUserModel = function(curUser, username, currentPassword, callback) {
 
     // First, fetch the existing password hash from the database for the current user
     pool.query('SELECT profile_password from profile WHERE profile_username = $1', [curUser], (err, result) => {
@@ -69,4 +69,60 @@ const settingModel = function(curUser, username, currentPassword, callback) {
     });
 };
 
-module.exports = settingModel;
+const deleteAccountModel = function(curUser, password, callback) {
+    // First, fetch the existing password hash from the database for the current user
+    pool.query('SELECT profile_password from profile WHERE profile_username = $1', [curUser], (err, result) => {
+        if (err) {
+            console.error('Error executing query to get current password', err.stack);
+            callback({ success: false, message: 'Internal Server Error' });
+            return;
+        }
+
+        // If for some reason the user is not found, don't continue
+        if (result.rows.length === 0) {
+            callback({ success: false, message: 'User not found' });
+            return;
+        }
+
+        // Compare the password given with the stored hashed password for the user
+        const storedHash = result.rows[0].profile_password;
+
+        bcrypt.compare(password, storedHash, (err, isMatch) => {
+            if (err) {
+                console.error('Error comparing password:', err);
+                callback({ success: false, message: 'Login error' });
+                return;
+            }
+
+            // Incorrect password entered
+            if (!isMatch) {
+                callback({ success: false, message: 'Incorrect password' });
+                return;
+            }
+
+            // Password is correct, proceed with account deletion
+            const deleteQuery = 'DELETE FROM profile WHERE profile_username = $1 RETURNING *';
+            
+            pool.query(deleteQuery, [curUser], (err, deleteResult) => {
+                if (err) {
+                    console.error('Error deleting account', err.stack);
+                    callback({ success: false, message: 'Deletion failed' });
+                    return;
+                }
+
+                // Check if the deletion was successful
+                if (deleteResult.rows.length > 0) {
+                    callback({ success: true, message: 'Account deleted', deletedUser: deleteResult.rows[0] });
+                } else {
+                    callback({ success: false, message: 'Deletion failed' });
+                }
+            });
+        });
+    });
+}
+
+
+module.exports = {
+    changeUserModel,
+    deleteAccountModel
+}

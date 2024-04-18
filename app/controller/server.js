@@ -61,16 +61,28 @@ app.post('/login', (req, res) => {
   });
 });
 
-// Settings post request
-app.post('/settings', (req, res) => {
-  const {curUser, username, password} = req.body;
+// Settings post request for change username
+app.post('/changeusername', (req, res) => {
+  const { curUser, username, password } = req.body;
 
   // Call the settings model to verify information
-  model.settingModel(curUser, username, password, (result) => {
+  model.changeUserModel(curUser, username, password, (result) => {
     if (result.success)
-      res.status(200).json({ success: true});
+      res.status(200).json({ success: true });
     else
-      res.status(401).json({ success: false, message: result.message});
+      res.status(401).json({ success: false, message: result.message });
+  });
+});
+
+// Settings post request for delete account
+app.post('/deleteaccount', (req, res) => {
+  const { curUser, password } = req.body;
+
+  model.deleteAccountModel(curUser, password, (result) => {
+    if (result.success)
+      res.status(200).json({ success: true });
+    else
+      res.status(400).json({ success: false, message: result.message });
   });
 });
 

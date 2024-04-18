@@ -60,9 +60,14 @@
 </template>
 
 <script>
-  import { jwtDecode } from 'jwt-decode';
+  import e from 'cors';
+import { jwtDecode } from 'jwt-decode';
 
-  var user = jwtDecode( localStorage.getItem('token')).username;
+  var token = localStorage.getItem('token');
+  var user = 'username'; // temp placeholder name
+  
+  if (token)
+    user = jwtDecode(token).username;
 
   export default {
     data() {
@@ -99,7 +104,7 @@
     methods: {
       onSubmit() {
 
-         // Check if passwords match before sending the form
+        // Check if passwords match before sending the form
         if (this.password !== this.confirmPassword) {
           this.errors.confirmPassword = 'Passwords do not match!';
 
@@ -116,7 +121,7 @@
 
         const username = this.username.toLowerCase();
 
-        fetch('/settings', {
+        fetch('/changeusername', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -163,9 +168,50 @@
       },
       onDeleteAccount() {
         // Implement account deletion logic here
+        if(!this.password || !this.confirmPassword) {
+          this.errors.password = 'Password is required for account deletion!';
+          return;
+        }
 
-        if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
-          alert('Account deleted.');
+
+        if (confirm('Are you sure you want to delete your account? This cannot be undone!')) {
+
+          fetch('./deleteaccount', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              curUser: user,
+              password: this.password
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (!data.success) {
+              
+              switch(data.message) {
+
+                case 'Incorrect password':
+                  this.errors.password = 'Incorrect password entered!';
+                  break;
+
+                case 'Deletion failed':
+                  this.errors.password = 'Deletion failed, please refrsh and try again!';
+                  break;
+
+              }
+            } 
+            else {
+              localStorage.removeItem('token');
+
+              alert('Account deleted!');
+              this.$router.push('/login');
+            }
+          })
+        }
+        else {
+          alert('Account not deleted!');
         }
       }
     }
