@@ -1,85 +1,81 @@
 <template>
-    <div class="gray-background">
-        <TopBar></TopBar>
-        <Card class="card-container">
-            <template #header>
-                <h3 class="post-heading">Create a New Post</h3>
-                <div class="form-item">
-                    <select v-model="postType">
-                        <option v-for="type in postTypes" :value="type.code" :key="type.code">{{ type.name }}</option>
-                    </select>
-                </div>
-            </template>
-            <template #content>
-                <div class="form-container">
-                    <div class="form-item">
-                        <input placeholder="Title" v-model="title" />
-                    </div>
-                    <br>
-                    <div v-if="postType === 'JOB'">
-                        <div class="form-item">
-                            <select v-model="selectedCategory">
-                                <option v-for="type in categories" :value="type.code" :key="type.code">{{ type.name }}
-                                </option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="form-item">
-                            <Calendar placeholder="Job date" v-model="jobDate" />
-                        </div>
-                        <br>
-                        <div class="form-item">
-                            <textarea placeholder="Job description" v-model="description" style="min-height: 5rem;" />
-                        </div>
-                        <br>
-                        <div class="pictures-container">
-                            <div v-for="(picture, index) in media" :key="index" class="picture-preview">
-                                <img :src="picture.url" class="image-preview" />
-                                <Button icon="pi pi-times" class="remove-picture-button" @click="removeMedia(index)" />
-                            </div>
-                            <Button icon="pi pi-plus" class="add-picture-button" @click="() => mediaInput.click()" />
-                        </div>
-                        <input type="file" ref="mediaInput" hidden @change="handleMediaUpload" accept="image/*" />
-                    </div>
-                    <div v-if="postType === 'PROMO'">
-                        <div class="form-item">
-                            <textarea placeholder="Description" v-model="description" style="min-height: 5rem;" />
-                        </div>                        <br>
-                        <div class="media-container">
-                            <video v-if="video.url" controls class="video-preview">
-                                <source :src="video.url" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <Button icon="pi pi-times" v-if="video.url" class="remove-video-button"
-                                @click="removeVideo()" />
-                            <Button icon="pi pi-plus" class="add-video-button" v-else
-                                @click="() => videoInput.click()" />
-                        </div>
-                        <input type="file" ref="videoInput" hidden @change="handleVideoUpload" accept="video/*" />
-                    </div>
-                    <br>
-                    <Button label="Post" class="post-button" @click="post" />
-                </div>
-            </template>
-        </Card>
-        <Navbar></Navbar>
-    </div>
+  <div class="gray-background">
+    <TopBar></TopBar>
+    <Card class="card-container">
+      <template #header>
+        <h3 class="post-heading">Create a New Post</h3>
+        <div class="form-item">
+          <select v-model="postType">
+            <option v-for="type in postTypes" :value="type.code" :key="type.code">{{ type.name }}</option>
+          </select>
+        </div>
+      </template>
+      <template #content>
+        <div class="form-container">
+          <div class="form-item">
+            <input placeholder="Title" v-model="title" />
+          </div>
+          <br>
+          <div v-if="postType === 'JOB'">
+            <div class="form-item">
+              <select v-model="selectedCategory">
+                <option v-for="type in categories" :value="type.code" :key="type.code">{{ type.name }}</option>
+              </select>
+            </div>
+            <br>
+            <div class="form-item">
+              <Calendar placeholder="Job date" v-model="jobDate" />
+            </div>
+            <br>
+            <div class="form-item">
+              <textarea placeholder="Job description" v-model="description" style="min-height: 5rem;" />
+            </div>
+            <br>
+            <div class="pictures-container">
+              <div v-for="(picture, index) in media" :key="index" class="picture-preview">
+                <img :src="picture.url" class="image-preview" />
+                <Button icon="pi pi-times" class="remove-picture-button" @click="removeMedia(index)" />
+              </div>
+              <Button icon="pi pi-plus" class="add-picture-button" @click="() => mediaInput.click()" />
+            </div>
+            <input type="file" ref="mediaInput" hidden @change="handleMediaUpload" accept="image/*" />
+          </div>
+          <div v-if="postType === 'PROMO'">
+            <InputTextarea placeholder="Short description" v-model="description" rows="2"></InputTextarea>
+            <br>
+            <div class="media-container">
+              <video v-if="video.url" controls class="video-preview">
+                <source :src="video.url" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <Button icon="pi pi-times" v-if="video.url" class="remove-video-button" @click="removeVideo()" />
+              <Button icon="pi pi-plus" class="add-video-button" v-else @click="() => videoInput.click()" />
+            </div>
+            <input type="file" ref="videoInput" hidden @change="handleVideoUpload" accept="video/*" />
+          </div>
+          <br>
+          <Button label="Post" class="post-button" @click="post" />
+        </div>
+      </template>
+    </Card>
+    <Navbar></Navbar>
+  </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
 
 const postTypes = ref([
-    { name: 'Job Post', code: 'JOB' },
-    { name: 'Self Promotion', code: 'PROMO' }
+  { name: 'Job Post', code: 'JOB' },
+  { name: 'Self Promotion', code: 'PROMO' }
 ]);
 
 const categories = ref([
-    { name: 'Tech', code: 'TECH' },
-    { name: 'Healthcare', code: 'HC' },
-    { name: 'Education', code: 'EDU' },
-    { name: 'Construction', code: 'CONS' },
-    { name: 'Finance', code: 'FIN' }
+  { name: 'Tech', code: 'TECH' },
+  { name: 'Healthcare', code: 'HC' },
+  { name: 'Education', code: 'EDU' },
+  { name: 'Construction', code: 'CONS' },
+  { name: 'Finance', code: 'FIN' }
 ]);
 
 const postType = ref('JOB');
@@ -93,196 +89,202 @@ const mediaInput = ref(null);
 const videoInput = ref(null);
 
 watch(postType, (newVal, oldVal) => {
-    console.log('postType changed from', oldVal, 'to', newVal);
+  console.log('postType changed from', oldVal, 'to', newVal);
 });
 
 function handleMediaUpload(event) {
-    const files = event.target.files;
-    if (!files.length) return;
+  const files = event.target.files;
+  if (!files.length) return;
 
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const url = URL.createObjectURL(file);
-        media.value.push({ file, url });
-    }
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const url = URL.createObjectURL(file);
+    media.value.push({ file, url });
+  }
 }
 
 function handleVideoUpload(event) {
-    const files = event.target.files;
-    if (!files.length || video.value.url) return;
+  const files = event.target.files;
+  if (!files.length || video.value.url) return;
 
-    const file = files[0];
-    const url = URL.createObjectURL(file);
-    video.value = { file, url };
+  const file = files[0];
+  const url = URL.createObjectURL(file);
+  video.value = { file, url };
 }
 
 function removeVideo() {
-    URL.revokeObjectURL(video.value.url);
-    video.value = {};
+  URL.revokeObjectURL(video.value.url);
+  video.value = {};
 }
+
 function removeMedia(index) {
-    URL.revokeObjectURL(jobPictures.value[index].url);
-    jobPictures.value.splice(index, 1);
+  URL.revokeObjectURL(media.value[index].url);
+  media.value.splice(index, 1);
 }
 
 function post() {
-    //add db logic
-    console.log({
-        type: postType.value,
-        title: title.value,
-        category: selectedCategory.value,
-        date: jobDate.value,
-        description: description.value,
-        media: media.value,
-        video: video.value
-    });
+  const postData = {
+    job_post_title: title.value,
+    job_post_category: selectedCategory.value,
+    job_post_date: jobDate.value,
+    job_post_description: description.value
+  };
+
+  fetch('/addpost', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(postData)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to post data');
+    }
+    // Handle success response
+    console.log('Post successful');
+    // Optionally, reset form fields after successful post
+    title.value = '';
+    selectedCategory.value = 'TECH';
+    jobDate.value = null;
+    description.value = '';
+    media.value = [];
+    video.value = {};
+  })
+  .catch(error => {
+    // Handle error
+    console.error('Error posting data:', error.message);
+  });
 }
 </script>
 
 <style scoped>
 .card-container {
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.838);
-    align-items: center;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.838);
+  align-items: center;
 }
 
 .gray-background {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 10dvw;
-    padding-right: 10dvw;
-    background-color: #ededed98;
-    background-image: url('@/assets/Pastel_2.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 100vh;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 10dvw;
+  padding-right: 10dvw;
+  background-color: #ededed98;
+  background-image: url('@/assets/Pastel_2.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 .post-heading {
-    padding-bottom: 1rem
+  padding-bottom: 1rem
 }
 
 .form-item input,
 .form-item select,
 .form-item textarea {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    font-size: 1rem;
-    color: #333;
-    outline: none;
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
 }
 
 .form-item input:hover,
 .form-item select:hover,
 .form-item textarea:hover {
-    border-color: #888;
+  border-color: #888;
 }
 
 .form-item input:focus,
 .form-item select:focus,
 .form-item textarea:focus {
-    border-color: #0056b3;
-    box-shadow: 0 0 5px rgba(0, 86, 179, 0.25);
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 86, 179, 0.25);
 }
 
 .pictures-container {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .picture-preview {
-    position: relative;
-    width: 10rem;
-    height: 10rem;
-    margin: 0.2rem;
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+  margin: 0.2rem;
 }
 
 .image-preview {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .video-preview {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
 }
 
-.remove-picture-button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.add-picture-button {
-    width: 10rem;
-    height: 10rem;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    background-color: rgb(220, 220, 220);
-}
-
+.remove-picture-button,
 .remove-video-button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.add-picture-button,
 .add-video-button {
-    width: 10rem;
-    height: 10rem;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    background-color: rgb(220, 220, 220);
+  width: 10rem;
+  height: 10rem;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background-color: rgb(220, 220, 220);
 }
 
 .post-button {
-    display: flex;
-    margin: auto;
-    width: 40dvw;
+  display: flex;
+  margin: auto;
+  width: 40dvw;
 }
 
 @media (max-width: 1100px) {
-    .form-container {
-        padding: 0;
-        max-width: 100%;
-    }
+  .form-container {
+    padding: 0;
+    max-width: 100%;
+  }
 
-    .pictures-container {
-        gap: 0.5rem;
-    }
+  .pictures-container {
+    gap: 0.5rem;
+  }
 }
 
 @media (max-width: 767px) {
-    .gray-background {
-        padding-top: 0rem;
-        padding-bottom: 0rem;
-        padding-left: 0dvw;
-        padding-right: 0dvw;
-    }
+  .gray-background {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 0dvw;
+    padding-right: 0dvw;
+  }
 
-    .form-item input,
-    .form-item select,
-    .form-item textarea {
-        padding: 0.5rem;
-        font-size: 0.9rem;
-    }
+  .form-item input,
+  .form-item select,
+  .form-item textarea {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
 }
 </style>
