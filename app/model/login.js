@@ -1,16 +1,9 @@
-const { Pool } = require('pg');
+const pool = require('./db'); // Import the opened pool
 const bcrypt = require('bcrypt')
 
 const loginModel = function(username, password, callback) {
     
-    const pool = new Pool({ // create a pool of connections
-        user: 'postgres',
-        host: 'localhost',
-        database: 'postgres',
-        password: 'Sp00ky!',
-        port: 5432 // default PostgreSQL port
-    });
-
+    // Query for the username, does it exist
     pool.query('SELECT * FROM profile WHERE profile_email = $1', [username], (err, result) => {
         if (err) {
             console.error('Error executing query', err.stack);
@@ -21,9 +14,11 @@ const loginModel = function(username, password, callback) {
             callback({ success: false, message: 'User not found' });
             return;
         }
-
+        
+        // Store the found user with the name
         const user = result.rows[0];
          
+        // Compare the password entered with the password of the found user
         bcrypt.compare(password, user.profile_password, (err, isMatch) => {
             if (err) {
                 console.error('Error comparing password:', err);
