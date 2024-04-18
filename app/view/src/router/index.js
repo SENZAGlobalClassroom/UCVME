@@ -102,7 +102,7 @@ router.beforeEach((to, from, next) => {
         next();
       }
     } else { // User has no token, send them to login
-      next('/home');
+      next('/login');
     }
   }
   // Else if the webpage the user is going to is only for non logged in users
