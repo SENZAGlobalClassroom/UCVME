@@ -25,7 +25,7 @@
 <style scoped>
 .card-container {
     margin: auto;
-    margin-top: 1dvw;
+    margin-top: 2dvw;
     width: 40dvw;
     min-width: 500px;
     padding: 1.5rem;
