@@ -10,11 +10,10 @@ const app = express(); // set app as express js
 const cors = require('cors');
 
 // serve static file in view/index.html
-const staticPath = path.join(__dirname, '../'); // set index path to index.html in view directory
+const staticPath = path.join(__dirname, '../view/dist'); // set index path to index.html in view directory
 const saltRounds = 10; // salt round set to 10 for hashing password
 const jwt = require('jsonwebtoken'); // JWT library for cookies
 const { Pool } = require('pg'); // PostgreSQL client library
-
 
 var model = require('../model/index'); 
 
