@@ -59,7 +59,8 @@
           },
           body: JSON.stringify({
             email: email,
-            password: this.password
+            password: this.password,
+            rememberMe: this.rememberMe
           })
         })
         .then(response => response.json())

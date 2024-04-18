@@ -58,7 +58,7 @@ async function signupModel(username, email, password, callback) {
         const newUser = await pool.query(insertUserQuery, [username, email, hashedPassword]);
 
         if (newUser.rows.length > 0) {
-            return callback({ success: true, message: "Signup successful" });
+            return callback({ success: true, username: username, message: "Signup successful" });
         } else {
             return callback({ success: false, message: "Registration failed" });
         }
