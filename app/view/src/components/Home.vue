@@ -57,19 +57,30 @@ import cat3 from '@/assets/cat3.jpg';
 import cat1 from '@/assets/cat5.jpeg';
 import garden1 from '@/assets/garden1.jpg';
 import garden2 from '@/assets/garden2.jpg';
-import video from '@/assets/test3.mp4';
+import video from '@/assets/vid1.mov';
+import video2 from "@/assets/vid2.mov";
 
 // Test data by Mate, all these should come from db
 const posts = ref([
   {
     id: 1,
-    firstname: "Erica",
-    lastname: "Harris",
-    title: 'Your perfect pet sitter',
+    firstname: "Wolfgang",
+    lastname: "McClingelberry",
+    title: 'Looking for young and talented developers!',
     date: 'Needed for 22/04/2024, 16:00',
     description: "<strong>Job Description:</strong><br>" +
-      "Hey there! Are you someone who finds solace in the purrs of content kitties? We’re looking for a kind-hearted individual to pamper our two furry friends while we embark on a two-week adventure. If you're a cat whisperer who can make our fur babies feel like royalty, this gig is purr-fect for you!<br><br>",
+      "We're on the lookout for young, talented computer scientists who are eager to innovate and drive technological advancements. Our ideal candidates are recent graduates or current students in the field of computer science who possess a strong foundational understanding of programming, algorithms, and systems design. We value creativity, the ability to think critically about complex problems, and a passion for learning new technologies. If you're looking for an opportunity to apply your skills in real-world applications and work on cutting-edge projects that impact various industries, we encourage you to join our dynamic team. Together, we'll explore new possibilities, develop groundbreaking software, and revolutionize the way technologies enhance our lives.<br><br>",
     video: video,
+  },
+  {
+    id: 4,
+    firstname: "Bongo",
+    lastname: "Crouch",
+    title: 'Looking for farmers in Wicklow!',
+    date: 'Needed for 25/04/2024, 07:00',
+    description: "<strong>Job Description:</strong><br>" +
+      "We are seeking dedicated farmers to join our agricultural team in Wicklow. Ideal candidates will have experience in farming or a strong interest in agriculture, with a particular focus on sustainable practices. We value individuals who are hardworking, detail-oriented, and passionate about cultivating high-quality produce and maintaining the health of our land. This role involves various farming duties, including planting, harvesting, crop management, and equipment operation. If you're ready to contribute to a thriving agricultural community and take part in nurturing the land in scenic Wicklow, we invite you to apply and grow with us.<br><br>",
+    video: video2,
   },
   {
     id: 2,
@@ -202,7 +213,7 @@ function applyJob(post) {
 }
 
 .video-content {
-  width: 70%;
+  width: 20%;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
   overflow: hidden;
