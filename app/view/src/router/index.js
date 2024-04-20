@@ -1,16 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { jwtDecode } from 'jwt-decode'
 import CVProcessView from '../views/CVProcessView.vue'
-import LoginView from '../views/LoginView.vue'
-import SignUpView from '../views/SignUpView.vue'
-import CVProcessCompleteView from '../views/CVProcessCompleteView.vue'
 import CV from '../views/CVView.vue'
 import WalletView from '../views/WalletView.vue'
-import HelpView from '../views/HelpView.vue'
-import SettingView from '../views/SettingView.vue'
-import LikesView from '../views/LikesView.vue'
 import AddPostView from '../views/AddPostView.vue'
-
+import CollectionDetailView from '../views/CollectionDetailView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,13 +18,13 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: LoginView,
+      component: () => import('../views/LoginView.vue'),
       meta: { requiresGuest: true }
     },
     {
       path: '/signup',
       name: 'SignUp',
-      component: SignUpView,
+      component: () => import('../views/SignUpView.vue'),
       meta: { requiresGuest: true }
     },
     {
@@ -42,7 +36,7 @@ const router = createRouter({
     {
       path: '/CVComplete',
       name: 'CVComplete',
-      component: CVProcessCompleteView,
+      component: () => import('../views/CVProcessCompleteView.vue'),
       meta: { requiresAuth: true }
     },
     {
@@ -52,28 +46,34 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
+      path: '/history',
+      name: 'HistoryView',
+      component: () => import('../views/HistoryView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/wallet',
       name: 'WalletView',
       component: WalletView,
       meta: { requiresAuth: true }
     },
     {
+      path: '/collection/:id',
+      name: 'CollectionDetails',
+      component: CollectionDetailView,
+      props: true
+    },
+    {
       path: '/help',
       name: 'HelpView',
-      component: HelpView
+      component: () => import('../views/HelpView.vue'),
     },
     {
       path: '/settings',
       name: 'SettingView',
-      component: SettingView,
+      component: () => import('../views/SettingView.vue'),
       meta: { requiresAuth: true }
     }, 
-    {
-      path: '/likes',
-      name: 'LikesView',
-      component: LikesView,
-      meta: { requiresAuth: true }
-    },
     {
       path: '/addpost',
       name: 'AddPostView',

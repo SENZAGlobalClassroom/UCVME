@@ -10,8 +10,8 @@
       <RouterLink to="/addpost">
         <i class="pi pi-plus" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
-      <RouterLink to="/Likes">
-        <i class="pi pi-heart" style="color: black; font-size: 1.5rem"></i>
+      <RouterLink to="/history">
+        <i class="pi pi-history" style="color: black; font-size: 1.5rem"></i>
       </RouterLink>
       <RouterLink to="/CVUsername">
         <i class="pi pi-user" style="color: black; font-size: 1.5rem"></i>

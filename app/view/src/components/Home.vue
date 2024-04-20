@@ -49,8 +49,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import { likedPosts } from '@/store';
-
 
 // Test Data The images should come from db
 import cat3 from '@/assets/cat3.jpg';
@@ -59,6 +57,16 @@ import garden1 from '@/assets/garden1.jpg';
 import garden2 from '@/assets/garden2.jpg';
 import video from '@/assets/vid1.mov';
 import video2 from "@/assets/vid2.mov";
+
+const showCollectionDialog = ref(false);
+const selectedPost = ref(null);
+
+// should get available collections from db, all posts should always be there
+const collections = ref([
+  { id: 1, name: 'All Posts' },
+  { id: 2, name: 'Favorite Jobs' },
+  { id: 3, name: 'My Interests' }
+]);
 
 // Test data by Mate, all these should come from db
 const posts = ref([
@@ -163,11 +171,17 @@ const posts = ref([
 ]);
 
 function likePost(post) {
-  if (!likedPosts.value.some(likedPost => likedPost.id === post.id)) {
-    likedPosts.value.push(post);
-    console.log('Post liked:', post);
-    console.log('All liked posts:', likedPosts.value);
-  }
+  selectedPost.value = post;
+  showCollectionDialog.value = true;
+}
+
+function savePostToCollection(post, collection) {
+  // should save to db by sending post and collection info
+
+  console.log(`Post ${post.title} saved to collection ${collection.name}`);
+  showCollectionDialog.value = false;
+
+  toast.add({ severity: 'success', summary: 'Saved', detail: `Post saved to ${collection.name}` });
 }
 
 function applyJob(post) {
@@ -291,8 +305,6 @@ video {
 
   .post-details {
     padding-top: 1rem;
-
   }
-
 }
 </style>

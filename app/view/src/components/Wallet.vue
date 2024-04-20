@@ -8,7 +8,7 @@
         </button>
     </div>
     <div class="collections-grid">
-        <div class="collection" v-for="collection in collections" :key="collection.id">
+        <div class="collection" v-for="collection in collections" :key="collection.id" @click="openCollection(collection.id)">
             <div class="collection-images">
                 <div class="image primary"
                     :style="{ backgroundImage: collection.cvs.length > 0 ? 'url(' + collection.cvs[0].stillImage + ')' : '' }">
@@ -71,12 +71,20 @@
 import { ref, defineEmits } from 'vue';
 import PropTypes from 'vue-types';
 import { useToast } from 'primevue/usetoast';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+
+const openCollection = (id) => {
+    router.push(`/collection/${id}`).catch(err => {
+  console.error("Failed to navigate:", err);
+});
+}
 const openSettings = () => {
     //settings button
 };
 
-//add colection dialogue logic
+//add colection dialogue logic should be adding it to db !!
 const showDialog = ref(false);
 const newCollectionName = ref('');
 const toast = useToast();
@@ -95,7 +103,7 @@ const addNewCollection = () => {
 };
 
 
-//Edit dialogue logic
+//Edit dialogue logic should be editing in db!!
 const showEditDialog = ref(false);
 const editCollectionName = ref('');
 const editingCollectionId = ref(null);

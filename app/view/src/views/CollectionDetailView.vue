@@ -1,12 +1,12 @@
 <script setup>
-import Likes from '@/components/Likes.vue';
+import Collections from '@/components/Collections.vue';
 
 </script>
 
 <template>
     <div class="gray-background">
         <TopBar></TopBar>
-        <Likes></Likes>
+        <Collections></Collections>
         <Navbar></Navbar>
     </div>
 </template>
