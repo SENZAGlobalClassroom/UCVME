@@ -80,8 +80,6 @@ console.log('Phone value:', phone.value); // Log phone value on component initia
 
 </script>
 
-
-
 <style scoped>
 
 .p-float-label input {

@@ -37,6 +37,9 @@ import Sidebar from 'primevue/sidebar';
 import Galleria from 'primevue/galleria';
 import Avatar from 'primevue/avatar';
 import Checkbox from 'primevue/checkbox';
+import AddPost from './components/AddPost.vue';
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
 
 const app = createApp(App)
 
@@ -66,6 +69,9 @@ app.component('Sidebar', Sidebar);
 app.component('Galleria', Galleria);
 app.component('Avatar', Avatar);
 app.component('Checkbox', Checkbox);
+app.component('AddPost', AddPost);
+app.component('TabView', TabView);
+app.component('TabPanel', TabPanel);
 
 app.use(router)
 app.use(PrimeVue);

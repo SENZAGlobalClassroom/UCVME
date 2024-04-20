@@ -1,4 +1,5 @@
 <template>
+  <br>
   <div class="navbar">
     <!-- Hamburger Menu Icon -->
     <div class="hamburger-menu" @click="toggleMenu">
@@ -43,6 +44,7 @@
     </div>
 
   </Sidebar>
+  <br>
 </template>
 
 <script setup>
