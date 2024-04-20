@@ -1,23 +1,17 @@
 <template>
-
-  <head>
-    <title>Make your CV</title>
-  </head>
   <div class="gray-background">
     <TopBarFT></TopBarFT>
     <div class="centered">
       <Stepper linear>
         <StepperPanel>
-          <template #header=> 
+          <template #header> 
             <Button>
               <i class="pi pi-user" />
             </Button>
           </template>
           <template #content="{ nextCallback }">
             <div class="space">
-              <CVProcessStep1 @update:firstName="updateFirstName" @update:lastName="updateLastName"
-                @update:phone="updatePhone" @update:email="updateEmail" @update:country="updateCountry"
-                :selectedCountry="selectedCountry"></CVProcessStep1>
+              <CVProcessStep1 @update:firstName="updateFirstName" @update:lastName="updateLastName" @update:phone="updatePhone" @update:email="updateEmail" @update:country="updateCountry" :selectedCountry="selectedCountry"></CVProcessStep1>
             </div>
             <div class="buttons">
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
@@ -48,7 +42,7 @@
           </template>
           <template #content="{ prevCallback, nextCallback }">
             <div class="space">
-              <CVProcessStep3></CVProcessStep3>
+              <CVProcessStep3 @update:selectedPersonality="updateSelectedPersonality" @update:jobTitle="updateJobTitle" @update:jobCategory="updateJobCategory" @update:startDate="updateStartDate" @update:endDate="updateEndDate" @update:description="updateDescription" @update:memory="updateMemory" @update:referencePhoneNumber="updateReferencePhoneNumber"></CVProcessStep3>
             </div>
             <div class="buttons">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
@@ -69,7 +63,6 @@
             <div class="buttons">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
               <Button label="Complete" @click="completeCV"></Button>
-
             </div>
           </template>
         </StepperPanel>
@@ -79,77 +72,94 @@
   </div>
 </template>
 
-
 <script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import CVProcessStep1 from '@/components/CVProcessStep1.vue';
 import CVProcessStep2 from '@/components/CVProcessStep2.vue';
 import CVProcessStep3 from '@/components/CVProcessStep3.vue';
 import CVProcessStep4 from '@/components/CVProcessStep4.vue';
 
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
 export default {
-  components: {
-    CVProcessStep1,
-    CVProcessStep2,
-    CVProcessStep3,
-    CVProcessStep4,
-  },
   setup() {
     const router = useRouter();
 
-    const sendDataToDatabase = () => {
-      // this is called when the complete button is pressed
-      // you can send the data to the db here @jia
+    const firstName = ref("");
+    const lastName = ref("");
+    const phone = ref("");
+    const email = ref("");
+    const selectedCountry = ref("");
+    const selectedColor = ref(null);
+    
+    const mbti = ref("");
+    const jobTitle = ref("");
+    const jobCategory = ref("");
+    const startDate = ref(null);
+    const endDate = ref(null);
+    const descriptionWork = ref("");
+    const memory = ref("");
+    const referencePhoneNumber = ref("");
+    const videoData = ref(null);
+
+    const updateFirstName = (value) => { firstName.value = value; };
+    const updateLastName = (value) => { lastName.value = value; };
+    const updatePhone = (value) => { phone.value = value; };
+    const updateEmail = (value) => { email.value = value; };
+    const updateCountry = (value) => { selectedCountry.value = value; };
+    const logCubeColor = (color) => { selectedColor.value = color; };
+    const updateSelectedPersonality = (value) => { mbti.value = value; };
+    const updateJobTitle = (value) => { jobTitle.value = value; };
+    const updateJobCategory = (value) => { jobCategory.value = value; };
+    const updateStartDate = (value) => { startDate.value = value; };
+    const updateEndDate = (value) => { endDate.value = value; };
+    const updateDescription = (value) => { descriptionWork.value = value; };
+    const updateMemory = (value) => { memory.value = value; };
+    const updateReferencePhoneNumber = (value) => { referencePhoneNumber.value = value; };
+    const handleVideoData = (data) => { videoData.value = data; };
+
+    const sendDataToDatabase = async () => {
+      try {
+        const formData = {
+          cv_firstname: firstName.value,
+          cv_lastname: lastName.value,
+          cv_phonenumber: phone.value,
+          cv_email: email.value,
+          cv_country: selectedCountry.value,
+          cv_colour: selectedColor.value,
+          cv_mbti: mbti.value,
+          cv_job_title: jobTitle.value,
+          cv_job_category: jobCategory.value,
+          cv_start_date: startDate.value,
+          cv_end_date: endDate.value,
+          cv_description_work: descriptionWork.value,
+          cv_memory: memory.value,
+          cv_reference_ph_number: referencePhoneNumber.value,
+        };
+
+        const response = await fetch('/cvprocess', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to send data to server');
+        }
+
+        router.push({ name: 'CVComplete' });
+      } catch (error) {
+        console.error('Error sending data to server:', error);
+      }
     };
 
     const completeCV = async () => {
       try {
         await sendDataToDatabase();
-        // Redirect to the CVProcessCompleteView.vue page after data is sent
-        router.push({ name: 'CVComplete' });
       } catch (error) {
         console.error('Error while completing CV:', error);
       }
-    };
-
-    const firstName = ref("");
-    const updateFirstName = (value) => {
-      firstName.value = value;
-      console.log(firstName.value);
-    };
-    const lastName = ref("");
-    const updateLastName = (value) => {
-      lastName.value = value;
-      console.log(lastName.value);
-    };
-    const phone = ref("");
-    const updatePhone = (value) => {
-      phone.value = value;
-      console.log(phone.value);
-    };
-    const email = ref("");
-    const updateEmail = (value) => {
-      email.value = value;
-      console.log(email.value);
-    };
-    const selectedCountry = ref("");
-    const updateCountry = (value) => {
-      selectedCountry.value = value;
-      console.log(selectedCountry.value);
-    };
-
-    const selectedColor = ref("");
-    const logCubeColor = (color) => {
-      selectedColor.value = color;
-      console.log(selectedColor.value);
-    };
-
-    const videoData = ref(null);
-    const handleVideoData = (data) => {
-      videoData.value = data;
-      console.log('Received video data:', videoData.value);
     };
 
     return {
@@ -158,18 +168,39 @@ export default {
       phone,
       email,
       selectedCountry,
+      selectedColor,
       updateFirstName,
       updateLastName,
       updatePhone,
       updateEmail,
       updateCountry,
-      selectedColor,
       logCubeColor,
+      mbti,
+      jobTitle,
+      jobCategory,
+      startDate,
+      endDate,
+      descriptionWork,
+      memory,
+      referencePhoneNumber,
       videoData,
-      handleVideoData,
-      completeCV
+      updateSelectedPersonality,
+      updateJobTitle,
+      updateJobCategory,
+      updateStartDate,
+      updateEndDate,
+      updateDescription,
+      updateMemory,
+      updateReferencePhoneNumber,
+      completeCV,
     }
   },
+  components: {
+    CVProcessStep1,
+    CVProcessStep2,
+    CVProcessStep3,
+    CVProcessStep4,
+  }
 }
 </script>
 
@@ -214,7 +245,6 @@ export default {
   border-radius: 50px;
 }
 
-
 @media only screen and (max-width: 1200px) {
   .p-stepper .p-stepper-panels {
     width: 75%;
@@ -227,7 +257,6 @@ export default {
     width: 100%;
     padding: 1rem;
   }
-
 
   .p-button {
     margin: 5px;

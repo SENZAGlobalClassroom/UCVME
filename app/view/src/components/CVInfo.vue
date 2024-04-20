@@ -198,13 +198,13 @@ const items = ref([
     background-color: #a8a8a8;
 }
 
-:deep .p-speeddial-button {
+:deep(.p-speeddial-button) {
     background-color: #fbeee000;
     color: black;
     border-color: transparent;
 }
 
-:deep .p-speeddial-action {
+:deep(.p-speeddial-action) {
     background-color: #ffffff;
 }
 
@@ -223,7 +223,7 @@ const items = ref([
         min-width: 90dvw;
     }
 
-    :deep .p-card .p-card-body {
+    :deep(.p-card .p-card-body) {
         padding: 0rem;
     }
 

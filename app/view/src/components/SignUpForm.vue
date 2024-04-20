@@ -133,7 +133,7 @@
         }
 
         // Send POST request to your server
-        fetch('http://localhost:8080/signup', {
+        fetch('/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
