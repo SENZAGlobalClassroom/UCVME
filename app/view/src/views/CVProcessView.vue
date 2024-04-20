@@ -206,12 +206,15 @@ export default {
 
 <style scoped>
 .gray-background {
-  padding: 1rem;
-  background-color: #ededed98;
-  background-image: url('@/assets/Pastel_9.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100vh;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 20dvw;
+    padding-right: 20dvw;
+    background-color: #ededed98;
+    background-image: url('@/assets/Pastel_9.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 .centered {

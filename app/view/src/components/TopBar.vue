@@ -22,22 +22,23 @@
 
     <ul class="sidebar-links">
       <li><a href="javascript:void(0)" @click="goToHistoryPage">
-        <i class="pi pi-history"></i>
-        History</a>
+          <i class="pi pi-history"></i>
+          History</a>
       </li>
       <li><a href="javascript:void(0)" @click="goToSettingsPage">
           <i class="pi pi-cog"></i>
           Settings</a>
       </li>
       <li><a href="javascript:void(0)" @click="goToHelpPage">
-        <i class="pi pi-question-circle"></i>
-        Help Centre</a>
+          <i class="pi pi-question-circle"></i>
+          Help Centre</a>
       </li>
     </ul>
 
     <div class="user-panel">
-      <Avatar image="/src/assets/user.jpg" shape="circle" />
-      {{ username }}
+      <div>
+        @{{ username }}
+      </div>
       <button class="sign-out-btn" @click="signOut">
         <i class="pi pi-sign-out"></i>
       </button>
@@ -112,7 +113,7 @@ const signOut = () => {
 }
 
 function toTitleCase(str) {
-  return str.replace(/\b(\w)/g, function(match, capture) {
+  return str.replace(/\b(\w)/g, function (match, capture) {
     return capture.toUpperCase();
   });
 }
@@ -121,10 +122,10 @@ function toTitleCase(str) {
 
 <style scoped>
 .navbar {
-  display: flex;   
+  display: flex;
   top: 0;
   width: 100%;
-  z-index: 1000; 
+  z-index: 1000;
   background-color: transparent;
   border-bottom: none;
 }
@@ -196,5 +197,16 @@ function toTitleCase(str) {
 
 .sign-out-btn .pi {
   font-size: 1.5em;
+}
+
+@media (max-width: 767px) {
+  .search-container {
+    max-width: 70dvw;
+
+  }
+
+  .hamburger-menu {
+    padding-left: 10px;
+  }
 }
 </style>

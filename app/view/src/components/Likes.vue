@@ -113,7 +113,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   border-radius: 0px;
-
 }
 
 .post-card {

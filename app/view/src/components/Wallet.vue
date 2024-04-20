@@ -153,7 +153,6 @@ const deleteCollection = () => {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    min-width: 18dvw;
 }
 
 .collection:hover {
@@ -242,22 +241,12 @@ const deleteCollection = () => {
     .collections-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-
-    .collection {
-        min-width: 24dvw;
-    }
-
 }
 
 @media (max-width: 768px) {
     .collections-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .collection {
-        min-width: 38dvw;
-    }
-
 }
 
 @media (max-width: 700px) {

@@ -68,7 +68,7 @@ const posts = ref([
     lastname: "McClingelberry",
     title: 'Looking for young and talented developers!',
     date: 'Needed for 22/04/2024, 16:00',
-    description: "<strong>Job Description:</strong><br>" +
+    description:
       "We're on the lookout for young, talented computer scientists who are eager to innovate and drive technological advancements. Our ideal candidates are recent graduates or current students in the field of computer science who possess a strong foundational understanding of programming, algorithms, and systems design. We value creativity, the ability to think critically about complex problems, and a passion for learning new technologies. If you're looking for an opportunity to apply your skills in real-world applications and work on cutting-edge projects that impact various industries, we encourage you to join our dynamic team. Together, we'll explore new possibilities, develop groundbreaking software, and revolutionize the way technologies enhance our lives.<br><br>",
     video: video,
   },
@@ -78,7 +78,7 @@ const posts = ref([
     lastname: "Crouch",
     title: 'Looking for farmers in Wicklow!',
     date: 'Needed for 25/04/2024, 07:00',
-    description: "<strong>Job Description:</strong><br>" +
+    description:
       "We are seeking dedicated farmers to join our agricultural team in Wicklow. Ideal candidates will have experience in farming or a strong interest in agriculture, with a particular focus on sustainable practices. We value individuals who are hardworking, detail-oriented, and passionate about cultivating high-quality produce and maintaining the health of our land. This role involves various farming duties, including planting, harvesting, crop management, and equipment operation. If you're ready to contribute to a thriving agricultural community and take part in nurturing the land in scenic Wicklow, we invite you to apply and grow with us.<br><br>",
     video: video2,
   },
@@ -191,6 +191,7 @@ function applyJob(post) {
   flex-direction: column;
   border-radius: 0px;
   border-bottom: 1px solid rgba(206, 206, 206, 0.753);
+  background-color: rgba(255, 255, 255, 0.808);
 }
 
 .post-card {
@@ -222,8 +223,9 @@ function applyJob(post) {
 
 video {
   width: 100%;
-  height: auto;
+  height: 40dvh;
   display: block;
+  object-fit: cover;
 }
 
 .post-details {

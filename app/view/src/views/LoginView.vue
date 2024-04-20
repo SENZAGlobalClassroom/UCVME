@@ -33,8 +33,8 @@ const handleLogin = (credentials) => {
 .gray-background {
     padding-top: 2rem;
     padding-bottom: 2rem;
-    padding-left: 10dvw;
-    padding-right: 10dvw;
+    padding-left: 20dvw;
+    padding-right: 20dvw;
     background-color: #ededed98;
     background-image: url('@/assets/Pastel_13.png');
     background-size: cover;
