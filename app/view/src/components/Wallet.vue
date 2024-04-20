@@ -8,8 +8,8 @@
         </button>
     </div>
     <div class="collections-grid">
-        <div class="collection" v-for="collection in collections" :key="collection.id" @click="openCollection(collection.id)">
-            <div class="collection-images">
+        <div class="collection" v-for="collection in collections" :key="collection.id">
+            <div class="collection-images" @click="openCollection(collection.id)">
                 <div class="image primary"
                     :style="{ backgroundImage: collection.cvs.length > 0 ? 'url(' + collection.cvs[0].stillImage + ')' : '' }">
                     <div v-if="collection.cvs.length === 0" class="placeholder"></div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="collection-info">
-                <h3 class="collection-title">{{ collection.name }}</h3>
+                <h3 class="collection-title" @click="openCollection(collection.id)">{{ collection.name }}</h3>
                 <button v-if="collection.id !== 0" class="edit-button" @click="openEditDialog(collection)">
                     <i class="pi pi-pencil" style="font-size: 1rem;"></i>
                 </button>
@@ -77,8 +77,8 @@ const router = useRouter();
 
 const openCollection = (id) => {
     router.push(`/collection/${id}`).catch(err => {
-  console.error("Failed to navigate:", err);
-});
+        console.error("Failed to navigate:", err);
+    });
 }
 const openSettings = () => {
     //settings button
@@ -122,14 +122,14 @@ const saveChanges = () => {
     const newName = editCollectionName.value.trim();
     if (newName) {
         emit('update-collection', { id: editingCollectionId.value, name: newName });
-        toast.add({ severity: 'success', summary: 'Success', detail: 'Collection updated',life: 3000 });
+        toast.add({ severity: 'success', summary: 'Success', detail: 'Collection updated', life: 3000 });
     }
     showEditDialog.value = false;
 };
 
 const deleteCollection = () => {
     emit('delete-collection', editingCollectionId.value);
-    toast.add({ severity: 'success', summary: 'Success', detail: 'Collection deleted',life: 3000 });
+    toast.add({ severity: 'success', summary: 'Success', detail: 'Collection deleted', life: 3000 });
     showEditDialog.value = false;
 };
 
@@ -163,12 +163,17 @@ const deleteCollection = () => {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.collection-title {
+    cursor: pointer;
+}
+
 .collection:hover {
     transform: translateY(-5px);
 }
 
 .collection-images {
     display: flex;
+    cursor: pointer;
 }
 
 .image {
