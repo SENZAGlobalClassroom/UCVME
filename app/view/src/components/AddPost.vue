@@ -3,7 +3,7 @@
         <TabPanel header="Job Post">
             <div class="form-container">
                 <div class="form-item">
-                    <input placeholder="Title" />
+                    <input placeholder="Title" v-model="title" />
                 </div>
                 <br>
                 <div>
@@ -27,7 +27,7 @@
                             <img :src="picture.url" class="image-preview" />
                             <Button icon="pi pi-times" class="remove-picture-button" @click="removeMedia(index)" />
                         </div>
-                        <Button icon="pi pi-plus" class="add-picture-button" @click="() => $refs.mediaInput.click()" />
+                        <Button icon="pi pi-plus" class="add-picture-button" @click="() => mediaInput.click()" />
                     </div>
                     <input type="file" ref="mediaInput" hidden @change="handleMediaUpload" accept="image/*" />
                 </div>
@@ -38,19 +38,25 @@
         <TabPanel header="Self Promotion">
             <div class="form-container">
                 <div class="form-item">
-                    <input placeholder="Title" />
+                    <input placeholder="Title" v-model="title" />
                 </div>
-                <InputTextarea placeholder="Short description" v-model="description" rows="2"></InputTextarea>
                 <br>
-                <div class="media-container">
-                    <video v-if="video && video.url" controls class="video-preview">
-                        <source :src="video.url" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <Button icon="pi pi-times" v-if="video && video.url" class="remove-video-button" @click="removeVideo" />
-                    <Button icon="pi pi-plus" v-else @click="() => $refs.videoInput.click()" />
+                <div>
+                    <div class="form-item">
+                        <textarea placeholder="Job description" v-model="description" style="min-height: 5rem;" />
+                    </div>
+                    <br>
+                    <div class="media-container">
+                        <video v-if="video.url" controls class="video-preview">
+                            <source :src="video.url" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <Button icon="pi pi-times" v-if="video.url" class="remove-video-button"
+                            @click="removeVideo()" />
+                        <Button icon="pi pi-plus" class="add-video-button" v-else @click="() => videoInput.click()" />
+                    </div>
+                    <input type="file" ref="videoInput" hidden @change="handleVideoUpload" accept="video/*" />
                 </div>
-                <input type="file" ref="videoInput" hidden @change="handleVideoUpload" accept="video/*" />
                 <br>
                 <Button label="Post" class="post-button" @click="post" />
             </div>
@@ -58,7 +64,7 @@
     </TabView>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 
 const categories = ref([
@@ -69,51 +75,77 @@ const categories = ref([
     { name: 'Finance', code: 'FIN' }
 ]);
 
-const postType = ref('');
+const postType = ref('JOB');
 const title = ref('');
 const selectedCategory = ref('TECH');
 const jobDate = ref(null);
 const description = ref('');
 const media = ref([]);
-const video = ref(null);
+const video = ref({});
+const mediaInput = ref(null);
+const videoInput = ref(null);
 
 function handleMediaUpload(event) {
     const files = event.target.files;
-    if (files) {
-        Array.from(files).forEach(file => {
-            const fileReader = new FileReader();
-            fileReader.onload = (e) => {
-                media.value.push({ url: e.target.result });
-            };
-            fileReader.onerror = (e) => {
-                console.error("Error reading file: ", e);
-            };
-            fileReader.readAsDataURL(file);
-        });
+    if (!files.length) return;
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const url = URL.createObjectURL(file);
+        media.value.push({ file, url });
     }
-}
-function removeMedia(index) {
-    media.value.splice(index, 1);
 }
 
 function handleVideoUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const fileReader = new FileReader();
-        fileReader.onload = (e) => {
-            video.value = { url: e.target.result };
-        };
-        fileReader.onerror = (e) => {
-            console.error("Error reading video file: ", e);
-        };
-        fileReader.readAsDataURL(file);
-    }
+    const files = event.target.files;
+    if (!files.length || video.value.url) return;
+
+    const file = files[0];
+    const url = URL.createObjectURL(file);
+    video.value = { file, url };
 }
 
 function removeVideo() {
-    video.value = null;
+    URL.revokeObjectURL(video.value.url);
+    video.value = {};
 }
 
+function removeMedia(index) {
+    URL.revokeObjectURL(media.value[index].url);
+    media.value.splice(index, 1);
+}
+
+function post() {
+    const postData = {
+        job_post_title: title.value,
+        job_post_category: selectedCategory.value,
+        job_post_date: jobDate.value,
+        job_post_description: description.value
+    };
+
+    fetch('/addpost', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to post data');
+            }
+            console.log('Post successful');
+            title.value = '';
+            selectedCategory.value = 'TECH';
+            jobDate.value = null;
+            description.value = '';
+            media.value = [];
+            video.value = {};
+        })
+        .catch(error => {
+            console.error('Error posting data:', error.message);
+        });
+}
 </script>
 
 <style scoped>
