@@ -172,7 +172,7 @@
 
             localStorage.setItem('token', data.token);
 
-            this.$router.push('/');
+            this.$router.push('/CVProcess');
           }
         })
       }
