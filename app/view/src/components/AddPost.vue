@@ -149,6 +149,10 @@ function post() {
 </script>
 
 <style scoped>
+:deep(.p-tabview-panels ){
+    background: transparent !important;
+}
+
 .post-heading {
     padding-bottom: 1rem
 }
