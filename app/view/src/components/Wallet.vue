@@ -1,8 +1,5 @@
 <template>
     <div class="wallet-controls">
-        <button class="wallet-control-button" @click="openSettings">
-            <i class="pi pi-cog" style="font-size: 2rem;"></i>
-        </button>
         <button class="wallet-control-button" @click="showDialog = true">
             <i class="pi pi-plus" style="font-size: 2rem;"></i>
         </button>
@@ -80,11 +77,8 @@ const openCollection = (id) => {
         console.error("Failed to navigate:", err);
     });
 }
-const openSettings = () => {
-    //settings button
-};
 
-//add colection dialogue logic should be adding it to db !!
+//add collection dialogue logic should be adding it to db !!
 const showDialog = ref(false);
 const newCollectionName = ref('');
 const toast = useToast();

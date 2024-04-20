@@ -45,10 +45,44 @@
       </template>
     </Card>
   </div>
+
+  <!-- Save to collection popup -->
+  <Dialog v-model:visible="showCollectionDialog" header="Add New Collection" :style="{ width: '45rem' }">
+    <div class="dialog-content">
+      <div>
+        <div class="collections-grid">
+          <div class="collection" v-for="collection in collections" :key="collection.id" @click="() => savePostToCollection(selectedPost, collection)">
+            <div class="collection-images">
+              <div class="image primary"
+                :style="{ backgroundImage: collection.cvs.length > 0 ? 'url(' + collection.cvs[0].stillImage + ')' : '' }">
+                <div v-if="collection.cvs.length === 0" class="placeholder"></div>
+              </div>
+              <div class="side-images">
+                <div class="image secondary"
+                  :style="{ backgroundImage: collection.cvs.length > 1 ? 'url(' + collection.cvs[1].stillImage + ')' : '' }">
+                  <div v-if="collection.cvs.length < 2" class="placeholder"></div>
+                </div>
+                <div class="image secondary"
+                  :style="{ backgroundImage: collection.cvs.length > 2 ? 'url(' + collection.cvs[2].stillImage + ')' : '' }">
+                  <div v-if="collection.cvs.length < 3" class="placeholder"></div>
+                </div>
+              </div>
+            </div>
+            <div class="collection-info">
+              <h3 class="collection-title">{{ collection.name }}</h3>
+              <p class="collection-details">{{ collection.cvs.length }} Saved</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Dialog>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useToast } from 'primevue/usetoast';
+const toast = useToast();
 
 // Test Data The images should come from db
 import cat3 from '@/assets/cat3.jpg';
@@ -57,15 +91,138 @@ import garden1 from '@/assets/garden1.jpg';
 import garden2 from '@/assets/garden2.jpg';
 import video from '@/assets/vid1.mov';
 import video2 from "@/assets/vid2.mov";
+import test2 from '@/assets/test2.mp4';
+import test3 from '@/assets/test3.mp4';
+import person1 from '@/assets/wonyoung.png';
+import person2 from '@/assets/person2.jpg';
+import person3 from '@/assets/person4.png';
 
 const showCollectionDialog = ref(false);
 const selectedPost = ref(null);
 
 // should get available collections from db, all posts should always be there
 const collections = ref([
-  { id: 1, name: 'All Posts' },
-  { id: 2, name: 'Favorite Jobs' },
-  { id: 3, name: 'My Interests' }
+  {
+    id: 1,
+    name: 'Gardening CVs',
+    cvs: [
+      {
+        id: 'cv1',
+        name: 'Erica Lee',
+        video: test2,
+        stillImage: person1,
+        workExperience: [
+          {
+            jobTitle: 'Hairstylist',
+            startDate: '2020-01',
+            endDate: '2021-12',
+            description: 'Hairstyle.',
+            memory: 'A client once gave me a tip',
+            referencePhone: '000000'
+          },
+        ],
+      },
+      {
+        id: 'cv2',
+        name: 'John Doe',
+        video: test2,
+        stillImage: person2,
+        workExperience: [
+          {
+            jobTitle: 'Gardener',
+            startDate: '2020-01',
+            endDate: '2021-12',
+            description: 'Maintained and beautified gardens.',
+            memory: 'A client once...',
+            referencePhone: '000000'
+          },
+        ],
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Pet Sitter CVs',
+    cvs: [
+      {
+        id: 'cv1',
+        name: 'Erica Lee',
+        video: test2,
+        stillImage: person1,
+        workExperience: [
+          {
+            jobTitle: 'Hairstylist',
+            startDate: '2020-01',
+            endDate: '2021-12',
+            description: 'Hairstyle.',
+            memory: 'A client once gave me a tip',
+            referencePhone: '000000'
+          },
+        ],
+      },
+      {
+        id: 'cv2',
+        name: 'John Doe',
+        video: test2,
+        stillImage: person2,
+        workExperience: [
+          {
+            jobTitle: 'Gardener',
+            startDate: '2020-01',
+            endDate: '2021-12',
+            description: 'Maintained and beautified gardens.',
+            memory: 'A client once...',
+            referencePhone: '000000'
+          },
+        ],
+      },
+      {
+        id: 'cv3',
+        name: 'Amanda Doe',
+        video: test3,
+        stillImage: person3,
+        workExperience: [
+          {
+            jobTitle: 'Pet Sitter',
+            startDate: '2020-01',
+            endDate: '2021-12',
+            description: 'Taking care of cats and dogs',
+            memory: 'A client once...',
+            referencePhone: '000000'
+          },
+        ],
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Artist CVs',
+    cvs: [
+      {
+        id: 'cv1',
+        name: 'Erica Lee',
+        video: test2,
+        stillImage: person1,
+        workExperience: [
+          {
+            jobTitle: 'Hairstylist',
+            startDate: '2020-01',
+            endDate: '2021-12',
+            description: 'Hairstyle.',
+            memory: 'A client once gave me a tip',
+            referencePhone: '000000'
+          },
+        ],
+      },
+    ]
+  },
+  {
+    id: 4,
+    name: 'Musician CVs',
+    cvs: [
+    ]
+  }
+
 ]);
 
 // Test data by Mate, all these should come from db
@@ -275,6 +432,118 @@ video {
   background-color: #6d6d6d;
 }
 
+/* Collections related */
+.wallet-controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.wallet-control-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 15px;
+  padding: 10px;
+}
+
+.collection {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.collection-title {
+  cursor: pointer;
+}
+
+.collection:hover {
+  transform: translateY(-5px);
+}
+
+.collection-images {
+  display: flex;
+  cursor: pointer;
+}
+
+.image {
+  background-size: cover;
+  background-position: center;
+}
+
+.primary {
+  flex: 1;
+  height: 10rem;
+}
+
+.side-images {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.image.secondary {
+  flex: 1;
+}
+
+.placeholder {
+  background-color: #ccc;
+  height: 100%;
+}
+
+.collection-info {
+  padding: 15px;
+}
+
+.collection-title {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #333;
+}
+
+.collection-details {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 1200px) {
+  .collections-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .collection {
+    min-width: 45dvw;
+  }
+}
+
+@media (max-width: 468px) {
+  .collections-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .collection {
+    min-width: 90dvw;
+  }
+}
 
 @media (max-width: 1024px) {
   .title {

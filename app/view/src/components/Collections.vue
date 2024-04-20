@@ -1,9 +1,9 @@
 <template>
-  <div class="header" :class="{ 'rounded-header': !collection.length }">
+  <div class="header" :class="{ 'rounded-header': !collection.posts.length }">
     <h1>{{ collection.name }}</h1>
-    <h4 v-if="!collection.length" style="padding: 2rem;">No Posts Added</h4>
+    <h4 v-if="!collection.posts.length" style="padding: 2rem;">No Posts Added</h4>
   </div>
-  <Card class="card" v-for="post in collection" :key="post.id" v-if="collection.length">
+  <Card class="card" v-for="post in collection.posts" :key="post.id" v-if="collection.posts.length">
     <template #header>
       <div style="display: flex; align-items: center;">
         <Avatar label="E" size="large" />
@@ -38,9 +38,8 @@
     </template>
     <template #footer>
       <div class="post-actions">
-        <Button label="&nbsp Like" @click="likePost(post)" icon="pi pi-heart" severity="secondary" text rounded
+        <Button label="&nbsp Dislike" @click="dislikePost(post)" icon="pi pi-heart-fill" severity="secondary" text rounded
           aria-label="Like" />
-        <Button label="&nbsp  Apply" icon="pi pi-send" severity="secondary" text rounded aria-label="Apply" />
       </div>
     </template>
   </Card>
@@ -51,15 +50,45 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
+// test data
 import video from '@/assets/vid1.mov';
 import video2 from "@/assets/vid2.mov";
+import cat3 from '@/assets/cat3.jpg';
+import cat1 from '@/assets/cat1.jpg';
 
 const route = useRoute()
 const collection = ref(null)
 
+const images = ref();
+const PhotoService = {
+  getData() {
+    return [
+      {
+        itemImageSrc: cat3,
+        thumbnailImageSrc: cat3,
+        alt: 'Description for Image 1',
+        title: 'Title 1'
+      },
+      {
+        itemImageSrc: cat1,
+        thumbnailImageSrc: cat1,
+        alt: 'Description for Image 2',
+        title: 'Title 2'
+      }
+    ];
+  },
+  getImages() {
+    return Promise.resolve(this.getData());
+  }
+};
+
+
 onMounted(() => {
   const collectionId = route.params.id;
-  collection.value = fetchCollectionById(collectionId)
+  collection.value = fetchCollectionById(collectionId);
+  console.log(collection.value);
+  
+  PhotoService.getImages().then((data) => (images.value = data));
 });
 
 function fetchCollectionById(id) {
@@ -132,39 +161,6 @@ function fetchCollectionById(id) {
     ]
   }
 }
-
-
-// Test Data The images should come from db
-import cat3 from '@/assets/cat3.jpg';
-import cat1 from '@/assets/cat1.jpg';
-
-const images = ref();
-
-const PhotoService = {
-  getData() {
-    return [
-      {
-        itemImageSrc: cat3,
-        thumbnailImageSrc: cat3,
-        alt: 'Description for Image 1',
-        title: 'Title 1'
-      },
-      {
-        itemImageSrc: cat1,
-        thumbnailImageSrc: cat1,
-        alt: 'Description for Image 2',
-        title: 'Title 2'
-      }
-    ];
-  },
-  getImages() {
-    return Promise.resolve(this.getData());
-  }
-};
-
-onMounted(() => {
-  PhotoService.getImages().then((data) => (images.value = data));
-});
 </script>
 
 
