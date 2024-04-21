@@ -100,8 +100,6 @@ cursor: pointer;
   height: 10dvw;
   min-height: 150px;
 }
-
-
 }
 
 .separator {

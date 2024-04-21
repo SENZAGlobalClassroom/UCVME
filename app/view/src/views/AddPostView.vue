@@ -6,7 +6,7 @@
         <h3 class="post-heading">Create a New Post</h3>
       </template>
       <template #content>
-       <AddPost></AddPost>
+        <AddPost></AddPost>
       </template>
     </Card>
     <Navbar></Navbar>
@@ -19,7 +19,8 @@
 <style scoped>
 .card-container {
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.838);
+  background-color: rgba(255, 255, 255, 0.53);
+  backdrop-filter: blur(5px);
   align-items: center;
 }
 

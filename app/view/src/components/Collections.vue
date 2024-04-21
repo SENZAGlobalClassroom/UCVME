@@ -24,11 +24,14 @@
           </template>
         </Galleria>
       </div>
-      <div class="video-content" v-if="post.video">
-        <video class="video" controls>
-          <source :src="post.video" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+      <div v-if="post.video">
+        <div class="video-content">
+          <video class="video" controls>
+            <source :src="post.video" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <br><br>
       </div>
       <div class="post-details">
         <div class="post-content">
@@ -38,8 +41,9 @@
     </template>
     <template #footer>
       <div class="post-actions">
-        <Button label="&nbsp Dislike" @click="dislikePost(post)" icon="pi pi-heart-fill" severity="secondary" text rounded
-          aria-label="Like" />
+        <Button label="&nbsp Dislike" @click="dislikePost(post)" icon="pi pi-heart-full" severity="secondary" text rounded
+          aria-label="Dislike" />
+        <Button label="&nbsp  Apply" icon="pi pi-send" severity="secondary" text rounded aria-label="Apply" />
       </div>
     </template>
   </Card>
@@ -87,7 +91,7 @@ onMounted(() => {
   const collectionId = route.params.id;
   collection.value = fetchCollectionById(collectionId);
   console.log(collection.value);
-  
+
   PhotoService.getImages().then((data) => (images.value = data));
 });
 
@@ -166,7 +170,8 @@ function fetchCollectionById(id) {
 
 <style scoped>
 .header {
-  background-color: #ffffffec;
+  background-color: rgba(255, 255, 255, 0.53);
+  backdrop-filter: blur(5px);
   padding: 2rem;
   text-align: center;
   color: #454545;
@@ -195,7 +200,8 @@ function fetchCollectionById(id) {
   flex-direction: column;
   border-radius: 0px;
   border-bottom: 1px solid rgba(206, 206, 206, 0.753);
-  background-color: rgba(255, 255, 255, 0.808);
+  background-color: rgba(255, 255, 255, 0.53);
+  backdrop-filter: blur(5px);
 }
 
 .post-card {

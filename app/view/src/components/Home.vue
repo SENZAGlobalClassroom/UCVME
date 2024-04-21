@@ -360,9 +360,9 @@ function applyJob(post) {
   margin: auto;
   display: flex;
   flex-direction: column;
-  border-radius: 0px;
   border-bottom: 1px solid rgba(206, 206, 206, 0.753);
-  background-color: rgba(255, 255, 255, 0.808);
+  background-color: rgba(255, 255, 255, 0.53);
+  backdrop-filter: blur(5px);
 }
 
 .post-card {

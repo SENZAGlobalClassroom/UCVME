@@ -6,12 +6,9 @@
                 <h3>Saved CVs</h3>
             </template>
             <template #content>
-            <Wallet 
-                :collections="collections" 
-                @add-collection="handleNewCollection" 
-                @update-collection="handleUpdateCollection" 
-                @delete-collection="handleDeleteCollection">
-            </Wallet>
+                <Wallet :collections="collections" @add-collection="handleNewCollection"
+                    @update-collection="handleUpdateCollection" @delete-collection="handleDeleteCollection">
+                </Wallet>
             </template>
         </Card>
         <Navbar></Navbar>
@@ -19,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import Wallet from '@/components/Wallet.vue';
 
 //test data imports
@@ -108,7 +105,7 @@ const allCVsCollection = {
     id: 0,
     name: 'All CVs',
     cvs: allCVs,
-  };
+};
 
 // this should be the collections made by the user with added cvs to it
 const collections = ref([
@@ -244,7 +241,8 @@ onMounted(() => {
 <style scoped>
 .card-container {
     padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.808);
+    background-color: rgba(255, 255, 255, 0.53);
+    backdrop-filter: blur(5px);
     align-items: center;
 }
 
