@@ -269,5 +269,10 @@ export default {
   .centered {
     align-items: normal;
   }
+
+  .gray-background {
+    padding-left: 0dvw;
+    padding-right: 0dvw;
+}
 }
 </style>

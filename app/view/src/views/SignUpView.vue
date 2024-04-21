@@ -41,10 +41,15 @@ const handleSignUp = (credentials) => {
     min-height: 100vh;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
     .card-container {
     max-width: 80dvw;
     margin: auto;
+}
+
+.gray-background {
+    padding-left: 0dvw;
+    padding-right: 0dvw;
 }
 }
 </style>
