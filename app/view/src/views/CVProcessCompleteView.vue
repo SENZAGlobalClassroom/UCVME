@@ -23,7 +23,7 @@
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-const goToHomePage= () => {
+const goToHomePage = () => {
     router.push({ name: 'Home' });
 };
 
@@ -31,7 +31,8 @@ const goToHomePage= () => {
 
 <style lang="scss" scoped>
 .p-card {
-    background-color: rgba(255, 250, 250, 0.694);
+    background-color: rgba(255, 255, 255, 0.53);
+    backdrop-filter: blur(5px);
     padding: 1rem;
 }
 
@@ -55,7 +56,7 @@ const goToHomePage= () => {
     align-items: center;
 }
 
-.congratulations-image{
+.congratulations-image {
     max-width: 60dvw;
 }
 

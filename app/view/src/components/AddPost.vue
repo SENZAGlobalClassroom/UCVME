@@ -149,7 +149,7 @@ function post() {
 </script>
 
 <style scoped>
-:deep(.p-tabview-panels ){
+:deep(.p-tabview-panels) {
     background: transparent !important;
 }
 

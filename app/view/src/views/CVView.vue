@@ -3,7 +3,7 @@
     <TopBar></TopBar>
     <Card class="card-container">
       <template #content>
-      <CVInfo></CVInfo>
+        <CVInfo></CVInfo>
         <div class="button-container">
           <button class="button-74" role="button"> <i class="pi pi-envelope"></i> Contact!</button>
           <button class="button-74" role="button"> <i class="pi pi-heart"></i> Save CV</button>
@@ -20,14 +20,14 @@ import CVInfo from '@/components/CVInfo.vue';
 </script>
 
 <style lang="scss" scoped>
-
 .card-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.808);
+  background-color: rgba(255, 255, 255, 0.53);
+  backdrop-filter: blur(5px);
   margin-top: 25px;
 }
 
@@ -82,11 +82,9 @@ import CVInfo from '@/components/CVInfo.vue';
   }
 
   .button-74 {
-  padding: 0.2rem;
-  font-size: 18px;
+    padding: 0.2rem;
+    font-size: 18px;
 
-}
-
-
+  }
 }
 </style>
