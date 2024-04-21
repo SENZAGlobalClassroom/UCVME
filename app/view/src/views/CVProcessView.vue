@@ -4,14 +4,16 @@
     <div class="centered">
       <Stepper linear>
         <StepperPanel>
-          <template #header> 
+          <template #header>
             <Button>
               <i class="pi pi-user" />
             </Button>
           </template>
           <template #content="{ nextCallback }">
             <div class="space">
-              <CVProcessStep1 @update:firstName="updateFirstName" @update:lastName="updateLastName" @update:phone="updatePhone" @update:email="updateEmail" @update:country="updateCountry" :selectedCountry="selectedCountry"></CVProcessStep1>
+              <CVProcessStep1 @update:firstName="updateFirstName" @update:lastName="updateLastName"
+                @update:phone="updatePhone" @update:email="updateEmail" @update:country="updateCountry"
+                :selectedCountry="selectedCountry"></CVProcessStep1>
             </div>
             <div class="buttons">
               <Button label="Next" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
@@ -42,7 +44,8 @@
           </template>
           <template #content="{ prevCallback, nextCallback }">
             <div class="space">
-              <CVProcessStep3 @update:selectedPersonality="updateSelectedPersonality" @update:jobTitle="updateJobTitle" @update:jobCategory="updateJobCategory" @update:startDate="updateStartDate" @update:endDate="updateEndDate" @update:description="updateDescription" @update:memory="updateMemory" @update:referencePhoneNumber="updateReferencePhoneNumber"></CVProcessStep3>
+              <CVProcessStep3 @update:mbti="updateMBTI" :selectedPersonality="selectedPersonality"
+                @update:aboutYou="updateAbout"></CVProcessStep3>
             </div>
             <div class="buttons">
               <Button label="Back" severity="secondary" icon="pi pi-arrow-left" @click="prevCallback" />
@@ -73,7 +76,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import CVProcessStep1 from '@/components/CVProcessStep1.vue';
 import CVProcessStep2 from '@/components/CVProcessStep2.vue';
@@ -90,15 +93,10 @@ export default {
     const email = ref("");
     const selectedCountry = ref("");
     const selectedColor = ref(null);
-    
+
     const mbti = ref("");
-    const jobTitle = ref("");
-    const jobCategory = ref("");
-    const startDate = ref(null);
-    const endDate = ref(null);
-    const descriptionWork = ref("");
-    const memory = ref("");
-    const referencePhoneNumber = ref("");
+    const about = ref("");
+
     const videoData = ref(null);
 
     const updateFirstName = (value) => { firstName.value = value; };
@@ -108,13 +106,6 @@ export default {
     const updateCountry = (value) => { selectedCountry.value = value; };
     const logCubeColor = (color) => { selectedColor.value = color; };
     const updateSelectedPersonality = (value) => { mbti.value = value; };
-    const updateJobTitle = (value) => { jobTitle.value = value; };
-    const updateJobCategory = (value) => { jobCategory.value = value; };
-    const updateStartDate = (value) => { startDate.value = value; };
-    const updateEndDate = (value) => { endDate.value = value; };
-    const updateDescription = (value) => { descriptionWork.value = value; };
-    const updateMemory = (value) => { memory.value = value; };
-    const updateReferencePhoneNumber = (value) => { referencePhoneNumber.value = value; };
     const handleVideoData = (data) => { videoData.value = data; };
 
     const sendDataToDatabase = async () => {
@@ -127,13 +118,7 @@ export default {
           cv_country: selectedCountry.value,
           cv_colour: selectedColor.value,
           cv_mbti: mbti.value,
-          cv_job_title: jobTitle.value,
-          cv_job_category: jobCategory.value,
-          cv_start_date: startDate.value,
-          cv_end_date: endDate.value,
-          cv_description_work: descriptionWork.value,
-          cv_memory: memory.value,
-          cv_reference_ph_number: referencePhoneNumber.value,
+          cv_about: about.value,
         };
 
         const response = await fetch('/cvprocess', {
@@ -176,22 +161,10 @@ export default {
       updateCountry,
       logCubeColor,
       mbti,
-      jobTitle,
-      jobCategory,
-      startDate,
-      endDate,
-      descriptionWork,
-      memory,
-      referencePhoneNumber,
+      about,
       videoData,
-      updateSelectedPersonality,
-      updateJobTitle,
-      updateJobCategory,
-      updateStartDate,
-      updateEndDate,
-      updateDescription,
-      updateMemory,
-      updateReferencePhoneNumber,
+      updateMBTI,
+      updateAbout,
       completeCV,
     }
   },
@@ -206,15 +179,15 @@ export default {
 
 <style scoped>
 .gray-background {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 20dvw;
-    padding-right: 20dvw;
-    background-color: #ededed98;
-    background-image: url('@/assets/Pastel_9.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 100vh;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 20dvw;
+  padding-right: 20dvw;
+  background-color: #ededed98;
+  background-image: url('@/assets/Pastel_9.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 .centered {
@@ -273,6 +246,6 @@ export default {
   .gray-background {
     padding-left: 0dvw;
     padding-right: 0dvw;
-}
+  }
 }
 </style>
