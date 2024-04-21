@@ -11,10 +11,9 @@
         <Video :videomp4="videoUrl"></Video>
     </div>
     <div class="work-experience-container">
-        <h1>Work Experience</h1>
+        <h1>About me</h1>
         <ScrollPanel class="scroll-panel">
-            <WorkExperience v-for="(experience, index) in workExperiences" :key="index" :jobTitle="experience.jobTitle"
-                :description="experience.description" :startDate="experience.startDate" :endDate="experience.endDate" />
+            {{ aboutMe }}
         </ScrollPanel>
     </div>
     </div>
@@ -58,26 +57,12 @@ const confirm = useConfirm();
 const toast = useToast();
 
 // the actual data needs to come from the db (from whatever the user put in the CV Process)
-const workExperiences = ref([
-    {
-        jobTitle: "Pet Sitter",
-        description: "I have worked previously as a pet sitter for my friend Anna. She was gone on a holiday to France for 2 weeks and I had the pleasure to take care of her 3 lovely cats, Samuel, Candy and Lilly. I played with them every day for 1 hour before their morning meal. I made sure they have fresh water and are brushed daily. I also clipped their nails and made sure their toilet is always clean. See the cute pictures I took of them. I also sent daily updates to Anna with video and pictures of her babies happy.",
-        startDate: "10/03/23",
-        endDate: "20/03/23"
-    },
-    {
-        jobTitle: "Pet Sitter",
-        description: "I have worked previously as a pet sitter for my friend Anna. She was gone on a holiday to France for 2 weeks and I had the pleasure to take care of her 3 lovely cats, Samuel, Candy and Lilly. I played with them every day for 1 hour before their morning meal. I made sure they have fresh water and are brushed daily. I also clipped their nails and made sure their toilet is always clean. See the cute pictures I took of them. I also sent daily updates to Anna with video and pictures of her babies happy.",
-        startDate: "10/03/23",
-        endDate: "20/03/23"
-    }
-]);
-
+const aboutMe = `Hi there! I'm Joe, a proud resident of the stunning landscapes of Kerry, where the rolling green hills inspire my passion for farming. With roots deeply embedded in this rich agricultural region, I find joy in cultivating the land and nurturing life from seed to harvest. Whether it's tending to crops or caring for livestock, there's an undeniable connection to the earth that fuels my spirit. When I'm not knee-deep in soil, you'll likely find me exploring the countryside or sharing stories over a cup of tea. Farming isn't just a livelihood for me; it's a way of life that I cherish every day.`;
 const videoUrl = video
+var username = 'username'; // Placeholder username
 
 const token = localStorage.getItem('token');
 var decoded = jwtDecode(token).username;
-var username = 'username'; // Placeholder username
 
 if (token && decoded) {
   decoded = toTitleCase(decoded);

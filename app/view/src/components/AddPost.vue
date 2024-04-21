@@ -43,7 +43,7 @@
                 <br>
                 <div>
                     <div class="form-item">
-                        <textarea placeholder="Job description" v-model="description" style="min-height: 5rem;" />
+                        <textarea placeholder="About me" v-model="description" style="min-height: 5rem;" />
                     </div>
                     <br>
                     <div class="media-container">
