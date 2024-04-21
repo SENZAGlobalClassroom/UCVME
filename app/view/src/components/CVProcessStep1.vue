@@ -15,7 +15,7 @@
       </FloatLabel>
 
       <FloatLabel>
-        <InputText id="phone" v-model="phone" mask="999 999 9999" placeholder="999 999 9999" @input="handlePhoneInput" />
+        <InputText id="phone" v-model="phone"  class="InputText" mask="999 999 9999" placeholder="999 999 9999" @input="$emit('update:Phone', $event.target.value)" />
         <label for="phone">Phone</label>
       </FloatLabel>
 
@@ -70,11 +70,6 @@ const countries = ref([
 ]);
 
 const emit = defineEmits(['update:firstName', 'update:lastName', 'update:phone', 'update:email', 'update:country']);
-
-const handlePhoneInput = (event) => {
-  console.log('InputMask value:', event.target.value);
-  phone.value = event.target.value; // Update phone value manually
-};
 
 console.log('Phone value:', phone.value); // Log phone value on component initialization
 

@@ -3,6 +3,7 @@ import { RouterLink } from 'vue-router'
 import HomeView from './views/HomeView.vue';
 import Navbar from '@/components/Navbar.vue';
 // import Likes from '@/components/Likes.vue';
+
 </script>
 
 <template>
