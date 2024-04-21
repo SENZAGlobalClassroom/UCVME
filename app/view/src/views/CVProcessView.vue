@@ -273,6 +273,10 @@ export default {
   .gray-background {
     padding-left: 0dvw;
     padding-right: 0dvw;
+<<<<<<< HEAD
+=======
+}
+>>>>>>> 7935cba5f395ac01fa15ee7a36ab293b9d4f10e0
 }
 }
 </style>

@@ -278,7 +278,7 @@
       text-align-last: center;
   }
 
-  @media (max-width: 766px) {
+  @media (max-width: 1000px) {
       .form-group input,
       .login-button,
       .google-sign-in {
