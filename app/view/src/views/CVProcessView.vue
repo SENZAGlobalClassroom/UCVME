@@ -105,7 +105,8 @@ export default {
     const updateEmail = (value) => { email.value = value; };
     const updateCountry = (value) => { selectedCountry.value = value; };
     const logCubeColor = (color) => { selectedColor.value = color; };
-    const updateSelectedPersonality = (value) => { mbti.value = value; };
+    const updateMBTI = (value) => { mbti.value = value; };
+    const updateAbout = (value) => { about.value = value; };
     const handleVideoData = (data) => { videoData.value = data; };
 
     const sendDataToDatabase = async () => {
