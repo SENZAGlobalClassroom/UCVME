@@ -89,6 +89,10 @@ onUnmounted(() => {
 });*/
 
 // routing
+const goToHistoryPage = () => {
+  router.push({ name: 'HistoryView' });
+  visible.value = false;
+};
 const goToSettingsPage = () => {
   router.push({ name: 'SettingView' });
   visible.value = false;

@@ -19,6 +19,7 @@ import Card from 'primevue/card';
 import Footer from './components/Footer.vue';
 import TopBarFT from './components/topBarFirstTime.vue';
 import TopBar from './components/TopBar.vue';
+import History from './components/History.vue';
 import Steps from 'primevue/steps';
 import InputMask from 'primevue/inputmask';
 import Stepper from 'primevue/stepper';
@@ -72,6 +73,7 @@ app.component('Checkbox', Checkbox);
 app.component('AddPost', AddPost);
 app.component('TabView', TabView);
 app.component('TabPanel', TabPanel);
+app.component('History', History);
 
 app.use(router)
 app.use(PrimeVue);
