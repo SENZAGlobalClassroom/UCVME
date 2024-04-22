@@ -21,9 +21,9 @@
             </template>
           </Galleria>
         </div>
-        <div v-if="post.video">
-          <div class="video-content">
-            <video class="video" controls>
+        <div class="galleria-content" v-if="post.video">
+          <div>
+            <video controls class="galleria-image">
               <source :src="post.video" type="video/mp4">
               Your browser does not support the video tag.
             </video>
@@ -40,12 +40,12 @@
         <div class="post-actions">
           <Button label="&nbsp Like" @click="likePost(post)" icon="pi pi-heart" severity="secondary" text rounded
             aria-label="Like" />
-          <Button label="&nbsp  Apply" icon="pi pi-send" severity="secondary" text rounded aria-label="Apply" />
+          <Button label="&nbsp  Message" icon="pi pi-send" severity="secondary" text rounded aria-label="Message" />
         </div>
       </template>
     </Card>
   </div>
-
+  <Toast />
   <!-- Save to collection popup -->
   <Dialog v-model:visible="showCollectionDialog" header="Add New Collection" :style="{ width: '45rem' }">
     <div class="dialog-content">
@@ -231,20 +231,55 @@ const posts = ref([
     id: 1,
     firstname: "Wolfgang",
     lastname: "McClingelberry",
-    title: 'Looking for young and talented developers!',
+    title: 'Looking for a software developer job!',
     date: 'Needed for 22/04/2024, 16:00',
-    description:
-      "We're on the lookout for young, talented computer scientists who are eager to innovate and drive technological advancements. Our ideal candidates are recent graduates or current students in the field of computer science who possess a strong foundational understanding of programming, algorithms, and systems design. We value creativity, the ability to think critically about complex problems, and a passion for learning new technologies. If you're looking for an opportunity to apply your skills in real-world applications and work on cutting-edge projects that impact various industries, we encourage you to join our dynamic team. Together, we'll explore new possibilities, develop groundbreaking software, and revolutionize the way technologies enhance our lives.<br><br>",
-    video: video,
+    description: "<strong>Professional Summary:</strong><br>" +
+      "Hello! I'm Wolfgang McClingelberry, a creative and driven software developer eager to bring top-notch coding skills and innovative solutions to your tech team. My background in computer science and proficiency in multiple programming languages equip me with the tools to develop cutting-edge web and mobile applications.<br><br>" +
+      "<strong>Skills and Expertise:</strong><br>" +
+      "1. Strong proficiency in JavaScript, Python, and Java.<br>" +
+      "2. Experienced in full-stack development, from concept through deployment.<br>" +
+      "3. Skilled in cloud services such as AWS and Azure.<br>" +
+      "4. Proficient in database management and integration.<br>" +
+      "5. Excellent problem-solving skills and attention to detail.<br>" +
+      "6. Adept at working in agile development environments.<br><br>" +
+      "<strong>Key Achievements:</strong><br>" +
+      "1. Led the development of a scalable e-commerce platform, increasing customer engagement by 40%.<br>" +
+      "2. Successfully implemented a microservices architecture that improved system reliability by 25%.<br>" +
+      "3. Developed several mobile apps that have been downloaded over 1,000,000 times.<br><br>" +
+      "<strong>Commitment:</strong><br>" +
+      "I am committed to continuous learning and staying on the cutting edge of technology. My goal is to apply my skills in a challenging environment that values innovation and a proactive approach to problem solving.<br><br>" +
+      "<strong>Goals for the Future:</strong><br>" +
+      "I look forward to contributing to a team where I can bring my unique insights and dedication to software excellence. Let’s collaborate to create technology solutions that are not only effective but transformative.<br><br>" +
+      "<strong>Get in Touch:</strong><br>" +
+      "If you're in need of a versatile software developer who is ready to tackle challenges and make a positive impact, please don’t hesitate to contact me. Together, we can drive the future of technology.<br>",    video: video,
   },
   {
     id: 4,
     firstname: "Bongo",
     lastname: "Crouch",
-    title: 'Looking for farmers in Wicklow!',
+    title: 'Looking for farmer job in Wicklow',
     date: 'Needed for 25/04/2024, 07:00',
-    description:
-      "We are seeking dedicated farmers to join our agricultural team in Wicklow. Ideal candidates will have experience in farming or a strong interest in agriculture, with a particular focus on sustainable practices. We value individuals who are hardworking, detail-oriented, and passionate about cultivating high-quality produce and maintaining the health of our land. This role involves various farming duties, including planting, harvesting, crop management, and equipment operation. If you're ready to contribute to a thriving agricultural community and take part in nurturing the land in scenic Wicklow, we invite you to apply and grow with us.<br><br>",
+    description: "<strong>About me:</strong><br>" +
+      "Hi! I'm Bongo Crouch, eager to apply my robust farming skills in Wicklow. With extensive experience in crop cultivation and livestock management, I am ready to contribute effectively to your farming operations.<br><br>" +
+      "<strong>Key Qualifications:</strong><br>" +
+      "1. Proficient in modern farming techniques and equipment.<br>" +
+      "2. Experienced in both arable and livestock farming.<br>" +
+      "3. Strong knowledge of sustainable agricultural practices.<br>" +
+      "4. Capable of managing farm resources efficiently to maximize productivity.<br>" +
+      "5. Excellent physical condition and stamina to handle demanding farm tasks.<br>" +
+      "6. Committed to the principles of organic farming and animal welfare.<br><br>" +
+      "<strong>Responsibilities I can handle:</strong><br>" +
+      "1. Planting, tending, and harvesting crops.<br>" +
+      "2. Feeding and managing livestock, ensuring their health and welfare.<br>" +
+      "3. Maintaining farm equipment and structures.<br>" +
+      "4. Implementing pest and disease control measures.<br>" +
+      "5. Recording production data and managing supplies.<br><br>" +
+      "<strong>Personal Commitment:</strong><br>" +
+      "I thrive in the great outdoors and take pride in producing food that nourishes communities. I'm deeply committed to enhancing farm productivity while adhering to environmental and ethical standards.<br><br>" +
+      "<strong>Looking Forward:</strong><br>" +
+      "I'm keen to join a team where I can bring my skills to the forefront and grow alongside a dedicated group of agricultural professionals. Let's advance sustainable agriculture together!<br><br>" +
+      "<strong>Contact Me:</strong><br>" +
+      "If you are looking for a dedicated and skilled farmer in Wicklow, please reach out. I'm ready to start contributing from day one and help take your farming operations to new heights.<br>",
     video: video2,
   },
   {
@@ -341,10 +376,6 @@ function savePostToCollection(post, collection) {
   toast.add({ severity: 'success', summary: 'Saved', detail: `Post saved to ${collection.name}` });
 }
 
-function applyJob(post) {
-  // get the post's user email
-  // send stylysed email informing the recipient that the user has applied for their job and a qr code/link to their CV
-}
 </script>
 
 <style scoped>
@@ -374,6 +405,7 @@ function applyJob(post) {
   width: 100%;
   height: 35vh;
   object-fit: cover;
+  border-radius: 25px;
 }
 
 .galleria-content {
@@ -382,21 +414,6 @@ function applyJob(post) {
   max-width: 30dvw;
   width: 100%;
   margin-bottom: 1rem;
-}
-
-.video-content {
-  width: 20%;
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
-  border-radius: 25px;
-  overflow: hidden;
-  margin: auto;
-}
-
-video {
-  width: 100%;
-  height: 40dvh;
-  display: block;
-  object-fit: cover;
 }
 
 .post-details {
@@ -545,7 +562,7 @@ video {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 764px) {
   .title {
     display: inline;
   }
@@ -576,4 +593,6 @@ video {
     padding-top: 1rem;
   }
 }
+
+
 </style>
