@@ -48,7 +48,6 @@
 import { ref } from 'vue';
 import WorkExperience from '@/components/WorkExp.vue';
 import Video from '@/components/Video.vue';
-import video from '../assets/TestVideo.mp4'
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { jwtDecode } from 'jwt-decode'; 
@@ -58,7 +57,9 @@ const toast = useToast();
 
 // the actual data needs to come from the db (from whatever the user put in the CV Process)
 const aboutMe = `Hi there! I'm Joe, a proud resident of the stunning landscapes of Kerry, where the rolling green hills inspire my passion for farming. With roots deeply embedded in this rich agricultural region, I find joy in cultivating the land and nurturing life from seed to harvest. Whether it's tending to crops or caring for livestock, there's an undeniable connection to the earth that fuels my spirit. When I'm not knee-deep in soil, you'll likely find me exploring the countryside or sharing stories over a cup of tea. Farming isn't just a livelihood for me; it's a way of life that I cherish every day.`;
-const videoUrl = video
+
+// should be videoURL from postgres db
+const videoUrl = "https://firebasestorage.googleapis.com/v0/b/ucvme-131a0.appspot.com/o/Eli.mp4?alt=media&token=0438e70d-651d-4ac1-a8b3-555f0d0625d8"
 var username = 'username'; // Placeholder username
 
 const token = localStorage.getItem('token');

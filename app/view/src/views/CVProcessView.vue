@@ -97,7 +97,7 @@ export default {
     const selectedPersonality = ref("");
     const about = ref("");
 
-    const videoData = ref(null);
+    const videoData = ref("");
 
     const updateFirstName = (value) => { firstName.value = value; };
     const updateLastName = (value) => { lastName.value = value; };
@@ -107,8 +107,10 @@ export default {
     const logCubeColor = (color) => { selectedColor.value = color; };
     const updateMBTI = (value) => { selectedPersonality.value = value; };
     const updateAbout = (value) => { about.value = value; };
-    const handleVideoData = (data) => { videoData.value = data; };
-
+    const handleVideoData = (videoUrl) => {
+      videoData.value = videoUrl;
+      console.log("Received video URL:", videoData.value);
+    };
     const sendDataToDatabase = async () => {
       try {
         const formData = {
@@ -160,6 +162,7 @@ export default {
       updatePhone,
       updateEmail,
       updateCountry,
+      handleVideoData,
       logCubeColor,
       selectedPersonality,
       about,
