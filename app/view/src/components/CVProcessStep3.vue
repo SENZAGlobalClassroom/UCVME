@@ -3,15 +3,23 @@
 
     <div class="center">
         <!-- Personality Type Dropdown -->
-        <Dropdown v-model="selectedPersonality" :options="groupedPersonalities" optionLabel="label"
-            optionGroupLabel="type" optionGroupChildren="items" placeholder="Select a Personality Type"
-            class="w-full md:w-14rem" @change="$emit('update:MBTI', $event.value)">
-            <template #optiongroup="slotProps">
+        <Dropdown v-model="selectedPersonality" :options="groupedPersonalities" filter optionLabel="label"
+            placeholder="Select a Personality Personality" class="w-full md:w-14rem" @change="$emit('update:mbti', $event.value)">
+            <template #value="slotProps">
+                <div v-if="slotProps.value" class="flex align-items-center">
+                    <div>{{ slotProps.value.label }}</div>
+                </div>
+                <span v-else>
+                    {{ slotProps.placeholder }}
+                </span>
+            </template>
+            <template #option="slotProps">
                 <div class="flex align-items-center">
-                    <div>{{ slotProps.option.type }}</div>
+                    <div>{{ slotProps.option.label }}</div>
                 </div>
             </template>
         </Dropdown>
+
         <div class="form-item">
             <textarea placeholder="About you" v-model="about" style="min-height: 5rem;"
                 @input="$emit('update:aboutYou', $event.target.value)" />
@@ -26,46 +34,30 @@
 import { ref, defineEmits } from 'vue';
 
 const selectedPersonality = ref();
+
 const groupedPersonalities = ref([
-    {
-        type: 'Analysts',
-        items: [
-            { label: 'INTJ - Architect', value: 'INTJ' },
-            { label: 'INTP - Logician', value: 'INTP' },
-            { label: 'ENTJ - Commander', value: 'ENTJ' },
-            { label: 'ENTP - Debater', value: 'ENTP' }
-        ]
-    },
-    {
-        type: 'Diplomats',
-        items: [
-            { label: 'INFJ - Advocate', value: 'INFJ' },
-            { label: 'INFP - Mediator', value: 'INFP' },
-            { label: 'ENFJ - Protagonist', value: 'ENFJ' },
-            { label: 'ENFP - Campaigner', value: 'ENFP' }
-        ]
-    },
-    {
-        type: 'Sentinels',
-        items: [
-            { label: 'ISTJ - Inspector', value: 'ISTJ' },
-            { label: 'ISFJ - Defender', value: 'ISFJ' },
-            { label: 'ESTJ - Executive', value: 'ESTJ' },
-            { label: 'ESFJ - Consul', value: 'ESFJ' }
-        ]
-    },
-    {
-        type: 'Explorers',
-        items: [
-            { label: 'ISTP - Virtuoso', value: 'ISTP' },
-            { label: 'ISFP - Adventurer', value: 'ISFP' },
-            { label: 'ESTP - Entrepreneur', value: 'ESTP' },
-            { label: 'ESFP - Entertainer', value: 'ESFP' }
-        ]
-    }
+        { label: 'INTJ - Architect', value: 'INTJ' },
+        { label: 'INTP - Logician', value: 'INTP' },
+        { label: 'ENTJ - Commander', value: 'ENTJ' },
+        { label: 'ENTP - Debater', value: 'ENTP' },
+
+        { label: 'INFJ - Advocate', value: 'INFJ' },
+        { label: 'INFP - Mediator', value: 'INFP' },
+        { label: 'ENFJ - Protagonist', value: 'ENFJ' },
+        { label: 'ENFP - Campaigner', value: 'ENFP' },
+
+        { label: 'ISTJ - Inspector', value: 'ISTJ' },
+        { label: 'ISFJ - Defender', value: 'ISFJ' },
+        { label: 'ESTJ - Executive', value: 'ESTJ' },
+        { label: 'ESFJ - Consul', value: 'ESFJ' },
+
+        { label: 'ISTP - Virtuoso', value: 'ISTP' },
+        { label: 'ISFP - Adventurer', value: 'ISFP' },
+        { label: 'ESTP - Entrepreneur', value: 'ESTP' },
+        { label: 'ESFP - Entertainer', value: 'ESFP' }
 ]);
 
-const emit = defineEmits(['update:aboutYou', 'update:MBTI']);
+const emit = defineEmits(['update:aboutYou', 'update:mbti']);
 
 
 </script>

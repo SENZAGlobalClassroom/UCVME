@@ -32,13 +32,13 @@ const cvModel = function(cvData, response) {
                 cvData.cv_country,
                 cvData.cv_colour,
                 cvData.cv_mbti,
-                cvData.cv_job_title,
-                cvData.cv_job_category,
-                cvData.cv_start_date,
-                cvData.cv_end_date,
-                cvData.cv_description_work,
-                cvData.cv_memory,
-                cvData.cv_reference_ph_number
+                // cvData.cv_job_title,
+                // cvData.cv_job_category,
+                // cvData.cv_start_date,
+                // cvData.cv_end_date,
+                // cvData.cv_description_work,
+                // cvData.cv_memory,
+                // cvData.cv_reference_ph_number
             ],
             (err, result) => {
                 release(); // release the client back to the pool
