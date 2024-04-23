@@ -1,7 +1,7 @@
 // sql query for registering an account into the database
 const { Pool } = require('pg'); // PostgreSQL client library
 
-const cvModel = function(cvData, response) {
+const cvModel = function(cvData, profileId, response) {
     console.log('Request body:', cvData); // Log the request body to verify data received
 
     const pool = new Pool({ // create a pool of connections
@@ -22,7 +22,7 @@ const cvModel = function(cvData, response) {
         console.log('Connected to database'); // console log database connected
 
         client.query(
-            'INSERT INTO create_cv(cv_firstname, cv_lastname, cv_phonenumber, cv_email, cv_country, cv_colour, cv_mbti, cv_job_title, cv_job_category, cv_start_date, cv_end_date, cv_description_work, cv_memory, cv_reference_ph_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *',
+            'INSERT INTO create_cv(cv_firstname, cv_lastname, cv_phonenumber, cv_email, cv_country, cv_colour, cv_mbti, cv_about, profile_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
             // insert query to add a new user to the profile table, $1, $2, $3 are placeholders for the user inputs
             [
                 cvData.cv_firstname,
@@ -32,13 +32,8 @@ const cvModel = function(cvData, response) {
                 cvData.cv_country,
                 cvData.cv_colour,
                 cvData.cv_mbti,
-                cvData.cv_job_title,
-                cvData.cv_job_category,
-                cvData.cv_start_date,
-                cvData.cv_end_date,
-                cvData.cv_description_work,
-                cvData.cv_memory,
-                cvData.cv_reference_ph_number
+                cvData.cv_about,
+                profileId, // Pass profileId here
             ],
             (err, result) => {
                 release(); // release the client back to the pool

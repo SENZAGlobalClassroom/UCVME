@@ -54,6 +54,9 @@ app.post('/login', (req, res) => {
         { expiresIn: expiresIn }
       );
 
+      // Pass profile_id to the response
+      const profileId = result.user.profile_id;
+
       res.status(200).json({ success: true, token: token });
     } else { // Failed to log in
       res.status(401).json({ success: false, message: result.message });
@@ -88,6 +91,7 @@ app.post('/deleteaccount', (req, res) => {
 
 // cv process post request
 app.post('/cvprocess', function(req, res) {
+  const profileId = req.body.profile_id; // Assuming profile_id is passed in the request body
 
   try {
     console.log('Request Body:', req.body);
@@ -109,8 +113,6 @@ app.post('/cvprocess', function(req, res) {
         cv_email: req.body.cv_email,
         cv_country: req.body.cv_country
       };
-      console.log('Phone Number:', req.body.cv_phonenumber);
-
       console.log('Data for page 1 received and logged:', cvData.page1);
     }
 
@@ -122,30 +124,19 @@ app.post('/cvprocess', function(req, res) {
       console.log('Data for page 2 received and logged:', cvData.page2);
     }
 
-    // Check if any data for page 3 is present
-    const page3Fields = ['cv_mbti', 'cv_job_title', 'cv_job_category', 'cv_start_date', 'cv_end_date', 'cv_description_work', 'cv_memory', 'cv_reference_ph_number'];
-    const page3DataPresent = page3Fields.some(field => req.body[field] !== undefined);
-
-    if (page3DataPresent) {
+    if (req.body.cv_mbti !== undefined) {
       cvData.page3 = {
         cv_mbti: req.body.cv_mbti,
-        cv_job_title: req.body.cv_job_title,
-        cv_job_category: req.body.cv_job_category,
-        cv_start_date: req.body.cv_start_date,
-        cv_end_date: req.body.cv_end_date,
-        cv_description_work: req.body.cv_description_work,
-        cv_memory: req.body.cv_memory,
-        cv_reference_ph_number: req.body.cv_reference_ph_number
+        cv_about: req.body.cv_about,
       };
       console.log('Data for page 3 received and logged:', cvData.page3);
     }
 
-    // Check if the request contains data for the fourth page (video)
-    // Assuming video data is handled separately
-
-    // Send a success response indicating partial data submission
-    res.status(200).json({ message: 'Partial data submitted successfully' });
-    console.log('Partial data submitted successfully:', cvData);
+    // Call cvModel with cvData and profileId
+    model.cvModel(cvData, profileId, (response) => {
+      // Send response back to the client
+      res.status(200).json(response);
+    });
   } catch (error) {
     console.error('Error handling CV data:', error.message);
     res.status(500).json({ error: 'Internal server error' });
