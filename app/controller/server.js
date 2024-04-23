@@ -54,9 +54,6 @@ app.post('/login', (req, res) => {
         { expiresIn: expiresIn }
       );
 
-      // Pass profile_id to the response
-      const profileId = result.user.profile_id;
-
       res.status(200).json({ success: true, token: token });
     } else { // Failed to log in
       res.status(401).json({ success: false, message: result.message });
@@ -91,7 +88,6 @@ app.post('/deleteaccount', (req, res) => {
 
 // cv process post request
 app.post('/cvprocess', function(req, res) {
-  const profileId = req.body.profile_id; // Assuming profile_id is passed in the request body
 
   try {
     console.log('Request Body:', req.body);
@@ -101,7 +97,6 @@ app.post('/cvprocess', function(req, res) {
       page1: {},
       page2: {},
       page3: {},
-      page4: {}
     };
 
     // Check if the request contains data for the first page
@@ -133,7 +128,7 @@ app.post('/cvprocess', function(req, res) {
     }
 
     // Call cvModel with cvData and profileId
-    model.cvModel(cvData, profileId, (response) => {
+    model.cvModel(cvData, (response) => {
       // Send response back to the client
       res.status(200).json(response);
     });
