@@ -94,7 +94,7 @@ export default {
     const selectedCountry = ref("");
     const selectedColor = ref(null);
 
-    const mbti = ref("");
+    const selectedPersonality = ref("");
     const about = ref("");
 
     const videoData = ref(null);
@@ -105,7 +105,7 @@ export default {
     const updateEmail = (value) => { email.value = value; };
     const updateCountry = (value) => { selectedCountry.value = value; };
     const logCubeColor = (color) => { selectedColor.value = color; };
-    const updateMBTI = (value) => { mbti.value = value; };
+    const updateMBTI = (value) => { selectedPersonality.value = value; };
     const updateAbout = (value) => { about.value = value; };
     const handleVideoData = (data) => { videoData.value = data; };
 
@@ -118,7 +118,7 @@ export default {
           cv_email: email.value,
           cv_country: selectedCountry.value,
           cv_colour: selectedColor.value,
-          cv_mbti: mbti.value,
+          cv_mbti: selectedPersonality.value,
           cv_about: about.value,
         };
 
@@ -161,7 +161,7 @@ export default {
       updateEmail,
       updateCountry,
       logCubeColor,
-      mbti,
+      selectedPersonality,
       about,
       videoData,
       updateMBTI,
