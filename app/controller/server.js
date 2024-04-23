@@ -24,8 +24,9 @@ app.post('/signup', (req, res) => {
   model.signupModel(username, email, password, (result) => {
     // If successful, create a token for the user
     if (result.success) {
+
       const token = jwt.sign(
-        { username: result.username },
+        { username: result.user.profile_username, profile_email: result.user.profile_email }, // Use profile_email here
         'This_1_Is_2_A_3_Secret_4!',
         { expiresIn: '12h' }
       );
@@ -45,11 +46,14 @@ app.post('/login', (req, res) => {
   model.loginModel(email, password, (result) => {
     // If the user logged in successfully
     if (result.success) {
+      // Extract user email from the JWT token payload
+      const profileEmail = result.user.profile_email;
+
       // Give a token based on their remember me setting
       const expiresIn = rememberMe ? '7d' : '12h';
 
       const token = jwt.sign(
-        { username: result.user.profile_username },
+        { username: result.user.profile_username, profile_email: profileEmail }, // Use profile_email here
         'This_1_Is_2_A_3_Secret_4!',
         { expiresIn: expiresIn }
       );
@@ -60,6 +64,7 @@ app.post('/login', (req, res) => {
     }
   });
 });
+
 
 // Settings post request for change username
 app.post('/changeusername', (req, res) => {
@@ -88,15 +93,20 @@ app.post('/deleteaccount', (req, res) => {
 
 // cv process post request
 app.post('/cvprocess', function(req, res) {
-
   try {
-    console.log('Request Body:', req.body);
+    // Verify and decode the JWT token to extract user information
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, 'This_1_Is_2_A_3_Secret_4!'); // Replace 'your_secret_key' with your actual secret key
+
+    // Extract user's profile email from the decoded token
+    const profileEmail = decoded.profile_email;
 
     // Initialize cvData object
     const cvData = {
       page1: {},
       page2: {},
       page3: {},
+      page4: {}
     };
 
     // Check if the request contains data for the first page
@@ -105,7 +115,7 @@ app.post('/cvprocess', function(req, res) {
         cv_firstname: req.body.cv_firstname,
         cv_lastname: req.body.cv_lastname,
         cv_phonenumber: req.body.cv_phonenumber,
-        cv_email: req.body.cv_email,
+        cv_email: req.body.cv_email, // Associate cv_email with CV data
         cv_country: req.body.cv_country
       };
       console.log('Data for page 1 received and logged:', cvData.page1);
@@ -127,8 +137,15 @@ app.post('/cvprocess', function(req, res) {
       console.log('Data for page 3 received and logged:', cvData.page3);
     }
 
-    // Call cvModel with cvData and profileId
-    model.cvModel(cvData, (response) => {
+    if (req.body.cv_video !== undefined){
+      cvData.page4 = {
+        cv_video: req.body.cv_video
+      };
+      console.log('Data for page 4 received and logged:', cvData.page4);
+    }
+
+    // Call cvModel with cvData and profileEmail
+    model.cvModel(cvData, profileEmail, (response) => {
       // Send response back to the client
       res.status(200).json(response);
     });
@@ -137,6 +154,7 @@ app.post('/cvprocess', function(req, res) {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 // add post post request
 app.post('/addpost', function(req, res) {
@@ -164,6 +182,16 @@ app.post('/addpost', function(req, res) {
     res.status(200).json({ message: 'Job post data submitted successfully' });
     console.log('Job post data submitted successfully:', result);
   });
+});
+
+// add post post request
+app.post('/wallet', function(req, res) {
+  const { name, cvs } = req.body;
+  console.log('Wallet data:', name, cvs);
+
+    // Respond with a success message or the newly created collection
+    res.status(201).json({ message: 'Collection created successfully', collection: { name, cvs } });
+
 });
 
 app.get('*', function (req, res) {

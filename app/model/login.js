@@ -26,7 +26,7 @@ const loginModel = function(username, password, callback) {
                 return;
             }
             if (isMatch) {
-                callback({ success: true, message: 'Login successful', user });
+                callback({ success: true, message: 'Login successful', user, token });
             } else {
                 callback({ success: false, message: 'Invalid password' });
             }

@@ -3,12 +3,15 @@
     <TopBarFT></TopBarFT>
     <div class="centered">
       <Stepper linear>
+        <!-- Step 1 -->
         <StepperPanel>
+          <!-- Step 1 Header -->
           <template #header>
             <Button>
               <i class="pi pi-user" />
             </Button>
           </template>
+          <!-- Step 1 Content -->
           <template #content="{ nextCallback }">
             <div class="space">
               <CVProcessStep1 @update:firstName="updateFirstName" @update:lastName="updateLastName"
@@ -20,12 +23,16 @@
             </div>
           </template>
         </StepperPanel>
+
+        <!-- Step 2 -->
         <StepperPanel>
+          <!-- Step 2 Header -->
           <template #header>
             <Button>
               <i class="pi pi-palette" />
             </Button>
           </template>
+          <!-- Step 2 Content -->
           <template #content="{ prevCallback, nextCallback }">
             <div class="space">
               <CVProcessStep2 @update:selectedColor="logCubeColor"></CVProcessStep2>
@@ -36,12 +43,16 @@
             </div>
           </template>
         </StepperPanel>
+
+        <!-- Step 3 -->
         <StepperPanel>
+          <!-- Step 3 Header -->
           <template #header>
             <Button>
               <i class="pi pi-star" />
             </Button>
           </template>
+          <!-- Step 3 Content -->
           <template #content="{ prevCallback, nextCallback }">
             <div class="space">
               <CVProcessStep3 @update:mbti="updateMBTI" :selectedPersonality="selectedPersonality"
@@ -53,12 +64,16 @@
             </div>
           </template>
         </StepperPanel>
+
+        <!-- Step 4 -->
         <StepperPanel>
+          <!-- Step 4 Header -->
           <template #header>
             <Button>
               <i class="pi pi-video" />
             </Button>
           </template>
+          <!-- Step 4 Content -->
           <template #content="{ prevCallback }">
             <div class="space">
               <CVProcessStep4 @videoUploaded="handleVideoData"></CVProcessStep4>
@@ -69,6 +84,7 @@
             </div>
           </template>
         </StepperPanel>
+
       </Stepper>
       <Footer></Footer>
     </div>
@@ -76,7 +92,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import CVProcessStep1 from '@/components/CVProcessStep1.vue';
 import CVProcessStep2 from '@/components/CVProcessStep2.vue';
@@ -87,18 +103,18 @@ export default {
   setup() {
     const router = useRouter();
 
+    // Define your reactive data properties
     const firstName = ref("");
     const lastName = ref("");
     const phone = ref("");
     const email = ref("");
     const selectedCountry = ref("");
     const selectedColor = ref(null);
-
     const selectedPersonality = ref("");
     const about = ref("");
-
     const videoData = ref("");
 
+    // Define methods to update the reactive data properties
     const updateFirstName = (value) => { firstName.value = value; };
     const updateLastName = (value) => { lastName.value = value; };
     const updatePhone = (value) => { phone.value = value; };
@@ -111,8 +127,15 @@ export default {
       videoData.value = videoUrl;
       console.log("Received video URL:", videoData.value);
     };
+
+    // Method to send data to the server
     const sendDataToDatabase = async () => {
       try {
+        const token = localStorage.getItem('token'); // Get JWT token from local storage
+        if (!token) {
+          throw new Error('No token found');
+        }
+
         const formData = {
           cv_firstname: firstName.value,
           cv_lastname: lastName.value,
@@ -122,12 +145,15 @@ export default {
           cv_colour: selectedColor.value,
           cv_mbti: selectedPersonality.value,
           cv_about: about.value,
+          cv_video: videoData.value,
+          profile_email: email.value // Include profile_email in the form data
         };
 
         const response = await fetch('/cvprocess', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(formData),
         });
@@ -142,6 +168,7 @@ export default {
       }
     };
 
+    // Method to complete the CV process
     const completeCV = async () => {
       try {
         await sendDataToDatabase();
@@ -150,6 +177,7 @@ export default {
       }
     };
 
+    // Return the reactive data properties and methods
     return {
       firstName,
       lastName,

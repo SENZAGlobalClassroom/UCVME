@@ -31,7 +31,6 @@ import { storage } from '@/firebase.js';
 import { ref as fireRef, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { jwtDecode } from 'jwt-decode';
 
-
 export default {
     setup(_, { emit }) {
         const previewImage = ref(null);
@@ -77,7 +76,6 @@ export default {
     }
 };
 </script>
-
 
 <style scoped>
 .loading-overlay {
