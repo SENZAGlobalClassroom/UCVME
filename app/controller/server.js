@@ -24,9 +24,8 @@ app.post('/signup', (req, res) => {
   model.signupModel(username, email, password, (result) => {
     // If successful, create a token for the user
     if (result.success) {
-
       const token = jwt.sign(
-        { username: result.user.profile_username, profile_email: result.user.profile_email }, // Use profile_email here
+        { username: result.username, email: result.email }, // Use directly username and email
         'This_1_Is_2_A_3_Secret_4!',
         { expiresIn: '12h' }
       );
@@ -37,6 +36,7 @@ app.post('/signup', (req, res) => {
     }
   });
 });
+
 
 // Login post request
 app.post('/login', (req, res) => {
