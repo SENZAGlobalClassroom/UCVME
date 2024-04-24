@@ -146,7 +146,7 @@ export default {
           cv_mbti: selectedPersonality.value,
           cv_about: about.value,
           cv_video: videoData.value,
-          profile_email: email.value // Include profile_email in the form data
+          // profile_email: email.value // Include profile_email in the form data
         };
 
         const response = await fetch('/cvprocess', {

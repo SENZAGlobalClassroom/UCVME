@@ -87,21 +87,23 @@ const video = ref({});
 const mediaInput = ref(null);
 const videoInput = ref(null);
 
-var username = 'username';
 
 const token = localStorage.getItem('token');
-var decoded = jwtDecode(token).username;
-
-if (token && decoded) {
-    decoded = toTitleCase(decoded);
-    username = decoded;
+if (!token) {
+    throw new Error('No token found');
 }
+// var decoded = jwtDecode(token).username;
 
-function toTitleCase(str) {
-    return str.replace(/\b(\w)/g, function (match, capture) {
-        return capture.toUpperCase();
-    });
-}
+// if (token && decoded) {
+//     decoded = toTitleCase(decoded);
+//     username = decoded;
+// }
+
+// function toTitleCase(str) {
+//     return str.replace(/\b(\w)/g, function (match, capture) {
+//         return capture.toUpperCase();
+//     });
+// }
 
 async function handleMediaUpload(event) {
     const files = event.target.files;
@@ -109,9 +111,13 @@ async function handleMediaUpload(event) {
 
     const now = Date.now();
 
+    // Extracting email from the JWT token
+    const decodedToken = jwtDecode(token);
+    const email = decodedToken.email; // Assuming the email is stored in the token's 'email' field
+
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const fileName = `${username}JobPost${now + i}.png`;
+        const fileName = `${email}JobPost${now + i}.png`; // Using email instead of username
         const fileRef = storageRef(storage, fileName);
 
         try {
@@ -153,17 +159,21 @@ function removeVideo() {
 }
 
 function post() {
+    console.log('Token:', token);
     const postData = {
         job_post_title: title.value,
         job_post_category: selectedCategory.value,
         job_post_date: jobDate.value,
-        job_post_description: description.value
+        job_post_description: description.value,
+        job_post_image: media.value.map(item => item.url), // Extracting URLs from media array
+        // profile_email: email.value
     };
 
     fetch('/addpost', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(postData)
     })
@@ -183,6 +193,7 @@ function post() {
             console.error('Error posting data:', error.message);
         });
 }
+
 </script>
 
 <style scoped>

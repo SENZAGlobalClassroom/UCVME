@@ -158,31 +158,43 @@ app.post('/cvprocess', function(req, res) {
 
 // add post post request
 app.post('/addpost', function(req, res) {
+
+  // Verify and decode the JWT token to extract user information
+  const token = req.headers.authorization.split(' ')[1];
+  const decoded = jwt.verify(token, 'This_1_Is_2_A_3_Secret_4!'); // Replace 'your_secret_key' with your actual secret key
+
+  // Extract user's profile email from the decoded token
+  const profileEmail = decoded.profile_email;
+
   var jobPostData = {
-    job_post_title: req.body.job_post_title,
-    job_post_category: req.body.job_post_category,
-    job_post_date: req.body.job_post_date,
-    job_post_description: req.body.job_post_description
+      job_post_title: req.body.job_post_title,
+      job_post_category: req.body.job_post_category,
+      job_post_date: req.body.job_post_date,
+      job_post_description: req.body.job_post_description,
+      job_post_image: req.body.job_post_image
   };
   console.log('Job post data:', jobPostData);
+  
 
   // Validate the presence of required fields
   if (!jobPostData.job_post_title || !jobPostData.job_post_category || !jobPostData.job_post_date || !jobPostData.job_post_description) {
-    console.error('Missing required fields');
-    return res.status(400).json({ message: 'Missing required fields' });
+      console.error('Missing required fields');
+      return res.status(400).json({ message: 'Missing required fields' });
   }
 
-  model.addPostModel(jobPostData, function(result) {
-    if (!result) {
-      console.error('Error adding post:', err);
-      return res.status(500).json({ message: 'Failed to add post. Please try again.' });
-    }
+  model.addPostModel(jobPostData, profileEmail, function(response) {
+      if (!response) {
+          console.error('Error adding post:', err);
+          return res.status(500).json({ message: 'Failed to add post. Please try again.' });
+      }
 
-    // If no error, send success response
-    res.status(200).json({ message: 'Job post data submitted successfully' });
-    console.log('Job post data submitted successfully:', result);
+      // If no error, send success response
+      res.status(200).json({ message: 'Job post data submitted successfully' });
+      console.log('Job post data submitted successfully:', response);
   });
 });
+
+
 
 // add post post request
 app.post('/wallet', function(req, res) {
