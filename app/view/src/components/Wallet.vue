@@ -87,9 +87,12 @@ const emit = defineEmits(['add-collection']);
 const addNewCollection = () => {
     if (newCollectionName.value.trim()) {
         const data = {
-            name: newCollectionName.value,
+            wallet_title: newCollectionName.value,
             // Add any other relevant data fields here
         };
+
+        console.log('Request body:', data); // Add this log to track the request payload
+
 
         fetch('/wallet', {
             method: 'POST',

@@ -1,8 +1,7 @@
-// sql query for registering an account into the database
 const { Pool } = require('pg');
 
-const walletModel = function(walletData, cv_phonenumber, response) {
-    console.log('Request body:', walletData);
+const walletModel = function(wallet_title, response) {
+    console.log('Request body:', wallet_title);
 
     const pool = new Pool({
         user: 'postgres',
@@ -21,20 +20,19 @@ const walletModel = function(walletData, cv_phonenumber, response) {
 
         console.log('Connected to database');
 
-        client.query('insert into wallet (wallet_title, cv_phonenumber) values ($1, $2) returning *',
+        client.query('INSERT INTO wallet (wallet_title ) VALUES ($1) RETURNING *',
         [
-            walletData.wallet_title,
-            cv_phonenumber
+            wallet_title // Use walletData.name instead of walletData.wallet_title
         ],
         (err, result) => {
             release();
             if (err) {
                 console.error('Error executing INSERT query:', err);
-                return response({ success: false, message: 'Failed to add post. Please try again.' });
+                return response({ success: false, message: 'Failed to add wallet. Please try again.' });
             }
             
-            console.log('Add post successfully');
-            response({ success: true, message: 'Add post successful', data: result.rows[0] }); 
+            console.log('Wallet added successfully');
+            response({ success: true, message: 'Wallet added successfully', data: result.rows[0] }); 
         });
     });
 };

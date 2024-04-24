@@ -174,7 +174,7 @@ app.post('/addpost', function(req, res) {
       job_post_image: req.body.job_post_image
   };
   console.log('Job post data:', jobPostData);
-  
+
 
   // Validate the presence of required fields
   if (!jobPostData.job_post_title || !jobPostData.job_post_category || !jobPostData.job_post_date || !jobPostData.job_post_description) {
@@ -195,31 +195,28 @@ app.post('/addpost', function(req, res) {
 });
 
 
-
 // add post post request
 app.post('/wallet', function(req, res) {
-  // Extract cv_phonenumber from the request body
-  const cv_phonenumber = req.body.cv_phonenumber;
-  
-  // Construct walletData object
-  const walletData = {
-    wallet_title: req.body.wallet_title
-  };
+  console.log('Request body:', req.body); // Log the entire request body
+  var wallet_title = req.body.wallet_title; // Extract wallet_title from request body
+  console.log('Wallet title:', wallet_title); // Log the extracted wallet_title
 
-  console.log('Wallet data:', walletData);
-
-  // Call the model with walletData and cv_phonenumber
-  model.walletModel(walletData, cv_phonenumber, function(result){
-    if (!result) {
-      console.error('Error creating wallet:', err);
+  // Call the model with walletData and a callback function to handle the response
+  model.walletModel(wallet_title, function(result){
+    if (!result.success) {
+      console.error('Error creating wallet:', result.error);
       return res.status(500).json({ message: 'Failed to create wallet. Please try again.' });
     }
 
     // If no error, send success response
-    res.status(200).json({ message: 'Wallet submitted successfully' });
+    res.status(200).json({ message: 'Wallet submitted successfully', data: result.data });
     console.log('Wallet submitted successfully:', result);
   });
 });
+
+
+
+
 
 
 app.get('*', function (req, res) {
