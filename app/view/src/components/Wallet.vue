@@ -86,16 +86,41 @@ const emit = defineEmits(['add-collection']);
 
 const addNewCollection = () => {
     if (newCollectionName.value.trim()) {
-        emit('add-collection', newCollectionName.value);
+        const data = {
+            name: newCollectionName.value,
+            // Add any other relevant data fields here
+        };
 
-        toast.add({ severity: 'success', summary: 'Success', detail: 'Collection added' });
-        newCollectionName.value = '';
-        showDialog.value = false;
+        fetch('/wallet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle success response
+            console.log('Collection added successfully:', data);
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Collection added' });
+            newCollectionName.value = '';
+            showDialog.value = false;
+        })
+        .catch(error => {
+            // Handle error response
+            console.error('Error adding collection:', error);
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to add collection' });
+        });
     } else {
+        // Show error toast
         toast.add({ severity: 'error', summary: 'Error', detail: 'Please enter a collection name' });
     }
 };
-
 
 //Edit dialogue logic should be editing in db!!
 const showEditDialog = ref(false);

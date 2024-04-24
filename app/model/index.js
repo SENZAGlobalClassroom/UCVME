@@ -4,6 +4,7 @@ var loginModel = require('./login');
 var { changeUserModel, deleteAccountModel } = require('./settings');
 var cvModel = require('./cvcreation');
 var addPostModel = require('./addpost')
+var walletModel = require('./wallet');
 
 module.exports = {
     signupModel,
@@ -11,5 +12,6 @@ module.exports = {
     changeUserModel,
     deleteAccountModel,
     cvModel,
-    addPostModel
+    addPostModel,
+    walletModel
 };

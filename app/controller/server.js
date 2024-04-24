@@ -186,13 +186,29 @@ app.post('/addpost', function(req, res) {
 
 // add post post request
 app.post('/wallet', function(req, res) {
-  const { name, cvs } = req.body;
-  console.log('Wallet data:', name, cvs);
+  // Extract cv_phonenumber from the request body
+  const cv_phonenumber = req.body.cv_phonenumber;
+  
+  // Construct walletData object
+  const walletData = {
+    wallet_title: req.body.wallet_title
+  };
 
-    // Respond with a success message or the newly created collection
-    res.status(201).json({ message: 'Collection created successfully', collection: { name, cvs } });
+  console.log('Wallet data:', walletData);
 
+  // Call the model with walletData and cv_phonenumber
+  model.walletModel(walletData, cv_phonenumber, function(result){
+    if (!result) {
+      console.error('Error creating wallet:', err);
+      return res.status(500).json({ message: 'Failed to create wallet. Please try again.' });
+    }
+
+    // If no error, send success response
+    res.status(200).json({ message: 'Wallet submitted successfully' });
+    console.log('Wallet submitted successfully:', result);
+  });
 });
+
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(staticPath, 'index.html'));
