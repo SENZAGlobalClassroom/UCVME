@@ -1,5 +1,5 @@
 <template>
-    <h1 class="title"> Add Your Video</h1>
+    <h1 class="title">Add Your Video</h1>
 
     <div style="padding: 2rem;">
         <div class="center">
@@ -7,13 +7,13 @@
                 <div class="image-preview" v-if="previewImage">
                     <img :src="previewImage" alt="Video preview" class="rounded-preview">
                 </div>
-                <div class="default-image" v-else>
-                    <img src="\src\assets\videoUpload.png" alt="Default Image" class="rounded-preview">
+                <div v-if="isLoading" class="loading-overlay">
+                    Uploading...
+                    <ProgressSpinner />
                 </div>
-            </div>
-
-            <div v-if="isLoading" class="loading-overlay">
-                Uploading...
+                <div class="default-image" v-else>
+                    <img src="/src/assets/videoUpload.png" alt="Default Image" class="rounded-preview">
+                </div>
             </div>
 
             <div class="file-input-container">
@@ -23,10 +23,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Hidden video element for generating thumbnail -->
+    <video ref="videoElement" style="display: none;"></video>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { storage } from '@/firebase.js';
 import { ref as fireRef, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { jwtDecode } from 'jwt-decode';
@@ -36,6 +39,7 @@ export default {
         const previewImage = ref(null);
         const isLoading = ref(false);
         const videoUrl = ref("");
+        const videoElement = ref(null);
         var username = 'username';
 
         const token = localStorage.getItem('token');
@@ -54,9 +58,22 @@ export default {
 
         const handleFileInputChange = async (event) => {
             const file = event.target.files[0];
-            const videoRef = fireRef(storage, `${username}.mp4`);
             if (file) {
+                const videoRef = fireRef(storage, `${username}.mp4`);
                 isLoading.value = true;
+
+                const objectUrl = URL.createObjectURL(file);
+                videoElement.value.src = objectUrl;
+                videoElement.value.load();
+
+                videoElement.value.addEventListener('loadedmetadata', () => {
+                    try {
+                        captureThumbnail(file);
+                    } catch (error) {
+                        console.error("Error generating thumbnail: ", error);
+                    }
+                }, { once: true });
+            
                 try {
                     const snapshot = await uploadBytes(videoRef, file);
                     videoUrl.value = await getDownloadURL(snapshot.ref);
@@ -69,9 +86,35 @@ export default {
                 }
             }
         };
+
+        const captureThumbnail = (file) => {
+            videoElement.value.currentTime = Math.min(5, videoElement.value.duration / 2);  // Attempt to capture a frame from the middle or at 5s
+            videoElement.value.addEventListener('seeked', async () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = videoElement.value.videoWidth;
+                canvas.height = videoElement.value.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(videoElement.value, 0, 0, canvas.width, canvas.height);
+                previewImage.value = canvas.toDataURL();
+
+                const videoRef = fireRef(storage, `videos/${file.name}`);
+                try {
+                    const snapshot = await uploadBytes(videoRef, file);
+                    const videoUrl = await getDownloadURL(snapshot.ref);
+                    emit('videoUploaded', videoUrl);
+                } catch (error) {
+                    console.error("Upload failed", error);
+                }
+                isLoading.value = false;
+                URL.revokeObjectURL(objectUrl);
+            }, { once: true });
+        };
+
         return {
             previewImage,
-            handleFileInputChange
+            isLoading,
+            handleFileInputChange,
+            videoElement
         };
     }
 };

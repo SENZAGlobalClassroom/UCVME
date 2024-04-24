@@ -41,6 +41,7 @@ import Checkbox from 'primevue/checkbox';
 import AddPost from './components/AddPost.vue';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
+import ProgressSpinner from 'primevue/progressspinner';
 
 const app = createApp(App)
 
@@ -74,6 +75,7 @@ app.component('AddPost', AddPost);
 app.component('TabView', TabView);
 app.component('TabPanel', TabPanel);
 app.component('History', History);
+app.component('ProgressSpinner ', ProgressSpinner );
 
 app.use(router)
 app.use(PrimeVue);
