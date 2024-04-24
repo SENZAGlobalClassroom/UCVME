@@ -1,6 +1,6 @@
 <template>
     <TabView>
-        <TabPanel header="Job Post">
+        <TabPanel header="Self Promotion">
             <div class="form-container">
                 <div class="form-item">
                     <input placeholder="Title" v-model="title" />
@@ -15,11 +15,11 @@
                     </div>
                     <br>
                     <div class="form-item">
-                        <Calendar placeholder="Job date" v-model="jobDate" />
+                        <Calendar placeholder="Date" v-model="jobDate" />
                     </div>
                     <br>
                     <div class="form-item">
-                        <textarea placeholder="Job description" v-model="description" style="min-height: 5rem;" />
+                        <textarea placeholder="Description" v-model="description" style="min-height: 5rem;" />
                     </div>
                     <br>
                     <div class="pictures-container">
@@ -35,32 +35,7 @@
                 <Button label="Post" class="post-button" @click="post" />
             </div>
         </TabPanel>
-        <TabPanel header="Self Promotion">
-            <div class="form-container">
-                <div class="form-item">
-                    <input placeholder="Title" v-model="title" />
-                </div>
-                <br>
-                <div>
-                    <div class="form-item">
-                        <textarea placeholder="About me" v-model="description" style="min-height: 5rem;" />
-                    </div>
-                    <br>
-                    <div class="media-container">
-                        <video v-if="video.url" controls class="video-preview">
-                            <source :src="video.url" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <Button icon="pi pi-times" v-if="video.url" class="remove-video-button"
-                            @click="removeVideo()" />
-                        <Button icon="pi pi-plus" class="add-video-button" v-else @click="() => videoInput.click()" />
-                    </div>
-                    <input type="file" ref="videoInput" hidden @change="handleVideoUpload" accept="video/*" />
-                </div>
-                <br>
-                <Button label="Post" class="post-button" @click="post" />
-            </div>
-        </TabPanel>
+        
     </TabView>
 </template>
 

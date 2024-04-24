@@ -67,9 +67,9 @@ const aboutMe = `Hi there! I'm Joe, a proud resident of the stunning landscapes 
 const workExperience = "Ever since I was knee-high, I've been mucking about in the dirt and loving every minute of it. Started out at Flynn's Orchards – just a stone's throw away from home in Wicklow. I got real good at figuring out what those apple and pear trees needed to thrive. Picking fruit at dawn, that's the kind of thing that teaches you to wait for the right moment. Next up was Green Hill Dairy. Not just your average farm, but a place that really cared about doing things right and kind. Got my hands dirty with the cows, learned the dance of the milking routine, and all about keeping the fields green and happy. Then there was a stint at Willow Creek, working with a bunch of smart folks trying to fix up tired old fields using nature's playbook. We did everything – mixing up what we planted, giving the land a break, and bringing back birds and bugs. Lately, I've been running the show at Harvest Bounty. It's a big veggie farm where every day is about getting those plants from tiny seeds to someone's dinner plate. It's a lot to keep track of, but I wouldn't have it any other way. ";
 
 // should be videoURL from postgres db
-const videoUrl = "https://firebasestorage.googleapis.com/v0/b/ucvme-131a0.appspot.com/o/Eli.mp4?alt=media&token=0438e70d-651d-4ac1-a8b3-555f0d0625d8"
+const videoUrl = "https://firebasestorage.googleapis.com/v0/b/ucvme-131a0.appspot.com/o/videos%2FIMG_6426.mov?alt=media&token=3edfbcb4-cb57-4d5b-bc45-4c52a04b3502"
 var username = 'username'; // Placeholder username
-var mbti = 'mbti';
+var mbti = 'INTP - Logician';
 
 const token = localStorage.getItem('token');
 var decoded = jwtDecode(token).username;
