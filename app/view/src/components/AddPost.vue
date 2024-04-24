@@ -66,6 +66,9 @@
 
 <script setup>
 import { ref } from 'vue';
+import { ref as storageRef, deleteObject, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { storage } from '@/firebase.js';
+import { jwtDecode } from 'jwt-decode';
 
 const categories = ref([
     { name: 'Tech', code: 'TECH' },
@@ -75,7 +78,6 @@ const categories = ref([
     { name: 'Finance', code: 'FIN' }
 ]);
 
-const postType = ref('JOB');
 const title = ref('');
 const selectedCategory = ref('TECH');
 const jobDate = ref(null);
@@ -85,17 +87,57 @@ const video = ref({});
 const mediaInput = ref(null);
 const videoInput = ref(null);
 
-function handleMediaUpload(event) {
+var username = 'username';
+
+const token = localStorage.getItem('token');
+var decoded = jwtDecode(token).username;
+
+if (token && decoded) {
+    decoded = toTitleCase(decoded);
+    username = decoded;
+}
+
+function toTitleCase(str) {
+    return str.replace(/\b(\w)/g, function (match, capture) {
+        return capture.toUpperCase();
+    });
+}
+
+async function handleMediaUpload(event) {
     const files = event.target.files;
     if (!files.length) return;
 
+    const now = Date.now();
+
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const url = URL.createObjectURL(file);
-        media.value.push({ file, url });
+        const fileName = `${username}JobPost${now + i}.png`;
+        const fileRef = storageRef(storage, fileName);
+
+        try {
+            const snapshot = await uploadBytes(fileRef, file);
+            const url = await getDownloadURL(snapshot.ref);
+            media.value.push({ file, url, fileName });
+            console.log(media.value[media.value.length - 1].url);
+        } catch (error) {
+            console.error("Error uploading file: ", error);
+        }
     }
 }
+function removeMedia(index) {
+    const fileToDelete = media.value[index];
+    const fileRef = storageRef(storage, fileToDelete.fileName); 
+    deleteObject(fileRef)
+        .then(() => {
+            console.log("File deleted successfully");
+            media.value.splice(index, 1);
+        })
+        .catch((error) => {
+            console.error("Error removing file: ", error);
+        });
+}
 
+// video not working atm
 function handleVideoUpload(event) {
     const files = event.target.files;
     if (!files.length || video.value.url) return;
@@ -108,11 +150,6 @@ function handleVideoUpload(event) {
 function removeVideo() {
     URL.revokeObjectURL(video.value.url);
     video.value = {};
-}
-
-function removeMedia(index) {
-    URL.revokeObjectURL(media.value[index].url);
-    media.value.splice(index, 1);
 }
 
 function post() {
