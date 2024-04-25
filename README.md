@@ -44,7 +44,45 @@ In the future we would like to implement features such as:
 ```bash
 git clone https://github.com/your-repository/ucvme.git](https://github.com/SENZAGlobalClassroom/UCVME.git
 ```
-2. **Project setup**
+2. **Database setup**
+
+**Download and install docker**
+```bash
+https://hub.docker.com
+```
+**Search postgres and select image to run**
+```bash
+docker pull postgres
+```
+**Obtain list of existing Docker Images and should see container listed in repository called postgres**
+```bash
+docker images
+```
+**Name new container and specify the ports**
+```bash
+docker run --name pg2023 –p 54321:5432 –e
+```
+**Enter username and password**
+```bash
+POSTGRES_USER=postgres -e POSTGRES_PASSWORD=Sp00ky! -e
+```
+**Insert the database you want in your container**
+```bash
+POSTGRES_DB=postgres -d postgres
+```
+**Download DBeaver**
+```bash
+https://dbeaver.io/
+```
+**Connect DBeaver using the username and password previously set**
+
+**Open SQL window, run to create new schema**
+```bash
+CREATE SCHEMA "BUILDER" AUTHORIZATION "postgres";
+```
+**Open SQL script and execute sql file**
+
+3. **Project setup**
 ```bash
 cd .\UCVME\app\view
 npm install
@@ -56,6 +94,11 @@ npm run dev
 **Compile and Minify for Production**
 ```bash
 npm run build
+```
+**Compile to run on node server**
+```bash
+cd .\UCVME\app\controller
+node server.js
 ```
 
 ## Screenshots
